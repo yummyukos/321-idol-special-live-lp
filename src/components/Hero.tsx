@@ -41,7 +41,7 @@ export default function Hero() {
         }}
       />
 
-      <div className="relative mx-auto w-full max-w-5xl px-6 pt-[40svh] sm:pt-[35svh] pb-16 text-center">
+      <div className="relative mx-auto w-full max-w-5xl px-6 pt-[22svh] sm:pt-[20svh] pb-16 text-center">
         {/* メインロゴ画像（Special LIVE 2026 in Kanadevia Hall） */}
         {!logoFailed ? (
           <img
