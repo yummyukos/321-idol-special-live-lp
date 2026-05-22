@@ -176,4 +176,4 @@ export async function fetchCurrentSales(): Promise<SalesSnapshot> {
 © 321 IDOL PROJECT
 
 ---
-最終更新: GitHub + Vercel自動デプロイ連携完了
+最終更新: GitHub + Vercel自動デプロイ連携完了（新トークン動作確認済み）
