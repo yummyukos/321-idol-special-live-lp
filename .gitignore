@@ -26,6 +26,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# secrets / tokens（絶対にGitHubにpushしない）
+gh-token.txt
+.secrets/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
