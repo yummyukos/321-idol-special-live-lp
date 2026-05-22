@@ -35,34 +35,22 @@ export default function AchievementProgress() {
           チケット達成特典
         </h2>
         <p className="text-center text-mist/85 text-base sm:text-lg max-w-2xl mx-auto mb-12 leading-relaxed font-mincho">
-          <span className="text-gold">バルコニー席 {TICKETS.balconyCapacity}枚</span>
-          を100%として
+          <span className="text-gold">バルコニー席完売</span>を100%として
           <br />
           販売枚数に応じて特典が次々と解禁！
         </p>
 
-        {/* 進捗表示（カードなし・中央寄せ） */}
+        {/* 達成率を大きくドンと中央表示 */}
         <div className="text-center">
-          {/* 大きな枚数表示 */}
-          <p className="font-mincho text-mist">
-            <span className="tabular text-shimmer text-6xl sm:text-8xl font-bold">
-              {balconySold.toLocaleString()}
-            </span>
-            <span className="text-mist/60 text-2xl sm:text-3xl ml-2 align-middle">
-              / {TICKETS.balconyCapacity.toLocaleString()} 枚
-            </span>
+          <p className="font-mincho text-xs sm:text-sm tracking-[0.4em] text-mist/60 mb-3">
+            達成率
           </p>
-
-          {/* 達成率ラベル＋％ */}
-          <div className="mt-8">
-            <p className="font-mincho text-xs sm:text-sm tracking-[0.3em] text-mist/60 mb-2">
-              達成率
-            </p>
-            <p className="font-mincho text-gold tabular text-4xl sm:text-5xl">
+          <p className="font-mincho tabular flex items-baseline justify-center gap-1">
+            <span className="text-shimmer text-7xl sm:text-9xl font-bold leading-none">
               {balconyPct.toFixed(1)}
-              <span className="text-mist/60 text-2xl">%</span>
-            </p>
-          </div>
+            </span>
+            <span className="text-mist/60 text-3xl sm:text-5xl">%</span>
+          </p>
         </div>
 
         {/* メーター */}

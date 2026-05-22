@@ -30,13 +30,13 @@ export default function Countdown() {
         </h2>
 
         {!t.isOver && (
-          <p className="font-mincho text-mist tabular">
-            <span className="text-mist/80 text-2xl sm:text-3xl mr-3">あと</span>
-            <span className="text-shimmer text-7xl sm:text-9xl font-bold align-middle">
+          <div className="font-mincho text-mist tabular flex items-baseline justify-center gap-2 sm:gap-3">
+            <span className="text-mist/80 text-2xl sm:text-3xl">あと</span>
+            <span className="text-shimmer text-7xl sm:text-9xl font-bold leading-none">
               {t.days}
             </span>
-            <span className="text-mist/80 text-2xl sm:text-3xl ml-3">日</span>
-          </p>
+            <span className="text-mist/80 text-2xl sm:text-3xl">日</span>
+          </div>
         )}
       </div>
     </section>

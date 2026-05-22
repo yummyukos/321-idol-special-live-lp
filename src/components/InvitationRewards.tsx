@@ -35,10 +35,12 @@ export default function InvitationRewards() {
                 <span className="unit">人</span>
               </div>
               <div className="invitation-card-content">
-                {t.badge && (
-                  <span className="invitation-badge">{t.badge}</span>
-                )}
-                <h3 className="invitation-card-title">{t.title}</h3>
+                <h3 className="invitation-card-title">
+                  {t.badge && (
+                    <span className="invitation-badge">{t.badge}</span>
+                  )}
+                  {t.title}
+                </h3>
                 <p className="invitation-card-brief">{t.brief}</p>
               </div>
             </article>

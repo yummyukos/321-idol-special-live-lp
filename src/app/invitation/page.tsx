@@ -8,8 +8,6 @@ import {
 } from "@/lib/invitation";
 import { EVENT } from "@/lib/event";
 
-export const dynamic = "force-dynamic";
-
 export const metadata: Metadata = {
   title: "招待特典について｜321 IDOL PROJECT Special LIVE",
   description:

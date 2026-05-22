@@ -1,42 +1,25 @@
 "use client";
 
+import Script from "next/script";
 import { useEffect, useRef } from "react";
 
 /**
  * X（旧Twitter）の最新ツイートを埋め込み表示。
- * widgets.js を1回だけ読み込んで、Twitter の標準timeline widgetを使う。
- * ロードに失敗しても下のフォローボタンは出るので、コミュニケーションは確保される。
+ * Next.jsのScriptコンポーネントで widgets.js を確実にロード。
  */
 export default function TwitterFeed() {
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // widgets.js ロード後、コンテナ内の <a class="twitter-timeline"> を描画
+  const renderWidget = () => {
+    if ((window as any).twttr?.widgets && containerRef.current) {
+      (window as any).twttr.widgets.load(containerRef.current);
+    }
+  };
+
   useEffect(() => {
-    const loadWidgets = () => {
-      if ((window as any).twttr?.widgets && containerRef.current) {
-        (window as any).twttr.widgets.load(containerRef.current);
-      }
-    };
-
-    // 既にロード済みなら再描画
-    if ((window as any).twttr?.widgets) {
-      loadWidgets();
-      return;
-    }
-
-    // 既存scriptがあれば再利用、なければ追加
-    const existing = document.querySelector<HTMLScriptElement>(
-      'script[src*="platform.twitter.com/widgets.js"]'
-    );
-    if (existing) {
-      existing.addEventListener("load", loadWidgets);
-      return;
-    }
-
-    const script = document.createElement("script");
-    script.src = "https://platform.twitter.com/widgets.js";
-    script.async = true;
-    script.onload = loadWidgets;
-    document.body.appendChild(script);
+    // すでに widgets.js がロード済みなら即描画
+    renderWidget();
   }, []);
 
   return (
@@ -47,10 +30,17 @@ export default function TwitterFeed() {
           最新情報を発信中
         </h2>
 
+        {/* widgets.js は Next.jsのScriptで一度だけロード */}
+        <Script
+          src="https://platform.twitter.com/widgets.js"
+          strategy="lazyOnload"
+          onLoad={renderWidget}
+        />
+
         {/* X (Twitter) 公式埋め込み */}
         <div
           ref={containerRef}
-          className="rounded-2xl overflow-hidden border border-white/10 bg-velvet/60 min-h-[400px] flex items-center justify-center"
+          className="rounded-2xl overflow-hidden border border-white/10 bg-velvet/60 min-h-[500px]"
         >
           <a
             className="twitter-timeline"

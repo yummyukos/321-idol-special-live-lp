@@ -16,7 +16,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative isolate overflow-hidden bg-aurora min-h-[100svh] flex flex-col justify-center">
+    <section className="relative isolate overflow-hidden bg-aurora min-h-[100svh]">
       {/* 背景動画 */}
       <video
         className="absolute inset-0 -z-10 h-full w-full object-cover opacity-60"
@@ -41,7 +41,7 @@ export default function Hero() {
         }}
       />
 
-      <div className="relative mx-auto w-full max-w-5xl px-6 pt-40 sm:pt-48 pb-16 text-center">
+      <div className="relative mx-auto w-full max-w-5xl px-6 pt-[40svh] sm:pt-[35svh] pb-16 text-center">
         {/* メインロゴ画像（Special LIVE 2026 in Kanadevia Hall） */}
         {!logoFailed ? (
           <img
@@ -62,10 +62,10 @@ export default function Hero() {
           </h1>
         )}
 
-        {/* 日付（2行で表示） */}
-        <div className="mt-10 font-mincho text-mist tabular space-y-1">
-          <p className="text-lg sm:text-2xl">2026年7月13日（月）</p>
-          <p className="text-base sm:text-xl tracking-wider text-mist/85">
+        {/* 日付（2行で表示・コンパクトに） */}
+        <div className="mt-6 sm:mt-8 font-mincho text-mist tabular space-y-0.5">
+          <p className="text-base sm:text-xl">2026年7月13日（月）</p>
+          <p className="text-sm sm:text-base tracking-wider text-mist/85">
             OPEN 17:30 / START 19:00
           </p>
         </div>

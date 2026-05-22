@@ -16,7 +16,7 @@ const STANZAS: string[][] = [
     "大きな景色のなかで、見たかったから。",
   ],
   [
-    "2026年7月13日。",
+    "7月13日。",
     "一生忘れられない景色を",
     "いっしょに見られたら嬉しいな！",
   ],
@@ -30,7 +30,7 @@ export default function Message() {
           MESSAGE
         </p>
 
-        <div className="message-mincho text-mist space-y-10 sm:space-y-12 text-[17px] sm:text-[22px] leading-[2.1] text-center">
+        <div className="message-mincho text-mist space-y-10 sm:space-y-12 text-[16px] sm:text-[21px] leading-[2.1] text-center">
           {STANZAS.map((stanza, i) => (
             <motion.div
               key={i}
