@@ -1,0 +1,248 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  background: #08060f;
+  color: #e9e4f5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: var(--font-zen), "Hiragino Sans", "Noto Sans JP", sans-serif;
+  overflow-x: hidden;
+}
+
+/* グラデーション流れる背景（Special感） */
+.bg-aurora {
+  background:
+    radial-gradient(60% 80% at 20% 10%, rgba(255, 58, 161, 0.25), transparent 60%),
+    radial-gradient(50% 60% at 80% 30%, rgba(124, 92, 255, 0.25), transparent 65%),
+    radial-gradient(70% 70% at 50% 100%, rgba(245, 210, 122, 0.12), transparent 60%),
+    #08060f;
+}
+
+/* ゴールドのシマー（達成済みのプログレスバー用） */
+.text-shimmer {
+  background: linear-gradient(
+    90deg,
+    #f5d27a 0%,
+    #ffffff 40%,
+    #ff3aa1 60%,
+    #f5d27a 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 3s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ネオン縁取り */
+.neon-border {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 0 24px rgba(255, 58, 161, 0.25),
+    inset 0 0 24px rgba(124, 92, 255, 0.15);
+}
+
+/* スクロール時のフェードイン用ベース */
+.section-pad {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+@media (max-width: 640px) {
+  .section-pad {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+}
+
+/* 数字を機械的に等幅にして点滅時のガタつきを防ぐ */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* メッセージ専用の明朝（Mac の Hiragino Mincho を優先して、最初の重みのある見え方に） */
+.message-mincho {
+  font-family: "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Yu Mincho",
+    "YuMincho", var(--font-shippori), "Shippori Mincho B1", serif;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+/* ============ 招待特典：ゴールドカード（2列） ============ */
+.invitation-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+@media (min-width: 640px) {
+  .invitation-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    grid-auto-flow: column;
+    gap: 1rem;
+  }
+}
+
+.invitation-card {
+  display: grid;
+  /* ゴールド部分を固定幅にして、白との境界線を全カードで揃える */
+  grid-template-columns: 96px 1fr;
+  gap: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #b8893f 0%, #f5d27a 40%, #d4a445 100%);
+  box-shadow: 0 4px 20px -8px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  position: relative;
+}
+@media (min-width: 640px) {
+  .invitation-card {
+    grid-template-columns: 120px 1fr;
+  }
+}
+
+/* ゴールドのテクスチャ風オーバーレイ */
+.invitation-card-number {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1em;
+  padding: 1rem 0.5rem;
+  color: #fff;
+  font-family: "Shippori Mincho B1", "Hiragino Mincho ProN", serif;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15), transparent 50%),
+    radial-gradient(circle at 70% 70%, rgba(0, 0, 0, 0.1), transparent 50%),
+    linear-gradient(135deg, #c89c4a 0%, #d4a445 50%, #b8893f 100%);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.invitation-card-number .num {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+@media (min-width: 640px) {
+  .invitation-card-number .num {
+    font-size: 2.5rem;
+  }
+}
+
+.invitation-card-number .unit {
+  font-size: 1rem;
+  font-weight: 500;
+  align-self: flex-end;
+  padding-bottom: 0.15rem;
+}
+@media (min-width: 640px) {
+  .invitation-card-number .unit {
+    font-size: 1.25rem;
+  }
+}
+
+/* 50人以降の縦並びナンバー */
+.invitation-card-number.stacked {
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.invitation-card-number.stacked .num {
+  font-size: 1.5rem;
+}
+@media (min-width: 640px) {
+  .invitation-card-number.stacked .num {
+    font-size: 1.75rem;
+  }
+}
+.invitation-card-number.stacked .suffix {
+  font-size: 0.875rem;
+  align-self: center;
+  padding-bottom: 0;
+}
+
+.invitation-card-content {
+  position: relative; /* バッジを絶対配置する基準 */
+  background: #ffffff;
+  padding: 0.85rem 1rem;
+  color: #1a1a1a;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+@media (min-width: 640px) {
+  .invitation-card-content {
+    padding: 1.1rem 1.25rem;
+  }
+}
+
+/* バッジは絶対配置で右上に貼り付け、縦幅に影響しないように */
+.invitation-badge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 2;
+  background: linear-gradient(90deg, #b8893f, #d4a445);
+  color: #fff;
+  font-family: "Shippori Mincho B1", serif;
+  font-size: 0.6rem;
+  font-weight: 500;
+  padding: 0.15rem 0.45rem;
+  border-radius: 3px;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+@media (min-width: 640px) {
+  .invitation-badge {
+    top: 0.6rem;
+    right: 0.6rem;
+    font-size: 0.65rem;
+    padding: 0.2rem 0.55rem;
+  }
+}
+
+.invitation-card-title {
+  font-family: "Shippori Mincho B1", "Hiragino Mincho ProN", serif;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #1a1a1a;
+  margin-bottom: 0.35rem;
+}
+@media (min-width: 640px) {
+  .invitation-card-title {
+    font-size: 1.1rem;
+  }
+}
+
+.invitation-card-brief {
+  font-size: 0.7rem;
+  line-height: 1.55;
+  color: #555555;
+}
+@media (min-width: 640px) {
+  .invitation-card-brief {
+    font-size: 0.75rem;
+  }
+}
+
+/* ボーナスカード（50人以降）はタイトル中央寄せ */
+.invitation-card--bonus .invitation-card-content {
+  justify-content: center;
+}
+.invitation-card--bonus .invitation-card-title {
+  margin-bottom: 0;
+}
