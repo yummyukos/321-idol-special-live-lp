@@ -1,25 +1,59 @@
 "use client";
 
-import Script from "next/script";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /**
  * X（旧Twitter）の最新ツイートを埋め込み表示。
- * Next.jsのScriptコンポーネントで widgets.js を確実にロード。
+ * widgets.js を手動で挿入＋ polling で確実にロード、リトライ付き。
  */
 export default function TwitterFeed() {
   const containerRef = useRef<HTMLDivElement>(null);
-
-  // widgets.js ロード後、コンテナ内の <a class="twitter-timeline"> を描画
-  const renderWidget = () => {
-    if ((window as any).twttr?.widgets && containerRef.current) {
-      (window as any).twttr.widgets.load(containerRef.current);
-    }
-  };
+  const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
 
   useEffect(() => {
-    // すでに widgets.js がロード済みなら即描画
-    renderWidget();
+    let cancelled = false;
+    let attempts = 0;
+    const MAX_ATTEMPTS = 20; // 500ms × 20 = 最大10秒待つ
+    const SCRIPT_ID = "twitter-widgets-js";
+
+    const tryRender = () => {
+      if (cancelled) return;
+      const w = window as unknown as {
+        twttr?: { widgets?: { load?: (el?: HTMLElement) => Promise<unknown> } };
+      };
+      if (w.twttr?.widgets?.load && containerRef.current) {
+        Promise.resolve(w.twttr.widgets.load(containerRef.current))
+          .then(() => !cancelled && setStatus("ready"))
+          .catch(() => !cancelled && setStatus("error"));
+        return;
+      }
+      attempts += 1;
+      if (attempts >= MAX_ATTEMPTS) {
+        setStatus("error");
+        return;
+      }
+      window.setTimeout(tryRender, 500);
+    };
+
+    // widgets.js を確実に挿入（既にあれば再利用）
+    const existing = document.getElementById(SCRIPT_ID) as HTMLScriptElement | null;
+    if (!existing) {
+      const script = document.createElement("script");
+      script.id = SCRIPT_ID;
+      script.src = "https://platform.twitter.com/widgets.js";
+      script.async = true;
+      script.charset = "utf-8";
+      script.onload = tryRender;
+      script.onerror = () => setStatus("error");
+      document.head.appendChild(script);
+    } else {
+      // 既に script タグはある → twttr が初期化されるのを待つ
+      tryRender();
+    }
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   return (
@@ -30,27 +64,42 @@ export default function TwitterFeed() {
           最新情報を発信中
         </h2>
 
-        {/* widgets.js は Next.jsのScriptで一度だけロード */}
-        <Script
-          src="https://platform.twitter.com/widgets.js"
-          strategy="lazyOnload"
-          onLoad={renderWidget}
-        />
-
         {/* X (Twitter) 公式埋め込み */}
         <div
           ref={containerRef}
-          className="rounded-2xl overflow-hidden border border-white/10 bg-velvet/60 min-h-[500px]"
+          className="rounded-2xl overflow-hidden border border-white/10 bg-velvet/60 min-h-[500px] relative"
         >
+          {/* widgets.js が読み込まれるまでのプレースホルダー */}
+          {status === "loading" && (
+            <div className="absolute inset-0 flex items-center justify-center text-mist/60 text-sm font-mincho pointer-events-none">
+              読み込み中…
+            </div>
+          )}
+          {status === "error" && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6 text-center text-mist/80 text-sm font-mincho">
+              <p>タイムラインの読み込みに失敗しました。</p>
+              <a
+                href="https://x.com/321idol"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gold underline underline-offset-4"
+              >
+                @321idol を直接見る →
+              </a>
+            </div>
+          )}
+
           <a
             className="twitter-timeline"
             data-theme="dark"
             data-chrome="noheader nofooter transparent noborders"
             data-height="500"
+            data-tweet-limit="5"
             data-dnt="true"
-            href="https://twitter.com/321idol?ref_src=twsrc%5Etfw"
+            data-lang="ja"
+            href="https://twitter.com/321idol"
           >
-            Tweets by 321idol
+            Tweets by @321idol
           </a>
         </div>
 
