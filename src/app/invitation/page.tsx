@@ -8,6 +8,9 @@ import {
 } from "@/lib/invitation";
 import { EVENT } from "@/lib/event";
 
+// 静的生成のタイムアウト回避のため、リクエスト時にレンダリング
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "招待特典について｜321 IDOL PROJECT Special LIVE",
   description:
