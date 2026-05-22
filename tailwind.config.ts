@@ -14,13 +14,13 @@ const config: Config = {
       },
       fontFamily: {
         // 本文（和文ゴシック）
-        sans: ["var(--font-zen)", "Hiragino Sans", "Noto Sans JP", "sans-serif"],
+        sans: ['"Zen Kaku Gothic New"', "Hiragino Sans", "Noto Sans JP", "sans-serif"],
         // 見出し（和文明朝＋欧文セリフを併用）
-        display: ["var(--font-dm-serif)", "var(--font-shippori)", "Hiragino Mincho ProN", "serif"],
+        display: ['"DM Serif Display"', '"Shippori Mincho B1"', "Hiragino Mincho ProN", "serif"],
         // 和文専用見出し
-        mincho: ["var(--font-shippori)", "Hiragino Mincho ProN", "serif"],
+        mincho: ['"Shippori Mincho B1"', "Hiragino Mincho ProN", "serif"],
         // 欧文専用見出し
-        serif: ["var(--font-dm-serif)", "Playfair Display", "serif"],
+        serif: ['"DM Serif Display"', "Playfair Display", "serif"],
       },
       animation: {
         "pulse-slow": "pulse 4s ease-in-out infinite",

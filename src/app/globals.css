@@ -8,7 +8,7 @@ body {
   color: #e9e4f5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: var(--font-zen), "Hiragino Sans", "Noto Sans JP", sans-serif;
+  font-family: "Zen Kaku Gothic New", "Hiragino Sans", "Noto Sans JP", sans-serif;
   overflow-x: hidden;
 }
 
@@ -75,7 +75,7 @@ body {
 /* メッセージ専用の明朝（Mac の Hiragino Mincho を優先して、最初の重みのある見え方に） */
 .message-mincho {
   font-family: "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Yu Mincho",
-    "YuMincho", var(--font-shippori), "Shippori Mincho B1", serif;
+    "YuMincho", "Shippori Mincho B1", serif;
   font-weight: 400;
   letter-spacing: 0.02em;
 }

@@ -1,23 +1,41 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 /**
  * X（旧Twitter）の最新ツイートを埋め込み表示。
  * widgets.js を1回だけ読み込んで、Twitter の標準timeline widgetを使う。
+ * ロードに失敗しても下のフォローボタンは出るので、コミュニケーションは確保される。
  */
 export default function TwitterFeed() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    // すでにロード済みなら再描画
+    const loadWidgets = () => {
+      if ((window as any).twttr?.widgets && containerRef.current) {
+        (window as any).twttr.widgets.load(containerRef.current);
+      }
+    };
+
+    // 既にロード済みなら再描画
     if ((window as any).twttr?.widgets) {
-      (window as any).twttr.widgets.load();
+      loadWidgets();
       return;
     }
-    // 初回はscriptをappend
+
+    // 既存scriptがあれば再利用、なければ追加
+    const existing = document.querySelector<HTMLScriptElement>(
+      'script[src*="platform.twitter.com/widgets.js"]'
+    );
+    if (existing) {
+      existing.addEventListener("load", loadWidgets);
+      return;
+    }
+
     const script = document.createElement("script");
     script.src = "https://platform.twitter.com/widgets.js";
     script.async = true;
-    script.charset = "utf-8";
+    script.onload = loadWidgets;
     document.body.appendChild(script);
   }, []);
 
@@ -30,14 +48,17 @@ export default function TwitterFeed() {
         </h2>
 
         {/* X (Twitter) 公式埋め込み */}
-        <div className="rounded-2xl overflow-hidden border border-white/10 bg-velvet/60">
+        <div
+          ref={containerRef}
+          className="rounded-2xl overflow-hidden border border-white/10 bg-velvet/60 min-h-[400px] flex items-center justify-center"
+        >
           <a
             className="twitter-timeline"
             data-theme="dark"
-            data-chrome="noheader nofooter transparent"
-            data-height="600"
+            data-chrome="noheader nofooter transparent noborders"
+            data-height="500"
             data-dnt="true"
-            href="https://twitter.com/321idol"
+            href="https://twitter.com/321idol?ref_src=twsrc%5Etfw"
           >
             Tweets by 321idol
           </a>

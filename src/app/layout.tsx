@@ -1,33 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Shippori_Mincho_B1, DM_Serif_Display, Zen_Kaku_Gothic_New } from "next/font/google";
 import "./globals.css";
 import HamburgerMenu from "@/components/HamburgerMenu";
 
-const SITE_URL = "https://321-idol-special-live.example.com"; // 本番ドメインに後で書き換え
-
-// 日本語の見出し用：上品な明朝体
-const shippori = Shippori_Mincho_B1({
-  subsets: ["latin"],
-  weight: ["400", "500", "700", "800"],
-  variable: "--font-shippori",
-  display: "swap",
-});
-
-// 欧文の見出し用：エレガントなセリフ
-const dmSerif = DM_Serif_Display({
-  subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-dm-serif",
-  display: "swap",
-});
-
-// 本文用：読みやすい和洋ゴシック
-const zen = Zen_Kaku_Gothic_New({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  variable: "--font-zen",
-  display: "swap",
-});
+const SITE_URL = "https://321-idol-special-live-lp.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -62,7 +37,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ja" className={`${shippori.variable} ${dmSerif.variable} ${zen.variable}`}>
+    <html lang="ja">
+      <head>
+        {/* Google Fonts：日本語含む全文字を読み込み（プレビューHTMLと同じ仕様） */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Shippori+Mincho+B1:wght@400;500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body>
         <HamburgerMenu />
         {children}
