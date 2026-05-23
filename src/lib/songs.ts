@@ -13,8 +13,10 @@ export type Song = {
 };
 
 export const SONGS: Song[] = [
+  {
+    title: "I don't know why?",
+    artist: "321 IDOL PROJECT",
+    file: "/songs/i-dont-know-why.mp3",
+  },
   // ↓↓↓ ここに楽曲を追加してください
-  // 例：
-  // { title: "ふふふ", artist: "PALE TULLE", file: "/songs/paletulle-fufufu.mp3" },
-  // { title: "キラキラ", artist: "グリッターシステム", file: "/songs/glitter-kirakira.mp3" },
 ];
