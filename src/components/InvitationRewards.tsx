@@ -73,8 +73,10 @@ export default function InvitationRewards() {
                   className="invitation-card-number"
                   style={{ background: TIER_GRADIENTS[index] }}
                 >
-                  <span className="num">{t.count}</span>
-                  <span className="unit">人</span>
+                  <span className="num-wrap">
+                    <span className="num">{t.count}</span>
+                    <span className="unit">人</span>
+                  </span>
                 </div>
 
                 {/* タイトル */}

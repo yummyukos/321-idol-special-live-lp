@@ -186,19 +186,25 @@ body {
   }
 }
 
-/* 番号エリア：左側に角丸 */
+/* 番号エリア：左側に角丸、コンテンツを完全中央配置 */
 .invitation-card-number {
   position: relative;
   display: flex;
-  align-items: baseline; /* 数字と「人」を同じベースラインに */
-  justify-content: center;
-  gap: 0.1em;
-  padding: 0.75rem 0.5rem;
+  align-items: center; /* 縦中央 */
+  justify-content: center; /* 横中央 */
+  padding: 0.5rem;
   color: #fff;
   font-family: "Shippori Mincho B1", "Hiragino Mincho ProN", serif;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
   border-radius: 12px 0 0 12px;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* 番号と「人」のインラインラッパー（baseline揃え） */
+.invitation-card-number .num-wrap {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.05em;
 }
 
 .invitation-card-number .num {
@@ -264,43 +270,36 @@ body {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
-/* PREMIUMバッジ：カード左上に乗せる（撮り下ろしと同じ位置・上に飛び出る） */
+/* PREMIUMバッジ：撮り下ろしと同サイズ・左上配置・色だけピンク→ゴールドで差別化 */
 .invitation-premium-badge {
   position: absolute;
-  top: -12px;
+  top: -8px;
   left: 8px;
   z-index: 10;
   display: inline-flex;
   align-items: center;
-  gap: 0.3em;
-  background: linear-gradient(135deg, #ff3aa1 0%, #f5d27a 100%);
+  gap: 0.25em;
+  background: linear-gradient(90deg, #ff3aa1, #f5d27a);
   color: #1a0a14;
   font-family: "Zen Kaku Gothic New", sans-serif;
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   font-weight: 800;
-  padding: 0.4rem 0.9rem;
+  padding: 0.25rem 0.65rem;
   border-radius: 999px;
-  letter-spacing: 0.15em;
-  border: 1px solid #fff;
-  box-shadow:
-    0 4px 14px rgba(255, 58, 161, 0.5),
-    0 0 20px rgba(245, 210, 122, 0.6),
-    inset 0 1px 0 rgba(255, 255, 255, 0.5);
-  animation: premiumBadgePulse 2s ease-in-out infinite;
+  letter-spacing: 0.1em;
+  line-height: 1.3;
+  white-space: nowrap;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 2px 6px rgba(255, 58, 161, 0.4), 0 0 12px rgba(245, 210, 122, 0.5);
+  animation: premiumBadgePulse 2.5s ease-in-out infinite;
 }
 
 @keyframes premiumBadgePulse {
   0%, 100% {
-    box-shadow:
-      0 4px 14px rgba(255, 58, 161, 0.5),
-      0 0 20px rgba(245, 210, 122, 0.6),
-      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    box-shadow: 0 2px 6px rgba(255, 58, 161, 0.4), 0 0 12px rgba(245, 210, 122, 0.5);
   }
   50% {
-    box-shadow:
-      0 4px 20px rgba(255, 58, 161, 0.7),
-      0 0 32px rgba(245, 210, 122, 0.8),
-      inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    box-shadow: 0 2px 10px rgba(255, 58, 161, 0.6), 0 0 20px rgba(245, 210, 122, 0.7);
   }
 }
 
