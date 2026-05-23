@@ -19,7 +19,7 @@ const SUGGESTED_QUESTIONS = [
 const INITIAL_GREETING: Msg = {
   role: "assistant",
   content:
-    "こんにちは♪\n321 IDOL PROJECT Special LIVE の何でも案内します。\n\n気になることをタップするか、自由に質問してくださいね！",
+    "こんにちは♪\n321 IDOL PROJECT Special LIVEについて何でも案内します。\n\n気になることをタップするか、自由に質問してくださいね！",
 };
 
 export default function ChatBot() {
