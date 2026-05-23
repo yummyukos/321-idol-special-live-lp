@@ -18,5 +18,19 @@ export const SONGS: Song[] = [
     artist: "321 IDOL PROJECT",
     file: "/songs/i-dont-know-why.mp3",
   },
-  // ↓↓↓ ここに楽曲を追加してください
+  {
+    title: "君以前、君以後",
+    artist: "321 IDOL PROJECT",
+    file: "/songs/kimi-izen-kimi-igo.mp3",
+  },
+  {
+    title: "憂ル憂ル",
+    artist: "321 IDOL PROJECT",
+    file: "/songs/yuru-yuru.mp3",
+  },
+  {
+    title: "RIP",
+    artist: "321 IDOL PROJECT",
+    file: "/songs/rip.mp3",
+  },
 ];

@@ -94,26 +94,16 @@ export default function MusicPlayer() {
             <div className="vinyl-groove vinyl-groove-1" />
             <div className="vinyl-groove vinyl-groove-2" />
             <div className="vinyl-groove vinyl-groove-3" />
-            {/* 中央ラベル */}
+            {/* 中央ラベル：音符マーク（再生中も同じ、回転で動的に） */}
             <div className="vinyl-label">
-              {isPlaying ? (
-                <svg
-                  viewBox="0 0 24 24"
-                  className="w-3 h-3 sm:w-4 sm:h-4 fill-current"
-                  aria-hidden="true"
-                >
-                  <rect x="6" y="5" width="4" height="14" rx="1" />
-                  <rect x="14" y="5" width="4" height="14" rx="1" />
-                </svg>
-              ) : (
-                <svg
-                  viewBox="0 0 24 24"
-                  className="w-3 h-3 sm:w-4 sm:h-4 fill-current"
-                  aria-hidden="true"
-                >
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              )}
+              <svg
+                viewBox="0 0 24 24"
+                className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current"
+                aria-hidden="true"
+              >
+                {/* 8分音符 ♪ */}
+                <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+              </svg>
             </div>
             {/* 中央ホール */}
             <div className="vinyl-hole" />
