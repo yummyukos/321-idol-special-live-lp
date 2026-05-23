@@ -40,17 +40,24 @@ export default function AchievementProgress() {
           販売枚数に応じて特典が次々と解禁！
         </p>
 
-        {/* 達成率を大きくドンと中央表示 */}
+        {/* 達成率を大きくドンと中央表示（数字自体を中央揃え、%は右に） */}
         <div className="text-center">
           <p className="font-mincho text-xs sm:text-sm tracking-[0.4em] text-mist/60 mb-3">
             達成率
           </p>
-          <p className="font-mincho tabular flex items-baseline justify-center gap-1">
-            <span className="text-shimmer text-7xl sm:text-9xl font-bold leading-none">
-              {balconyPct.toFixed(1)}
+          <div className="font-mincho tabular text-center">
+            <span className="relative inline-block">
+              <span className="text-shimmer text-7xl sm:text-9xl font-bold leading-none">
+                {balconyPct.toFixed(1)}
+              </span>
+              <span
+                className="absolute top-0 text-mist/60 text-3xl sm:text-5xl"
+                style={{ left: "calc(100% + 0.25rem)" }}
+              >
+                %
+              </span>
             </span>
-            <span className="text-mist/60 text-3xl sm:text-5xl">%</span>
-          </p>
+          </div>
         </div>
 
         {/* メーター */}

@@ -5,9 +5,10 @@
 export type InvitationTier = {
   count: number;
   title: string;
-  brief: string; // カード（LPと詳細ページ共通）で見せる短い説明
+  brief: string; // 詳細ページで見せる短い説明（LPカードには非表示）
   detail?: string; // 詳細ページのみの補足
   badge?: string; // 例：撮り下ろし
+  tier?: "premium"; // 最上位特典の演出用
 };
 
 export const INVITATION_TIERS: InvitationTier[] = [
@@ -60,6 +61,7 @@ export const INVITATION_TIERS: InvitationTier[] = [
     brief:
       "PALE TULLE、グリッターシステム合わせて4曲選べる ＋当日は両グループと囲みチェキを1枚づつ撮影できます。日程については後日メールでお伝えいたします。",
     detail: "両グループ合わせて4曲お選びいただけます。",
+    tier: "premium",
   },
 ];
 

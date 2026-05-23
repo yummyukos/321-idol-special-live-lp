@@ -11,23 +11,25 @@ export default function TicketCta() {
         <h2 className="font-mincho text-3xl sm:text-5xl text-mist mb-4">
           チケット販売中
         </h2>
-        <p className="font-mincho text-mist text-base sm:text-xl max-w-xl mx-auto mb-8 leading-relaxed">
+        <p className="font-mincho text-mist text-base sm:text-xl max-w-xl mx-auto mb-10 leading-relaxed">
           あなたの1枚が、ライブを変える。
         </p>
 
+        {/* CTAボタン：背景に動くグラデ＋脈動グロー＋ホバーで微浮上＋矢印アニメ */}
         <a
           href={EVENT.ticketUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center gap-3 rounded-full px-10 py-5 sm:px-14 sm:py-6 bg-gradient-to-r from-glow via-glow2 to-gold text-ink font-display text-lg sm:text-2xl shadow-[0_0_60px_-10px_rgba(255,58,161,0.6)] hover:scale-[1.02] transition-transform"
+          className="ticket-cta-button group inline-flex items-center justify-center gap-3 rounded-full px-10 py-5 sm:px-14 sm:py-6 text-ink font-display text-lg sm:text-2xl"
         >
-          TiGETでチケットを購入
-          <span aria-hidden>→</span>
+          <span className="relative z-10">TiGETでチケットを購入</span>
+          <span
+            aria-hidden
+            className="relative z-10 inline-block transition-transform group-hover:translate-x-1"
+          >
+            →
+          </span>
         </a>
-
-        <p className="mt-6 text-xs text-mist/50 break-all">
-          {EVENT.ticketUrl}
-        </p>
       </div>
     </section>
   );

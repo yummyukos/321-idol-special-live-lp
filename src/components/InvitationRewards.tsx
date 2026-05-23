@@ -29,10 +29,21 @@ export default function InvitationRewards() {
         {/* 2列ゴールドカード（PC：横並び・スマホ：縦並び） */}
         <div className="invitation-grid">
           {INVITATION_TIERS.map((t) => (
-            <article key={t.count} className="invitation-card">
+            <article
+              key={t.count}
+              className={`invitation-card ${t.tier === "premium" ? "invitation-card--premium" : ""}`}
+            >
+              {/* プレミアムバッジ（50人カードのみ） */}
+              {t.tier === "premium" && (
+                <span className="invitation-premium-badge">
+                  <svg viewBox="0 0 24 24" className="w-3 h-3 fill-current" aria-hidden="true">
+                    <path d="M5 16L3 6l5.5 4L12 4l3.5 6L21 6l-2 10H5zm0 2h14v2H5v-2z" />
+                  </svg>
+                  PREMIUM
+                </span>
+              )}
               <div className="invitation-card-number">
                 <span className="num">{t.count}</span>
-                <span className="unit">人</span>
               </div>
               <div className="invitation-card-content">
                 <h3 className="invitation-card-title">
