@@ -4,7 +4,12 @@ import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { ACHIEVEMENTS } from "@/lib/achievements";
 import { TICKETS } from "@/lib/event";
-import { subscribeSales, type SalesSnapshot } from "@/lib/sales";
+import {
+  subscribeSales,
+  getBalconySold,
+  getBalconyPct,
+  type SalesSnapshot,
+} from "@/lib/sales";
 
 export default function AchievementProgress() {
   const [snap, setSnap] = useState<SalesSnapshot | null>(null);
@@ -14,11 +19,11 @@ export default function AchievementProgress() {
     return () => unsub();
   }, []);
 
-  const balconySold = snap?.balconySold ?? 0;
-  const balconyPct = useMemo(
-    () => Math.min(100, (balconySold / TICKETS.balconyCapacity) * 100),
-    [balconySold]
-  );
+  const totalSold = snap?.totalSold ?? 0;
+  const balconySold = useMemo(() => getBalconySold(totalSold), [totalSold]);
+  const balconyPct = useMemo(() => getBalconyPct(totalSold), [totalSold]);
+  // アリーナがまだ完売してない時はバルコニー発売前
+  const isBalconyOpen = totalSold > TICKETS.arenaCapacity;
 
   return (
     <section
@@ -39,6 +44,15 @@ export default function AchievementProgress() {
           <br />
           販売枚数に応じて特典が次々と解禁！
         </p>
+
+        {/* バルコニー販売前のステータス */}
+        {!isBalconyOpen && (
+          <p className="text-center text-mist/70 text-sm sm:text-base font-mincho mb-6">
+            ⏳ 現在
+            <span className="text-gold mx-1">アリーナ席 {TICKETS.arenaCapacity}枚</span>
+            販売中。完売後、バルコニー席の発売開始 → 達成特典がスタートします。
+          </p>
+        )}
 
         {/* 達成率：数字と%をベースライン揃え、全体としてやや左寄りに */}
         <div className="text-center">

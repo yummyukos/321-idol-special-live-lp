@@ -28,7 +28,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     threshold: 20,
     title: "衣装交換＆交換楽曲披露",
     description:
-      "2グループで衣装をチェンジ！普段見られないコラボ衣装で楽曲披露しちゃいます！",
+      "2グループで衣装をチェンジ！普段見られない衣装で楽曲披露しちゃいます！",
     icon: "👗",
   },
   {
