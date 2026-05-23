@@ -8,9 +8,6 @@ import {
 } from "@/lib/invitation";
 import { EVENT } from "@/lib/event";
 
-// 静的生成のタイムアウト回避のため、リクエスト時にレンダリング
-export const dynamic = "force-dynamic";
-
 export const metadata: Metadata = {
   title: "招待特典について｜321 IDOL PROJECT Special LIVE",
   description:
@@ -33,9 +30,6 @@ export default function InvitationPage() {
             src="/logo-idol.png"
             alt="321 IDOL PROJECT"
             className="h-6 w-auto opacity-80"
-            onError={(e) => {
-              (e.target as HTMLImageElement).style.display = "none";
-            }}
           />
         </div>
       </header>
