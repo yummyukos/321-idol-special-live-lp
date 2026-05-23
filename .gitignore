@@ -28,6 +28,7 @@ yarn-error.log*
 
 # secrets / tokens（絶対にGitHubにpushしない）
 gh-token.txt
+anthropic-token.txt
 .secrets/
 
 # typescript
