@@ -7,6 +7,7 @@ type MenuItem = {
   label: string;
   href: string;
   external?: boolean;
+  chatbot?: boolean;
 };
 
 const ITEMS: MenuItem[] = [
@@ -14,6 +15,7 @@ const ITEMS: MenuItem[] = [
   { label: "公演情報", href: "/#info" },
   { label: "チケット達成特典", href: "/#achievement" },
   { label: "チケット購入", href: EVENT.ticketUrl, external: true },
+  { label: "AIチャットに質問する", href: "#chatbot", chatbot: true },
 ];
 
 export default function HamburgerMenu() {
@@ -38,6 +40,13 @@ export default function HamburgerMenu() {
 
   const handleClick = (item: MenuItem) => {
     setOpen(false);
+    // チャットボット起動
+    if (item.chatbot) {
+      setTimeout(() => {
+        window.dispatchEvent(new CustomEvent("open-chatbot"));
+      }, 300);
+      return;
+    }
     // ハッシュリンクは少し遅延してスムーズスクロール
     if (!item.external && item.href.startsWith("/#")) {
       setTimeout(() => {
@@ -106,19 +115,32 @@ export default function HamburgerMenu() {
                   target={item.external ? "_blank" : undefined}
                   rel={item.external ? "noopener noreferrer" : undefined}
                   onClick={(e) => {
-                    if (!item.external && item.href.startsWith("/#")) {
+                    if (item.chatbot || (!item.external && item.href.startsWith("/#"))) {
                       e.preventDefault();
                     }
                     handleClick(item);
                   }}
-                  className="group flex items-center gap-3 font-mincho text-2xl sm:text-3xl text-mist hover:text-gold transition-colors"
+                  className={`group flex items-center gap-3 font-mincho text-2xl sm:text-3xl transition-colors ${
+                    item.chatbot
+                      ? "text-glow hover:text-gold"
+                      : "text-mist hover:text-gold"
+                  }`}
                 >
+                  {item.chatbot && (
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="w-6 h-6 fill-current"
+                      aria-hidden="true"
+                    >
+                      <path d="M12 2C6.48 2 2 6.48 2 12c0 1.54.36 3 .97 4.29L1 23l6.71-1.97C9 21.64 10.46 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2z" />
+                    </svg>
+                  )}
                   {item.label}
                   <span
                     aria-hidden
                     className="text-base text-gold/60 group-hover:text-gold group-hover:translate-x-1 transition-all"
                   >
-                    {item.external ? "↗" : "→"}
+                    {item.external ? "↗" : item.chatbot ? "💬" : "→"}
                   </span>
                 </a>
               </li>
