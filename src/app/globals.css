@@ -169,24 +169,25 @@ body {
 }
 
 .invitation-card {
+  position: relative;
   display: grid;
-  /* ゴールド部分を固定幅にして、白との境界線を全カードで揃える */
   grid-template-columns: 96px 1fr;
   gap: 0;
   border-radius: 12px;
-  overflow: hidden;
-  background: linear-gradient(135deg, #b8893f 0%, #f5d27a 40%, #d4a445 100%);
-  box-shadow: 0 4px 20px -8px rgba(0, 0, 0, 0.6),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  position: relative;
+  /* overflow visible にしてPREMIUMバッジが上に飛び出せるように */
+  overflow: visible;
+  background: transparent;
+  /* PC/スマホ両方で同じ最小高さ → 全カード同じ縦幅 */
+  min-height: 92px;
 }
 @media (min-width: 640px) {
   .invitation-card {
     grid-template-columns: 120px 1fr;
+    min-height: 110px;
   }
 }
 
-/* ゴールドのテクスチャ風オーバーレイ */
+/* 番号エリア：左側に角丸 */
 .invitation-card-number {
   position: relative;
   display: flex;
@@ -196,11 +197,9 @@ body {
   padding: 1rem 0.5rem;
   color: #fff;
   font-family: "Shippori Mincho B1", "Hiragino Mincho ProN", serif;
-  background:
-    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15), transparent 50%),
-    radial-gradient(circle at 70% 70%, rgba(0, 0, 0, 0.1), transparent 50%),
-    linear-gradient(135deg, #c89c4a 0%, #d4a445 50%, #b8893f 100%);
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  border-radius: 12px 0 0 12px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .invitation-card-number .num {
@@ -215,33 +214,17 @@ body {
   }
 }
 
-/* 50人以降の縦並びナンバー */
-.invitation-card-number.stacked {
-  flex-direction: column;
-  gap: 0.1rem;
-}
-.invitation-card-number.stacked .num {
-  font-size: 1.5rem;
-}
-@media (min-width: 640px) {
-  .invitation-card-number.stacked .num {
-    font-size: 1.75rem;
-  }
-}
-.invitation-card-number.stacked .suffix {
-  font-size: 0.875rem;
-  align-self: center;
-  padding-bottom: 0;
-}
-
 .invitation-card-content {
-  position: relative; /* バッジを絶対配置する基準 */
+  position: relative;
   background: #ffffff;
   padding: 0.85rem 1rem;
   color: #1a1a1a;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  /* 右側のみ角丸（左側は番号エリアと隣接） */
+  border-radius: 0 12px 12px 0;
+  box-shadow: 0 4px 20px -8px rgba(0, 0, 0, 0.6);
 }
 @media (min-width: 640px) {
   .invitation-card-content {
@@ -249,75 +232,79 @@ body {
   }
 }
 
-/* 撮り下ろしバッジ：タイトル先頭にインライン表示 */
-.invitation-badge {
+/* 撮り下ろしバッジ：カード左上に絶対配置（カード上に乗る形） */
+.invitation-badge-corner {
+  position: absolute;
+  top: -8px;
+  left: 8px;
+  z-index: 5;
   display: inline-flex;
   align-items: center;
-  gap: 0.2em;
-  vertical-align: 0.15em;
   background: linear-gradient(90deg, #1a1a1a, #2a2a2a);
   color: #f5d27a;
   font-family: "Zen Kaku Gothic New", sans-serif;
-  font-size: 0.55em;
+  font-size: 0.6rem;
   font-weight: 700;
-  padding: 0.25em 0.6em;
+  padding: 0.25rem 0.65rem;
   border-radius: 999px;
-  margin-right: 0.4em;
   letter-spacing: 0.08em;
   line-height: 1.3;
   white-space: nowrap;
   border: 1px solid rgba(245, 210, 122, 0.4);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
-/* プレミアムカード（50人）の特別演出 */
-.invitation-card--premium {
-  position: relative;
-  background: linear-gradient(135deg, #8b6914 0%, #f5d27a 30%, #fff4c4 50%, #d4a445 70%, #8b6914 100%);
-  box-shadow:
-    0 0 0 1px rgba(245, 210, 122, 0.6),
-    0 8px 32px -8px rgba(245, 210, 122, 0.5),
-    0 4px 20px -8px rgba(0, 0, 0, 0.6),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  animation: premiumGlow 3s ease-in-out infinite;
-}
-
-@keyframes premiumGlow {
-  0%, 100% {
-    box-shadow:
-      0 0 0 1px rgba(245, 210, 122, 0.6),
-      0 8px 32px -8px rgba(245, 210, 122, 0.4),
-      0 4px 20px -8px rgba(0, 0, 0, 0.6),
-      inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  }
-  50% {
-    box-shadow:
-      0 0 0 1px rgba(245, 210, 122, 0.9),
-      0 8px 40px -4px rgba(245, 210, 122, 0.7),
-      0 4px 20px -8px rgba(0, 0, 0, 0.6),
-      inset 0 1px 0 rgba(255, 255, 255, 0.4);
-  }
-}
-
-/* PREMIUMバッジ（カード右上に配置） */
+/* PREMIUMバッジ：カード上部に乗せる（華やかピンク→ゴールドのグラデで撮り下ろしと差別化） */
 .invitation-premium-badge {
   position: absolute;
-  top: -8px;
-  right: 8px;
+  top: -12px;
+  right: 12px;
   z-index: 10;
   display: inline-flex;
   align-items: center;
-  gap: 0.25em;
-  background: linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 100%);
-  color: #f5d27a;
+  gap: 0.3em;
+  background: linear-gradient(135deg, #ff3aa1 0%, #f5d27a 100%);
+  color: #1a0a14;
   font-family: "Zen Kaku Gothic New", sans-serif;
-  font-size: 0.65rem;
-  font-weight: 700;
-  padding: 0.3rem 0.7rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 0.4rem 0.9rem;
   border-radius: 999px;
-  letter-spacing: 0.12em;
-  border: 1px solid #f5d27a;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 12px rgba(245, 210, 122, 0.4);
+  letter-spacing: 0.15em;
+  border: 1px solid #fff;
+  box-shadow:
+    0 4px 14px rgba(255, 58, 161, 0.5),
+    0 0 20px rgba(245, 210, 122, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  animation: premiumBadgePulse 2s ease-in-out infinite;
+}
+
+@keyframes premiumBadgePulse {
+  0%, 100% {
+    box-shadow:
+      0 4px 14px rgba(255, 58, 161, 0.5),
+      0 0 20px rgba(245, 210, 122, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  }
+  50% {
+    box-shadow:
+      0 4px 20px rgba(255, 58, 161, 0.7),
+      0 0 32px rgba(245, 210, 122, 0.8),
+      inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  }
+}
+
+/* PREMIUMカード（50人）の特別な縁取り＋グロー */
+.invitation-card--premium .invitation-card-content {
+  box-shadow:
+    0 0 0 2px rgba(245, 210, 122, 0.6),
+    0 8px 32px -8px rgba(245, 210, 122, 0.4),
+    0 4px 20px -8px rgba(0, 0, 0, 0.6);
+}
+.invitation-card--premium .invitation-card-number {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 2px 0 0 rgba(245, 210, 122, 0.6);
 }
 
 .invitation-card-title {
@@ -345,10 +332,4 @@ body {
   }
 }
 
-/* ボーナスカード（50人以降）はタイトル中央寄せ */
-.invitation-card--bonus .invitation-card-content {
-  justify-content: center;
-}
-.invitation-card--bonus .invitation-card-title {
-  margin-bottom: 0;
-}
+/* （旧）ボーナスカード（50人以降）は廃止 — テキスト表示に変更 */

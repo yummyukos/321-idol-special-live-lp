@@ -4,7 +4,15 @@ import { EVENT, TICKETS } from "@/lib/event";
 
 export default function EventInfo() {
   const items = [
-    { label: "日程", value: `${EVENT.date}　${EVENT.doorsLabel}` },
+    {
+      label: "日程",
+      value: (
+        <>
+          {EVENT.date}
+          <span className="block mt-0.5">{EVENT.doorsLabel}</span>
+        </>
+      ),
+    },
     {
       label: "会場",
       value: (
