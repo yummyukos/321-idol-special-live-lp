@@ -74,6 +74,7 @@ export default function InvitationRewards() {
                   style={{ background: TIER_GRADIENTS[index] }}
                 >
                   <span className="num">{t.count}</span>
+                  <span className="unit">人</span>
                 </div>
 
                 {/* タイトル */}
