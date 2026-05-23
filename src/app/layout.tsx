@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import HamburgerMenu from "@/components/HamburgerMenu";
+import MusicPlayer from "@/components/MusicPlayer";
 
 const SITE_URL = "https://321-idol-special-live-lp.vercel.app";
 
@@ -53,6 +54,7 @@ export default function RootLayout({
       </head>
       <body>
         <HamburgerMenu />
+        <MusicPlayer />
         {children}
       </body>
     </html>

@@ -53,12 +53,17 @@ export default function FloatingTicketCta() {
       ].join(" ")}
     >
       {/* 左の点滅ドット */}
-      <span className="relative flex h-2 w-2">
+      <span className="relative flex h-2 w-2 shrink-0">
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ink opacity-60"></span>
         <span className="relative inline-flex h-2 w-2 rounded-full bg-ink"></span>
       </span>
-      <span>チケット販売中</span>
-      <span aria-hidden className="text-base sm:text-lg">→</span>
+      {/* 2行表示でコンパクトに */}
+      <span className="text-left leading-tight text-xs sm:text-sm">
+        チケット
+        <br />
+        販売中
+      </span>
+      <span aria-hidden className="text-base sm:text-lg shrink-0">→</span>
     </a>
   );
 }

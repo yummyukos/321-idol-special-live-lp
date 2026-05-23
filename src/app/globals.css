@@ -129,6 +129,156 @@ body {
   }
 }
 
+/* ============ 左下のレコード再生ボタン ============ */
+.music-player-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* レコード本体（vinyl） */
+.vinyl {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    #1a1a1a 0%,
+    #0a0a0a 50%,
+    #1a1a1a 100%
+  );
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(255, 58, 161, 0.3),
+    inset 0 0 0 2px rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: box-shadow 0.3s, transform 0.2s;
+}
+@media (min-width: 640px) {
+  .vinyl {
+    width: 64px;
+    height: 64px;
+  }
+}
+
+.vinyl.idle {
+  animation: vinylSpin 8s linear infinite;
+}
+.vinyl.spinning {
+  animation: vinylSpin 2.5s linear infinite;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.6),
+    0 0 32px rgba(255, 58, 161, 0.6),
+    inset 0 0 0 2px rgba(245, 210, 122, 0.3);
+}
+
+.music-player-wrap:hover .vinyl {
+  transform: scale(1.05);
+}
+
+@keyframes vinylSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* レコードの溝 */
+.vinyl-groove {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.vinyl-groove-1 { width: 85%; height: 85%; }
+.vinyl-groove-2 { width: 70%; height: 70%; }
+.vinyl-groove-3 { width: 55%; height: 55%; }
+
+/* 中央ラベル（ピンク） */
+.vinyl-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 38%;
+  height: 38%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff3aa1 0%, #7c5cff 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  box-shadow: 0 0 8px rgba(255, 58, 161, 0.5);
+}
+
+/* 中央ホール */
+.vinyl-hole {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6%;
+  height: 6%;
+  border-radius: 50%;
+  background: #08060f;
+  z-index: 2;
+}
+
+/* 再生中の曲名表示 */
+.music-now-playing {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(8, 6, 15, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem 0.35rem 0.6rem;
+  color: #e9e4f5;
+  font-family: "Shippori Mincho B1", serif;
+  font-size: 0.75rem;
+  max-width: 160px;
+  overflow: hidden;
+}
+@media (min-width: 640px) {
+  .music-now-playing {
+    font-size: 0.85rem;
+    max-width: 200px;
+  }
+}
+
+.music-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* イコライザーアニメーション（3本のバー） */
+.music-eq {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 1.5px;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+.music-eq span {
+  display: block;
+  width: 3px;
+  background: linear-gradient(to top, #ff3aa1, #f5d27a);
+  border-radius: 1px;
+  animation: eqBounce 0.8s ease-in-out infinite;
+}
+.music-eq span:nth-child(1) { animation-delay: 0s; }
+.music-eq span:nth-child(2) { animation-delay: 0.15s; }
+.music-eq span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes eqBounce {
+  0%, 100% { height: 30%; }
+  50% { height: 100%; }
+}
+
 /* メッセージのキラキラ装飾 */
 .message-sparkle {
   position: absolute;
