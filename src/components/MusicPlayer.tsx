@@ -94,7 +94,7 @@ export default function MusicPlayer() {
             <div className="vinyl-groove vinyl-groove-1" />
             <div className="vinyl-groove vinyl-groove-2" />
             <div className="vinyl-groove vinyl-groove-3" />
-            {/* 中央ラベル：音符マーク（再生中も同じ、回転で動的に） */}
+            {/* 中央ラベル：音符マークのみ */}
             <div className="vinyl-label">
               <svg
                 viewBox="0 0 24 24"
@@ -105,8 +105,6 @@ export default function MusicPlayer() {
                 <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
               </svg>
             </div>
-            {/* 中央ホール */}
-            <div className="vinyl-hole" />
           </div>
 
           {/* 再生中の曲名 */}

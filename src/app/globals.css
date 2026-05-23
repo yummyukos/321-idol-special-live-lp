@@ -212,19 +212,6 @@ body {
   box-shadow: 0 0 8px rgba(255, 58, 161, 0.5);
 }
 
-/* 中央ホール */
-.vinyl-hole {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 6%;
-  height: 6%;
-  border-radius: 50%;
-  background: #08060f;
-  z-index: 2;
-}
-
 /* 再生中の曲名表示 */
 .music-now-playing {
   display: flex;
