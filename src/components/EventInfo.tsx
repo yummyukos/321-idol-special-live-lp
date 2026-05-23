@@ -38,23 +38,23 @@ export default function EventInfo() {
       ),
     },
     {
-      label: "席種・枚数",
+      label: "席種",
       value: (
         <>
           <span>
-            アリーナ席 {TICKETS.arenaCapacity}枚
+            アリーナ席
             <span className="ml-2 inline-block px-2 py-0.5 text-[10px] tracking-widest rounded-full bg-glow/20 text-glow border border-glow/30 align-middle">
               発売中
             </span>
           </span>
           <span className="block mt-1">
-            バルコニー席 {TICKETS.balconyCapacity}枚
+            バルコニー席
             <span className="ml-2 inline-block px-2 py-0.5 text-[10px] tracking-widest rounded-full bg-white/5 text-mist/60 border border-white/10 align-middle">
               発売開始前
             </span>
           </span>
           <span className="block mt-2 text-xs text-mist/55">
-            ※ 先着順で販売。まずアリーナ席（{TICKETS.arenaCapacity}枚）→ 完売後にバルコニー席（{TICKETS.balconyCapacity}枚）が発売されます。
+            ※ アリーナ席完売後に、バルコニー席が発売されます。
           </span>
         </>
       ),

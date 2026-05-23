@@ -49,8 +49,8 @@ export default function AchievementProgress() {
         {!isBalconyOpen && (
           <p className="text-center text-mist/70 text-sm sm:text-base font-mincho mb-6">
             ⏳ 現在
-            <span className="text-gold mx-1">アリーナ席 {TICKETS.arenaCapacity}枚</span>
-            販売中。完売後、バルコニー席の発売開始 → 達成特典がスタートします。
+            <span className="text-gold mx-1">アリーナ席</span>
+            が販売中。完売後、バルコニー席の発売開始 → 達成特典がスタートします。
           </p>
         )}
 
