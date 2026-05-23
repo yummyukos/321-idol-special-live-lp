@@ -41,7 +41,6 @@ export default function InvitationRewards() {
                   )}
                   {t.title}
                 </h3>
-                <p className="invitation-card-brief">{t.brief}</p>
               </div>
             </article>
           ))}

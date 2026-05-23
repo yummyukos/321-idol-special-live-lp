@@ -71,17 +71,23 @@ export default function AchievementProgress() {
             ))}
           </div>
 
-          {/* メーター下の数字ラベル */}
+          {/* メーター下の数字ラベル（95%は100%と重なるため非表示。マイルストーンリストには表示） */}
           <div className="relative h-7 mt-2">
-            {ACHIEVEMENTS.map((a) => {
+            {ACHIEVEMENTS.filter((a) => a.threshold !== 95).map((a) => {
               const unlocked = balconyPct >= a.threshold;
+              const isLast = a.threshold === 100;
               return (
                 <span
                   key={a.id}
-                  className={`absolute top-0 -translate-x-1/2 tabular text-[10px] sm:text-xs font-mincho transition-colors ${
+                  className={`absolute top-0 tabular text-[10px] sm:text-xs font-mincho transition-colors ${
                     unlocked ? "text-gold" : "text-mist/50"
                   }`}
-                  style={{ left: `${a.threshold}%` }}
+                  style={{
+                    left: `${a.threshold}%`,
+                    transform: isLast
+                      ? "translateX(-100%)"
+                      : "translateX(-50%)",
+                  }}
                 >
                   {a.threshold}%
                 </span>
