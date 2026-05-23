@@ -177,3 +177,6 @@ export async function fetchCurrentSales(): Promise<SalesSnapshot> {
 
 ---
 最終更新: GitHub + Vercel自動デプロイ連携完了（新トークン動作確認済み）
+
+---
+最終デプロイ: 2026-05-23 04:04:08（AIチャットボット環境変数反映用の再ビルド）
