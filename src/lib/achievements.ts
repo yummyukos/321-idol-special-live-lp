@@ -20,13 +20,13 @@ export const ACHIEVEMENTS: Achievement[] = [
     id: 1,
     threshold: 10,
     title: "カラオケ楽曲追加",
-    description: "ライブ前にみんなで歌える楽曲をカラオケに追加！",
+    description: "ライブ前にみんなで歌える楽曲をカラオケに追加！"
     icon: "🎤",
   },
   {
     id: 2,
     threshold: 20,
-    title: "衣装交換＆交換楽曲披露",
+    title: "交換楽曲披露,
     description:
       "2グループで衣装をチェンジ！普段見られない衣装で楽曲披露しちゃいます！",
     icon: "👗",
@@ -50,7 +50,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     threshold: 70,
     title: "ステージ装飾ランクアップ",
     description:
-      "ステージセットがスペシャル仕様に格上げ！照明・装花もパワーアップしてメンバーのテンションも爆上がり！",
+      "ステージセットがスペシャル仕様に格上げ！メンバーのテンションも爆上がり！",
     icon: "✨",
   },
   {
@@ -70,7 +70,7 @@ export const ACHIEVEMENTS: Achievement[] = [
   {
     id: 8,
     threshold: 100,
-    title: "？？？",
+    title: "各グループ新曲披露",
     description:
       "100%達成で解禁される、メンバーにもシークレットな特典。当日のお楽しみに...！",
     icon: "🗝️",

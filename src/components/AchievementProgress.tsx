@@ -39,14 +39,6 @@ export default function AchievementProgress() {
         <h2 className="text-center font-mincho text-3xl sm:text-4xl text-mist mb-3">
           チケット達成特典
         </h2>
-        {/* バルコニー販売前のステータス（タイトル直下に配置） */}
-        {!isBalconyOpen && (
-          <p className="text-center text-mist/70 text-xs sm:text-sm font-mincho mb-6 max-w-2xl mx-auto leading-relaxed">
-            ※ 現在
-            <span className="text-gold mx-1">アリーナ席</span>
-            が販売中。完売後、バルコニー席の発売開始 → 達成特典がスタートします。
-          </p>
-        )}
 
         <p className="text-center text-mist/85 text-base sm:text-lg max-w-2xl mx-auto mb-12 leading-relaxed font-mincho">
           <span className="text-gold">バルコニー席完売</span>を100%として

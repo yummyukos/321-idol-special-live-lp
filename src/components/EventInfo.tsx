@@ -53,9 +53,6 @@ export default function EventInfo() {
               発売開始前
             </span>
           </span>
-          <span className="block mt-2 text-xs text-mist/55">
-            ※ アリーナ席完売後に、バルコニー席が発売されます。
-          </span>
         </>
       ),
     },
