@@ -35,7 +35,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     id: 3,
     threshold: 30,
     title: "のぼり制作",
-    description: "会場を彩るオリジナルのぼりを制作。当日のフォトスポットに！",
+    description: "メンバー全員ののぼりを会場に設置。一緒に写真を撮ろう！",
     icon: "🚩",
   },
   {
