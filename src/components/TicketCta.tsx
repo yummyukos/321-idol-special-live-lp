@@ -17,13 +17,11 @@ export default function TicketCta() {
 
         {/* CTAボタン：背景に動くグラデ＋脈動グロー＋ホバーで微浮上＋矢印アニメ */}
         <a
-          href={EVENT.ticketUrl}
-          target="_blank"
-          rel="noopener noreferrer"
+          href="/tickets"
           className="ticket-cta-button group inline-flex items-center justify-center gap-3 rounded-full px-10 py-5 sm:px-14 sm:py-6 text-ink font-display text-lg sm:text-2xl"
         >
-          <span className="relative z-10">TiGETでチケットを購入</span>
-          <span
+          <span className="relative z-10">チケットを購入</span>
+                    <span
             aria-hidden
             className="relative z-10 inline-block transition-transform group-hover:translate-x-1"
           >

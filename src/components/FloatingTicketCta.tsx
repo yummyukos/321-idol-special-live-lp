@@ -34,11 +34,9 @@ export default function FloatingTicketCta() {
 
   return (
     <a
-      href={EVENT.ticketUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="チケット販売中 — TiGETで購入"
-      className={[
+         href="/tickets"
+          aria-label="チケットを購入"
+                className={[
         "fixed z-50 right-4 bottom-4 sm:right-6 sm:bottom-6",
         "inline-flex items-center gap-2 sm:gap-3 rounded-full",
         "px-5 py-3 sm:px-7 sm:py-4",
