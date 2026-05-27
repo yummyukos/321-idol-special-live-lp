@@ -186,7 +186,7 @@ export default function AchievementProgress() {
         </ol>
 
         <p className="mt-8 text-center text-xs text-mist/50">
-          ※ 表示中の販売枚数はデモデータです。本番運用時はリアルタイムの数値に切り替わります。
+          ※ 達成率は最新の販売状況に連動しています（30秒ごとに更新）。
         </p>
       </div>
     </section>

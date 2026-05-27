@@ -21,8 +21,8 @@ export type SalesSnapshot = {
   updatedAt: string;
 };
 
-// デモデータ：現在のリアル状況に合わせて 0（アリーナ販売開始直後・バルコニー未着手）
-const DEMO: SalesSnapshot = {
+// API障害時のフォールバック
+const FALLBACK: SalesSnapshot = {
   totalSold: 0,
   updatedAt: new Date().toISOString(),
 };
@@ -30,17 +30,25 @@ const DEMO: SalesSnapshot = {
 /**
  * 現在の売上スナップショットを取得します。
  *
- * 【今】デモデータを返します。
- * 【後で】Firestore or 公開APIに差し替えてください：
- *
- * @example APIエンドポイントを叩く場合
- *   const res = await fetch('https://tiget-sales-monitor.vercel.app/api/sales/477181');
- *   const data = await res.json();
- *   return { totalSold: data.totalSold, updatedAt: data.updatedAt };
+ * 同一オリジンの /api/sales を叩く（中で tiget-sales-monitor の /summary を
+ * サーバー側スクレイピングして JSON 化している）。
+ * サーバー側で30秒キャッシュしているので、頻繁に叩いても上流負荷は抑えられる。
  */
 export async function fetchCurrentSales(): Promise<SalesSnapshot> {
-  await new Promise((r) => setTimeout(r, 300));
-  return DEMO;
+  try {
+    const res = await fetch("/api/sales", { cache: "no-store" });
+    if (!res.ok) return FALLBACK;
+    const data = (await res.json()) as Partial<SalesSnapshot>;
+    if (typeof data.totalSold === "number") {
+      return {
+        totalSold: data.totalSold,
+        updatedAt: data.updatedAt ?? new Date().toISOString(),
+      };
+    }
+    return FALLBACK;
+  } catch {
+    return FALLBACK;
+  }
 }
 
 /**
