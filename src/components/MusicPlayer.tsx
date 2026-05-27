@@ -11,22 +11,6 @@ export default function MusicPlayer() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentSong, setCurrentSong] = useState<Song | null>(null);
-  const [show, setShow] = useState(false);
-
-  // ヒーロー（最初の100svh）を抜けたら表示
-  useEffect(() => {
-    const handler = () => {
-      const past = window.scrollY > window.innerHeight * 0.6;
-      setShow(past);
-    };
-    handler();
-    window.addEventListener("scroll", handler, { passive: true });
-    window.addEventListener("resize", handler);
-    return () => {
-      window.removeEventListener("scroll", handler);
-      window.removeEventListener("resize", handler);
-    };
-  }, []);
 
   const playRandom = () => {
     if (SONGS.length === 0) return; // 楽曲未登録なら何もしない
@@ -81,11 +65,7 @@ export default function MusicPlayer() {
         type="button"
         onClick={playRandom}
         aria-label={isPlaying ? "音楽を止める" : "ランダムで音楽を再生"}
-        className={`fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-50 transition-all duration-300 ${
-          show
-            ? "opacity-100 translate-y-0 pointer-events-auto"
-            : "opacity-0 translate-y-4 pointer-events-none"
-        }`}
+        className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-50"
       >
         <div className="music-player-wrap group">
           {/* レコード（vinyl） */}

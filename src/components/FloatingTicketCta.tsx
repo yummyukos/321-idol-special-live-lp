@@ -8,20 +8,19 @@ import { EVENT } from "@/lib/event";
  * スクロールしてヒーローを抜けてから登場し、フッターのCTAセクションに到達すると消える。
  */
 export default function FloatingTicketCta() {
-  const [show, setShow] = useState(false);
+  // ページ読み込み時から表示。フッターのCTAセクションに重なる時だけ隠す
+  const [show, setShow] = useState(true);
 
   useEffect(() => {
     const handler = () => {
-      // ヒーロー（100svh）を抜けたら表示
-      const past = window.scrollY > window.innerHeight * 0.6;
-      // ページ末尾のCTAセクションに到達したら非表示
+      // ページ末尾のCTAセクションに到達したら非表示（ボタン重複回避）
       const cta = document.getElementById("ticket");
       let nearBottom = false;
       if (cta) {
         const rect = cta.getBoundingClientRect();
         nearBottom = rect.top < window.innerHeight - 80;
       }
-      setShow(past && !nearBottom);
+      setShow(!nearBottom);
     };
     handler();
     window.addEventListener("scroll", handler, { passive: true });
