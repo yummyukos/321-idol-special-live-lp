@@ -20,16 +20,16 @@ export const ACHIEVEMENTS: Achievement[] = [
     id: 1,
     threshold: 10,
     title: "カラオケ楽曲追加",
-    description: "ライブ前にみんなで歌える楽曲をカラオケに追加！"
+    description: "ライブ前にみんなで歌える楽曲をカラオケに追加！",
     icon: "🎤",
   },
   {
     id: 2,
     threshold: 20,
-    title: "交換楽曲披露,
+    title: "交換楽曲披露",
     description:
-      "2グループで衣装をチェンジ！普段見られない衣装で楽曲披露しちゃいます！",
-    icon: "👗",
+      "2グループがお互いの楽曲を披露し合う！普段見られないコラボパフォーマンスをお楽しみに！",
+    icon: "🎵",
   },
   {
     id: 3,
@@ -72,9 +72,8 @@ export const ACHIEVEMENTS: Achievement[] = [
     threshold: 100,
     title: "各グループ新曲披露",
     description:
-      "100%達成で解禁される、メンバーにもシークレットな特典。当日のお楽しみに...！",
-    icon: "🗝️",
-    mystery: true,
+      "PALE TULLE と グリッターシステム、各グループから新曲を初披露！100%達成記念のスペシャルパフォーマンス！",
+    icon: "🎁",
   },
 ];
 
