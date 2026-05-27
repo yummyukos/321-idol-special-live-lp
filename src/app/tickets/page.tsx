@@ -30,8 +30,9 @@ export default function TicketsPage() {
             background: "linear-gradient(135deg, #FF3AA1 0%, #FFB84C 100%)",
           }}
         >
-          <span className="text-lg sm:text-xl">アリーナ席チケット</span>
-          <span className="text-sm font-normal opacity-80">（1階席）</span>
+          <span className="text-lg sm:text-xl whitespace-nowrap">
+            アリーナ席チケット
+          </span>
           <span className="mt-2 text-sm bg-black/20 rounded-full px-4 py-1">
             購入する →
           </span>
@@ -45,8 +46,9 @@ export default function TicketsPage() {
             background: "linear-gradient(135deg, #7C3AED 0%, #C084FC 100%)",
           }}
         >
-          <span className="text-lg sm:text-xl">バルコニー席チケット</span>
-          <span className="text-sm font-normal opacity-80">（2階席以上）</span>
+          <span className="text-lg sm:text-xl whitespace-nowrap">
+            バルコニー席チケット
+          </span>
           <span className="mt-2 text-sm bg-black/20 rounded-full px-4 py-1">
             購入する →
           </span>

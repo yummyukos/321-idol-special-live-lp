@@ -28,7 +28,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     threshold: 20,
     title: "交換楽曲披露",
     description:
-      "2グループがお互いの楽曲を披露し合う！普段見られないコラボパフォーマンスをお楽しみに！",
+      "2グループがお互いの楽曲を披露！普段見られないコラボパフォーマンスをお楽しみに！",
     icon: "🎵",
   },
   {
