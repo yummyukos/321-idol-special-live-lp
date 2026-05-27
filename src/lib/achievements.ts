@@ -62,18 +62,10 @@ export const ACHIEVEMENTS: Achievement[] = [
   },
   {
     id: 7,
-    threshold: 95,
+    threshold: 100,
     title: "14人全員で披露する新曲を披露",
     description: "PALE TULLE × グリッターシステム、14人全員での新曲を初披露！",
     icon: "🎶",
-  },
-  {
-    id: 8,
-    threshold: 100,
-    title: "各グループ新曲披露",
-    description:
-      "PALE TULLE と グリッターシステム、各グループから新曲を初披露！100%達成記念のスペシャルパフォーマンス！",
-    icon: "🎁",
   },
 ];
 

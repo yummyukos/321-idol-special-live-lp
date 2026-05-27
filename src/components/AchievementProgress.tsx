@@ -79,9 +79,9 @@ export default function AchievementProgress() {
             ))}
           </div>
 
-          {/* メーター下の数字ラベル（95%は100%と重なるため非表示。マイルストーンリストには表示） */}
+          {/* メーター下の数字ラベル */}
           <div className="relative h-7 mt-2">
-            {ACHIEVEMENTS.filter((a) => a.threshold !== 95).map((a) => {
+            {ACHIEVEMENTS.map((a) => {
               const unlocked = balconyPct >= a.threshold;
               const isLast = a.threshold === 100;
               return (
