@@ -18,6 +18,9 @@ export default function TicketsPage() {
         <p className="text-xs sm:text-sm text-mist/50 leading-relaxed max-w-md mx-auto">
           ※ アリーナ席は1階席です。バルコニー席は2階席以上となります。
         </p>
+        <p className="font-display text-glow text-sm sm:text-base font-semibold mt-6 tracking-wider">
+          ⏰ 締切は7月18日 23:59まで
+        </p>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-5 w-full max-w-lg">

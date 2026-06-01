@@ -11,8 +11,12 @@ export default function TicketCta() {
         <h2 className="font-mincho text-3xl sm:text-5xl text-mist mb-4">
           チケット販売中
         </h2>
-        <p className="font-mincho text-mist text-base sm:text-xl max-w-xl mx-auto mb-10 leading-relaxed">
+        <p className="font-mincho text-mist text-base sm:text-xl max-w-xl mx-auto mb-6 leading-relaxed">
           あなたの1枚が、ライブを変える。
+        </p>
+
+        <p className="font-display text-glow text-sm sm:text-base font-semibold mb-6 tracking-wider">
+          ⏰ 締切は7月18日 23:59まで
         </p>
 
         {/* CTAボタン：背景に動くグラデ＋脈動グロー＋ホバーで微浮上＋矢印アニメ */}
