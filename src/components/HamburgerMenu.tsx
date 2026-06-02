@@ -13,6 +13,7 @@ const ITEMS: MenuItem[] = [
   { label: "招待特典", href: "/#guest-reward" },
   { label: "公演情報", href: "/#info" },
   { label: "チケット達成特典", href: "/#achievement" },
+  { label: "スタンド花について", href: "/#stand-flower" },
   { label: "チケット購入", href: EVENT.ticketUrl, external: true },
 ];
 
