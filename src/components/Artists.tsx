@@ -1,27 +1,26 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import {
   GROUPS,
-  MEMBERS,
   getMembersByGroup,
   type GroupName,
   type Member,
 } from "@/lib/members";
 
 /**
- * ARTISTSセクション
- * PALE TULLE と Glitter System の紹介＋14人のメンバーカード
- *
- * カード上半分：2枚スワイプ式
- *  - 1枚目: arrangePhoto（正式アー写・フルポスター）
- *  - 2枚目: portraitPhoto（顔アップ）
- *
- * カードをタップで一言メッセージ・SNSが展開
+ * ABOUT US セクション
+ *  - 見出し「わたしたちについて」（はじめて知ってくれたあなたへ）
+ *  - 2グループ紹介＋14人のプロフ写真グリッド（3列）
+ *  - メンバーのカードをタップで、画面中央モーダルでアー写（全身）＋SNS表示
  */
 
-function SocialIcon({ kind }: { kind: "instagram" | "x" | "tiktok" | "pococha" | "youtube" | "profile" }) {
+function SocialIcon({
+  kind,
+}: {
+  kind: "instagram" | "x" | "tiktok" | "pococha" | "youtube" | "profile";
+}) {
   const cls = "w-4 h-4 fill-current";
   switch (kind) {
     case "instagram":
@@ -63,167 +62,85 @@ function SocialIcon({ kind }: { kind: "instagram" | "x" | "tiktok" | "pococha" |
   }
 }
 
-function PhotoSwipe({ photos }: { photos: { src: string; alt: string }[] }) {
-  const [idx, setIdx] = useState(0);
-  const startX = useRef<number | null>(null);
-  const startY = useRef<number | null>(null);
-  const moved = useRef(false);
+function MemberModal({
+  member,
+  onClose,
+}: {
+  member: Member;
+  onClose: () => void;
+}) {
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handler);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handler);
+    };
+  }, [onClose]);
 
-  const onTouchStart = (e: React.TouchEvent) => {
-    startX.current = e.touches[0].clientX;
-    startY.current = e.touches[0].clientY;
-    moved.current = false;
-  };
-  const onTouchMove = (e: React.TouchEvent) => {
-    if (startX.current == null) return;
-    const dx = e.touches[0].clientX - startX.current;
-    const dy = (e.touches[0].clientY - (startY.current ?? 0));
-    if (Math.abs(dx) > 6 && Math.abs(dx) > Math.abs(dy)) moved.current = true;
-  };
-  const onTouchEnd = (e: React.TouchEvent) => {
-    if (startX.current == null) return;
-    const dx = (e.changedTouches[0].clientX) - startX.current;
-    startX.current = null;
-    if (Math.abs(dx) < 40) return;
-    if (dx < 0 && idx < photos.length - 1) setIdx(idx + 1);
-    if (dx > 0 && idx > 0) setIdx(idx - 1);
-  };
+  const socials: Array<{
+    kind: Parameters<typeof SocialIcon>[0]["kind"];
+    href: string;
+    label: string;
+  }> = [];
+  if (member.instagram)
+    socials.push({ kind: "instagram", href: member.instagram, label: "Instagram" });
+  if (member.x) socials.push({ kind: "x", href: member.x, label: "X" });
+  if (member.tiktok)
+    socials.push({ kind: "tiktok", href: member.tiktok, label: "TikTok" });
+  if (member.pococha)
+    socials.push({ kind: "pococha", href: member.pococha, label: "Pococha" });
+  if (member.youtube)
+    socials.push({ kind: "youtube", href: member.youtube, label: "YouTube" });
+  socials.push({ kind: "profile", href: member.profileUrl, label: "公式プロフィール" });
 
   return (
     <div
-      className="relative aspect-[3/4] overflow-hidden bg-velvet"
-      onTouchStart={onTouchStart}
-      onTouchMove={onTouchMove}
-      onTouchEnd={onTouchEnd}
+      className="fixed inset-0 z-[80] flex items-center justify-center p-4 sm:p-8"
+      onClick={onClose}
     >
+      <div className="absolute inset-0 bg-ink/85 backdrop-blur-md" />
       <div
-        className="flex h-full transition-transform duration-300 ease-out"
-        style={{
-          width: `${photos.length * 100}%`,
-          transform: `translateX(-${(100 / photos.length) * idx}%)`,
-        }}
+        className="relative max-w-md w-full max-h-[92vh] overflow-y-auto rounded-2xl border border-white/15 bg-velvet"
+        onClick={(e) => e.stopPropagation()}
       >
-        {photos.map((p, i) => (
-          <div
-            key={p.src}
-            className="relative h-full shrink-0"
-            style={{ width: `${100 / photos.length}%` }}
-          >
-            <Image
-              src={p.src}
-              alt={p.alt}
-              fill
-              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 240px"
-              className="object-cover"
-              priority={i === 0}
-            />
-          </div>
-        ))}
-      </div>
-
-      {/* 左右ボタン（PC用・ホバーで出現） */}
-      {idx > 0 && (
         <button
           type="button"
-          onClick={(e) => {
-            e.stopPropagation();
-            setIdx(idx - 1);
-          }}
-          aria-label="前の写真"
-          className="absolute left-1.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-ink/70 backdrop-blur-sm text-mist flex items-center justify-center hover:bg-ink/90 transition-opacity opacity-0 group-hover:opacity-100"
+          onClick={onClose}
+          aria-label="閉じる"
+          className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-ink/70 backdrop-blur-sm flex items-center justify-center text-mist hover:bg-ink transition-colors"
         >
-          ‹
+          <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current" aria-hidden>
+            <path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+          </svg>
         </button>
-      )}
-      {idx < photos.length - 1 && (
-        <button
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation();
-            setIdx(idx + 1);
-          }}
-          aria-label="次の写真"
-          className="absolute right-1.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-ink/70 backdrop-blur-sm text-mist flex items-center justify-center hover:bg-ink/90 transition-opacity opacity-0 group-hover:opacity-100"
-        >
-          ›
-        </button>
-      )}
-
-      {/* ドットインジケーター */}
-      <div className="absolute top-2 left-1/2 -translate-x-1/2 flex gap-1.5">
-        {photos.map((_, i) => (
-          <button
-            key={i}
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              setIdx(i);
-            }}
-            aria-label={`写真 ${i + 1}`}
-            className={`block h-1.5 rounded-full transition-all ${
-              i === idx ? "w-5 bg-mist" : "w-1.5 bg-mist/40"
-            }`}
+        <div className="relative w-full aspect-[3/4] overflow-hidden rounded-t-2xl">
+          <Image
+            src={member.arrangePhoto}
+            alt={member.name}
+            fill
+            sizes="(max-width: 640px) 92vw, 28rem"
+            className="object-cover"
+            priority
           />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function MemberCard({ member }: { member: Member }) {
-  const [expanded, setExpanded] = useState(false);
-  const socials: Array<{ kind: Parameters<typeof SocialIcon>[0]["kind"]; href: string; label: string }> = [];
-  if (member.instagram) socials.push({ kind: "instagram", href: member.instagram, label: "Instagram" });
-  if (member.x) socials.push({ kind: "x", href: member.x, label: "X" });
-  if (member.tiktok) socials.push({ kind: "tiktok", href: member.tiktok, label: "TikTok" });
-  if (member.pococha) socials.push({ kind: "pococha", href: member.pococha, label: "Pococha" });
-  if (member.youtube) socials.push({ kind: "youtube", href: member.youtube, label: "YouTube" });
-  socials.push({ kind: "profile", href: member.profileUrl, label: "公式プロフィール" });
-
-  const photos = [
-    { src: member.arrangePhoto, alt: `${member.name}（アー写）` },
-    { src: member.portraitPhoto, alt: `${member.name}（プロフ写真）` },
-  ];
-
-  return (
-    <li className="group">
-      <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] hover:border-gold/40 transition-colors">
-        <PhotoSwipe photos={photos} />
-        <button
-          type="button"
-          onClick={() => setExpanded((v) => !v)}
-          aria-expanded={expanded}
-          className="flex w-full items-center justify-between gap-2 px-3 py-2.5 text-left"
-        >
-          <div className="min-w-0">
-            <p className="font-mincho text-mist text-sm sm:text-base leading-tight truncate">
-              {member.name}
-            </p>
-            {member.subName && (
-              <p className="text-mist/60 text-[10px] sm:text-xs leading-tight mt-0.5 truncate">
-                {member.subName}
-              </p>
-            )}
-          </div>
-          <span
-            aria-hidden
-            className={`shrink-0 text-mist/60 text-[10px] transition-transform ${expanded ? "rotate-180" : ""}`}
-          >
-            ▾
-          </span>
-        </button>
-      </div>
-
-      {expanded && (
-        <div className="mt-2 rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-          <p className="text-mist/85 text-xs sm:text-sm leading-relaxed mb-3 whitespace-pre-wrap">
-            {member.message ?? (
-              <span className="text-mist/45 italic">
-                一言メッセージ準備中...
-              </span>
-            )}
+        </div>
+        <div className="px-5 py-4">
+          <p className="font-mincho text-mist text-xl sm:text-2xl leading-tight">
+            {member.name}
           </p>
-          <div className="flex flex-wrap gap-2">
+          {member.subName && (
+            <p className="text-mist/60 text-xs sm:text-sm mt-1">
+              {member.subName}
+            </p>
+          )}
+          <p className="text-gold/80 text-[10px] tracking-widest mt-2">
+            {member.group}
+          </p>
+
+          <div className="mt-5 flex flex-wrap gap-2">
             {socials.map((s) => (
               <a
                 key={s.label}
@@ -231,7 +148,7 @@ function MemberCard({ member }: { member: Member }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`${member.name} ${s.label}`}
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.04] px-3 py-1.5 text-mist/80 hover:text-gold hover:border-gold/40 transition-colors text-[11px]"
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.04] px-3 py-1.5 text-mist/85 hover:text-gold hover:border-gold/40 transition-colors text-[11px] sm:text-xs"
               >
                 <SocialIcon kind={s.kind} />
                 <span>{s.label}</span>
@@ -239,45 +156,75 @@ function MemberCard({ member }: { member: Member }) {
             ))}
           </div>
         </div>
-      )}
+      </div>
+    </div>
+  );
+}
+
+function MemberCard({
+  member,
+  onOpen,
+}: {
+  member: Member;
+  onOpen: (m: Member) => void;
+}) {
+  return (
+    <li>
+      <button
+        type="button"
+        onClick={() => onOpen(member)}
+        className="group block w-full text-left overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] hover:border-gold/40 transition-colors"
+        aria-label={`${member.name} のプロフィールを開く`}
+      >
+        <div className="relative aspect-[3/4] overflow-hidden bg-velvet">
+          <Image
+            src={member.portraitPhoto}
+            alt={member.name}
+            fill
+            sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 220px"
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+          />
+        </div>
+        <div className="px-2.5 py-2 sm:px-3 sm:py-2.5">
+          <p className="font-mincho text-mist text-xs sm:text-sm leading-tight truncate">
+            {member.name}
+          </p>
+          {member.subName && (
+            <p className="text-mist/55 text-[9px] sm:text-[10px] leading-tight mt-0.5 truncate">
+              {member.subName}
+            </p>
+          )}
+        </div>
+      </button>
     </li>
   );
 }
 
-function GroupBlock({ group }: { group: GroupName }) {
+function GroupBlock({
+  group,
+  onOpen,
+}: {
+  group: GroupName;
+  onOpen: (m: Member) => void;
+}) {
   const info = GROUPS[group];
   const members = getMembersByGroup(group);
   return (
-    <div className="mb-16 last:mb-0">
-      <div className="text-center mb-8 sm:mb-10">
-        <p className="text-xs tracking-[0.4em] text-gold/80 mb-2">
-          {info.name === "PALE TULLE" ? "GROUP 01" : "GROUP 02"}
-        </p>
-        <h3 className="font-mincho text-2xl sm:text-3xl text-mist mb-1">
+    <div className="mb-14 last:mb-0">
+      <div className="text-center mb-7 sm:mb-9">
+        <h3 className="font-mincho text-2xl sm:text-3xl text-mist mb-3">
           {info.name}
         </h3>
-        <p className="text-mist/60 text-xs sm:text-sm">
-          {info.nameJa} ／ {info.nickname} ／ {info.memberCount}人
-        </p>
         {info.concept && (
-          <p className="text-mist/75 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto mt-4 font-mincho">
+          <p className="text-mist/75 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto font-mincho">
             {info.concept}
           </p>
         )}
-        <a
-          href={info.siteUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 mt-5 text-gold hover:text-mist text-xs sm:text-sm transition-colors"
-        >
-          公式サイトを見る
-          <span aria-hidden>↗</span>
-        </a>
       </div>
 
-      <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+      <ul className="grid grid-cols-3 gap-2.5 sm:gap-3.5">
         {members.map((m) => (
-          <MemberCard key={m.id} member={m} />
+          <MemberCard key={m.id} member={m} onOpen={onOpen} />
         ))}
       </ul>
     </div>
@@ -285,25 +232,35 @@ function GroupBlock({ group }: { group: GroupName }) {
 }
 
 export default function Artists() {
+  const [open, setOpen] = useState<Member | null>(null);
   return (
-    <section id="artists" className="section-pad bg-ink relative overflow-hidden">
+    <section
+      id="artists"
+      className="section-pad bg-ink relative overflow-hidden"
+    >
       <div className="absolute inset-0 -z-10 bg-aurora opacity-25" />
       <div className="mx-auto max-w-5xl px-6">
         <p className="text-center text-xs tracking-[0.4em] text-gold/80 mb-2">
-          ARTISTS
+          はじめて知ってくれたあなたへ
         </p>
-        <h2 className="text-center font-mincho text-3xl sm:text-4xl text-mist mb-3">
-          出演アーティスト
+        <h2 className="text-center font-mincho text-3xl sm:text-4xl text-mist mb-5">
+          わたしたちについて
         </h2>
-        <p className="text-center text-mist/70 text-sm sm:text-base max-w-2xl mx-auto mb-14 leading-relaxed font-mincho">
-          321 IDOL PROJECT の2つのグループ、{MEMBERS.length}名がこのステージに立ちます。
+        <p className="text-center text-mist/75 text-sm sm:text-base max-w-2xl mx-auto mb-14 leading-relaxed font-mincho">
+          わたしたちは、ライブ配信から生まれたアイドルプロジェクト「321 IDOL PROJECT」。
           <br className="hidden sm:inline" />
-          写真は<span className="text-gold">スワイプ</span>で切替、カードをタップで一言メッセージ＆SNSが見られます。
+          配信で日々あなたに会いに行く２つのグループ「PALE TULLE」と「Glitter System」が、
+          <br className="hidden sm:inline" />
+          このステージで真ん中に立ちます。
+          <br />
+          ライブの後も、ぜひ配信に遊びに来てくださいね。
         </p>
 
-        <GroupBlock group="PALE TULLE" />
-        <GroupBlock group="Glitter System" />
+        <GroupBlock group="PALE TULLE" onOpen={setOpen} />
+        <GroupBlock group="Glitter System" onOpen={setOpen} />
       </div>
+
+      {open && <MemberModal member={open} onClose={() => setOpen(null)} />}
     </section>
   );
 }
