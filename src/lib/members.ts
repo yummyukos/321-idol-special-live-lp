@@ -140,6 +140,7 @@ export const MEMBERS: Member[] = [
       "ずっと目指していたPALETULLEのスタメンに連れてきてくれて本当にありがとうございます！\n半年間後悔のないように精一杯頑張るのでよろしくお願いします！\n7月のKanadevia Hallワンマン絶対一緒に成功させようね！🤍",
     streamingRoom:
       "https://www.pococha.com/app/users/2ba61f10-e4af-4828-be64-138630f77e16",
+    instagram: "https://www.instagram.com/reno_oimo/",
   },
   {
     id: "228",
@@ -156,6 +157,7 @@ export const MEMBERS: Member[] = [
       "諦めずに最後まで応援してくれたみんなのおかげで、またスタメンとして活動させていただきます！\n自分らしく！目がなくなるくらいとびっきりの笑顔でキラキラ輝きます✨\nペンライトはパープル💜👑\nせーの！の後に大きな声で「まほー！」って呼んでね📣\n＼せーの！まほー！🐰🎀／",
     streamingRoom:
       "https://www.pococha.com/ja-jp/app/users/1898b0e1-0633-47e9-8ddc-4c4fbec78de9",
+    instagram: "https://www.instagram.com/maholic_.u/",
   },
 
   // ────── Glitter System ──────
