@@ -229,13 +229,20 @@ function GroupBlock({
       <div className="flex justify-center mb-7 sm:mb-9">
         {info.logoUrl ? (
           <div className="relative inline-flex items-center justify-center px-4">
-            {/* ロゴの裏に白いブラー光（視認性UP） */}
+            {/* ロゴの裏に白いブラー光（視認性UP）
+                Glitter System は紺ベースのロゴで暗いので、横幅広め＋色を明るくする */}
             <div
               aria-hidden
-              className="absolute inset-0 -m-6 sm:-m-10 rounded-full pointer-events-none"
+              className={`absolute inset-0 rounded-full pointer-events-none ${
+                group === "Glitter System"
+                  ? "-mx-16 sm:-mx-28 -my-6 sm:-my-10"
+                  : "-m-6 sm:-m-10"
+              }`}
               style={{
                 background:
-                  "radial-gradient(ellipse at center, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.25) 40%, rgba(255,255,255,0) 75%)",
+                  group === "Glitter System"
+                    ? "radial-gradient(ellipse at center, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.5) 40%, rgba(255,255,255,0) 75%)"
+                    : "radial-gradient(ellipse at center, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.25) 40%, rgba(255,255,255,0) 75%)",
                 filter: "blur(30px)",
               }}
             />
@@ -286,21 +293,20 @@ export default function Artists() {
     >
       <div className="absolute inset-0 -z-10 bg-aurora opacity-25" />
       <div className="mx-auto max-w-5xl px-6">
-        <div className="text-center mb-3">
+        <div className="text-center mb-10 sm:mb-12">
           <span className="inline-block rounded-full border border-gold/40 bg-gold/15 text-gold px-4 py-1.5 text-[11px] sm:text-xs tracking-[0.2em] backdrop-blur-sm">
             はじめて知ってくれたあなたへ
           </span>
         </div>
         <h2
-          className="text-center text-3xl sm:text-5xl mb-6 italic font-semibold tracking-wide leading-tight"
+          className="text-center text-3xl sm:text-5xl mb-8 sm:mb-10 italic font-bold tracking-wide leading-tight"
           style={{
+            fontFamily: '"Zen Maru Gothic", system-ui, sans-serif',
             color: "transparent",
             WebkitTextStroke: "1.3px #e9e6f0",
           }}
         >
-          私たち、
-          <br />
-          321 IDOL PROJECT
+          わたしたちについて
         </h2>
         <p className="text-center text-mist/85 text-sm sm:text-base max-w-2xl mx-auto mb-14 leading-relaxed">
           2つのグループ「<strong className="font-bold text-mist">PALE TULLE</strong>」と「

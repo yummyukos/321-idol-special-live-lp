@@ -53,7 +53,7 @@ export default function FollowUs() {
   return (
     <section
       id="follow"
-      className="section-pad bg-ink relative overflow-hidden"
+      className="bg-ink relative overflow-hidden pt-4 sm:pt-6 pb-16 sm:pb-20"
     >
       <div className="absolute inset-0 -z-10 bg-aurora opacity-30" />
 
