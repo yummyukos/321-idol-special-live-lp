@@ -8,7 +8,7 @@ export default function GroupPhoto() {
   return (
     <section
       className="relative overflow-hidden pt-2 pb-6 sm:pb-10"
-      style={{ background: "#faf6ec" }}
+      style={{ background: "#F4A4B5" }}
     >
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         <div

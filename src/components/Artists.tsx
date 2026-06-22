@@ -16,7 +16,7 @@ import {
  *  - 文字色：ink（黒系）
  */
 
-const LIGHT_BG = "#faf6ec";
+const LIGHT_BG = "#F4A4B5";
 
 function SocialIcon({
   kind,
@@ -234,10 +234,15 @@ function GroupBlock({
       <div className="flex justify-center mb-7 sm:mb-9">
         {info.logoUrl ? (
           // 明るい背景なのでロゴはパネルなしでそのまま表示
+          // PALE TULLE はスクリプト体で繊細なため少し大きめに
           <img
             src={info.logoUrl}
             alt={info.name}
-            className="h-14 sm:h-20 w-auto object-contain"
+            className={
+              group === "PALE TULLE"
+                ? "h-20 sm:h-28 w-auto object-contain"
+                : "h-14 sm:h-20 w-auto object-contain"
+            }
             onError={(e) => {
               const el = e.currentTarget;
               el.style.display = "none";
@@ -280,19 +285,19 @@ export default function Artists() {
         }}
       />
 
-      {/* 装飾：淡いピンク・ゴールド・パープルのぼかし光 */}
+      {/* 装飾：ピンク背景に合うホワイト・ゴールド・ラベンダーのぼかし光 */}
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
         <div
           className="absolute left-[-10%] top-[18%] h-[40%] w-[45%] rounded-full"
-          style={{ background: "rgba(255, 200, 220, 0.55)", filter: "blur(120px)" }}
+          style={{ background: "rgba(255, 255, 255, 0.45)", filter: "blur(120px)" }}
         />
         <div
           className="absolute right-[-10%] top-[55%] h-[38%] w-[40%] rounded-full"
-          style={{ background: "rgba(255, 230, 180, 0.6)", filter: "blur(120px)" }}
+          style={{ background: "rgba(255, 230, 180, 0.55)", filter: "blur(120px)" }}
         />
         <div
           className="absolute left-[28%] bottom-[8%] h-[28%] w-[34%] rounded-full"
-          style={{ background: "rgba(220, 200, 255, 0.45)", filter: "blur(120px)" }}
+          style={{ background: "rgba(220, 200, 255, 0.5)", filter: "blur(120px)" }}
         />
       </div>
 

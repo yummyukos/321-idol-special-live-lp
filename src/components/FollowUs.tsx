@@ -54,7 +54,7 @@ export default function FollowUs() {
     <section
       id="follow"
       className="relative overflow-hidden pt-12 sm:pt-16 pb-44 sm:pb-56"
-      style={{ background: "#faf6ec" }}
+      style={{ background: "#F4A4B5" }}
     >
       {/* 装飾：淡いピンク・ゴールドのぼかし光（Artistsと統一感） */}
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
