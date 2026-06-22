@@ -293,7 +293,7 @@ export default function Artists() {
     >
       <div className="absolute inset-0 -z-10 bg-aurora opacity-25" />
       <div className="mx-auto max-w-5xl px-6">
-        <div className="text-center mt-10 sm:mt-14 mb-10 sm:mb-12">
+        <div className="text-center mt-10 sm:mt-14 mb-4 sm:mb-5">
           <span className="inline-block rounded-full border border-gold/40 bg-gold/15 text-gold px-4 py-1.5 text-[11px] sm:text-xs tracking-[0.2em] backdrop-blur-sm">
             はじめて知ってくれたあなたへ
           </span>
@@ -308,7 +308,7 @@ export default function Artists() {
         >
           わたしたちについて
         </h2>
-        <p className="text-center text-mist/85 text-sm sm:text-base max-w-2xl mx-auto mb-14 leading-relaxed">
+        <p className="text-center text-mist/85 text-base sm:text-lg max-w-2xl mx-auto mb-14 leading-relaxed">
           2つのグループ「<strong className="font-bold text-mist">PALE TULLE</strong>」と「
           <strong className="font-bold text-mist">Glitter System</strong>」からなる
           <br />
