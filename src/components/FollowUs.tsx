@@ -53,21 +53,9 @@ export default function FollowUs() {
   return (
     <section
       id="follow"
-      className="relative overflow-hidden pt-12 sm:pt-16 pb-44 sm:pb-56"
-      style={{ background: "#F4A4B5" }}
+      className="relative overflow-hidden pt-12 sm:pt-16 pb-16 sm:pb-24"
+      style={{ background: "#FFFFFF" }}
     >
-      {/* 装飾：淡いピンク・ゴールドのぼかし光（Artistsと統一感） */}
-      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-        <div
-          className="absolute left-[-15%] top-[20%] h-[55%] w-[45%] rounded-full"
-          style={{ background: "rgba(255, 200, 220, 0.5)", filter: "blur(120px)" }}
-        />
-        <div
-          className="absolute right-[-10%] top-[10%] h-[50%] w-[40%] rounded-full"
-          style={{ background: "rgba(255, 230, 180, 0.55)", filter: "blur(120px)" }}
-        />
-      </div>
-
       <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
         {/* メインCTA：公式サイトボタン（ピンク・明るい背景でも映える） */}
         <a
@@ -99,7 +87,8 @@ export default function FollowUs() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`321 IDOL PROJECT ${l.label}`}
-                className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full border border-ink/15 bg-white text-ink/80 hover:text-ink hover:bg-white hover:border-ink/40 hover:scale-110 active:scale-95 transition-all shadow-sm"
+                className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full border border-pink-200 text-ink/80 hover:text-ink hover:border-pink-400 hover:scale-110 active:scale-95 transition-all shadow-sm"
+                style={{ background: "#FCE7EE" }}
               >
                 <IconSvg kind={l.icon} />
               </a>
@@ -108,14 +97,6 @@ export default function FollowUs() {
         </ul>
       </div>
 
-      {/* 下端：クリームから暗背景（Countdown）へフェード */}
-      <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-32 z-0"
-        style={{
-          background:
-            "linear-gradient(to top, rgb(8,6,15) 0%, rgba(8,6,15,0.7) 30%, rgba(8,6,15,0) 100%)",
-        }}
-      />
     </section>
   );
 }

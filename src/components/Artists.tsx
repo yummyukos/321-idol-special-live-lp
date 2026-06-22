@@ -16,7 +16,7 @@ import {
  *  - 文字色：ink（黒系）
  */
 
-const LIGHT_BG = "#F4A4B5";
+const LIGHT_BG = "#FFFFFF";
 
 function SocialIcon({
   kind,
@@ -191,10 +191,11 @@ function MemberCard({
       <button
         type="button"
         onClick={() => onOpen(member)}
-        className="group block w-full text-left overflow-hidden rounded-2xl border border-ink/10 bg-white shadow-sm hover:shadow-md hover:border-ink/30 transition-all"
+        className="group block w-full text-left overflow-hidden rounded-2xl border border-pink-200 shadow-sm hover:shadow-md hover:border-pink-300 transition-all"
+        style={{ background: "#FCE7EE" }}
         aria-label={`${member.name} のプロフィールを開く`}
       >
-        <div className="relative aspect-[3/4] overflow-hidden bg-[#f4efe2]">
+        <div className="relative aspect-[3/4] overflow-hidden bg-pink-50">
           <Image
             src={member.portraitPhoto}
             alt={member.name}
@@ -203,7 +204,7 @@ function MemberCard({
             className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
           />
         </div>
-        <div className="bg-white px-2 py-3.5 sm:px-2.5 sm:py-4 flex items-center justify-center min-h-[54px] sm:min-h-[60px]">
+        <div className="px-2 py-3.5 sm:px-2.5 sm:py-4 flex items-center justify-center min-h-[54px] sm:min-h-[60px]" style={{ background: "#FCE7EE" }}>
           <p
             className="text-ink leading-tight text-center truncate w-full"
             style={{
@@ -273,34 +274,9 @@ export default function Artists() {
   return (
     <section
       id="artists"
-      className="relative overflow-hidden pt-40 sm:pt-56 pb-16 sm:pb-24"
+      className="relative overflow-hidden pt-20 sm:pt-28 pb-16 sm:pb-24"
       style={{ background: LIGHT_BG }}
     >
-      {/* 上端：暗い Message からクリームへフェード */}
-      <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-32 z-0"
-        style={{
-          background:
-            "linear-gradient(to bottom, rgb(8,6,15) 0%, rgba(8,6,15,0.7) 30%, rgba(8,6,15,0) 100%)",
-        }}
-      />
-
-      {/* 装飾：ピンク背景に合うホワイト・ゴールド・ラベンダーのぼかし光 */}
-      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-        <div
-          className="absolute left-[-10%] top-[18%] h-[40%] w-[45%] rounded-full"
-          style={{ background: "rgba(255, 255, 255, 0.45)", filter: "blur(120px)" }}
-        />
-        <div
-          className="absolute right-[-10%] top-[55%] h-[38%] w-[40%] rounded-full"
-          style={{ background: "rgba(255, 230, 180, 0.55)", filter: "blur(120px)" }}
-        />
-        <div
-          className="absolute left-[28%] bottom-[8%] h-[28%] w-[34%] rounded-full"
-          style={{ background: "rgba(220, 200, 255, 0.5)", filter: "blur(120px)" }}
-        />
-      </div>
-
       <div className="relative z-10 mx-auto max-w-5xl px-6">
         <div className="text-center mb-3">
           <span className="inline-block rounded-full bg-ink/8 border border-ink/15 text-ink/70 px-4 py-1.5 text-[11px] sm:text-xs tracking-[0.2em]">
