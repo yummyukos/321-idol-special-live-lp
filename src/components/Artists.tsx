@@ -19,7 +19,7 @@ import {
 function SocialIcon({
   kind,
 }: {
-  kind: "instagram" | "x" | "tiktok" | "pococha" | "youtube" | "profile";
+  kind: "instagram" | "x" | "tiktok" | "room" | "youtube";
 }) {
   const cls = "w-4 h-4 fill-current";
   switch (kind) {
@@ -41,22 +41,17 @@ function SocialIcon({
           <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43V8.7a8.16 8.16 0 0 0 4.77 1.52V6.78a4.85 4.85 0 0 1-1.84-.09Z" />
         </svg>
       );
-    case "pococha":
+    case "room":
+      // 配信ルームアイコン（放送波）
       return (
         <svg viewBox="0 0 24 24" className={cls} aria-hidden>
-          <path d="M12 2c0 3.5-3 5.5-3 9a3 3 0 0 0 3 3 3 3 0 0 0 3-3c0-1 .5-2 1-2.5 1.5 1 3 3.5 3 6.5a7 7 0 1 1-14 0c0-5 4-7 4-13 1.5 0 3 0 3 0Z" />
+          <path d="M12 9.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm-3.05-2.83a.75.75 0 0 1 0 1.06 4.62 4.62 0 0 0 0 6.54.75.75 0 1 1-1.06 1.06 6.12 6.12 0 0 1 0-8.66.75.75 0 0 1 1.06 0Zm6.1 0a.75.75 0 0 1 1.06 0 6.12 6.12 0 0 1 0 8.66.75.75 0 0 1-1.06-1.06 4.62 4.62 0 0 0 0-6.54.75.75 0 0 1 0-1.06ZM6.12 3.84a.75.75 0 0 1 0 1.06 10 10 0 0 0 0 14.2.75.75 0 1 1-1.06 1.06 11.5 11.5 0 0 1 0-16.32.75.75 0 0 1 1.06 0Zm11.76 0a.75.75 0 0 1 1.06 0 11.5 11.5 0 0 1 0 16.32.75.75 0 1 1-1.06-1.06 10 10 0 0 0 0-14.2.75.75 0 0 1 0-1.06Z" />
         </svg>
       );
     case "youtube":
       return (
         <svg viewBox="0 0 24 24" className={cls} aria-hidden>
           <path d="M23.5 6.2a3 3 0 0 0-2.1-2.13C19.6 3.5 12 3.5 12 3.5s-7.6 0-9.4.57A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.13c1.8.57 9.4.57 9.4.57s7.6 0 9.4-.57a3 3 0 0 0 2.1-2.13A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6Z" />
-        </svg>
-      );
-    case "profile":
-      return (
-        <svg viewBox="0 0 24 24" className={cls} aria-hidden>
-          <path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Zm0 2.5c-3.34 0-10 1.67-10 5V22h20v-2.5c0-3.33-6.66-5-10-5Z" />
         </svg>
       );
   }
@@ -95,17 +90,22 @@ function MemberModal({
     kind: Parameters<typeof SocialIcon>[0]["kind"];
     href: string;
     label: string;
+    primary?: boolean;
   }> = [];
+  if (member.streamingRoom)
+    socials.push({
+      kind: "room",
+      href: member.streamingRoom,
+      label: "配信ルーム",
+      primary: true,
+    });
   if (member.instagram)
     socials.push({ kind: "instagram", href: member.instagram, label: "Instagram" });
   if (member.x) socials.push({ kind: "x", href: member.x, label: "X" });
   if (member.tiktok)
     socials.push({ kind: "tiktok", href: member.tiktok, label: "TikTok" });
-  if (member.pococha)
-    socials.push({ kind: "pococha", href: member.pococha, label: "Pococha" });
   if (member.youtube)
     socials.push({ kind: "youtube", href: member.youtube, label: "YouTube" });
-  socials.push({ kind: "profile", href: member.profileUrl, label: "公式プロフィール" });
 
   return (
     <div
@@ -167,7 +167,7 @@ function MemberModal({
             </div>
           )}
 
-          {/* SNS */}
+          {/* 配信ルーム & SNS */}
           <div className="mt-6 flex flex-wrap gap-2">
             {socials.map((s) => (
               <a
@@ -176,7 +176,11 @@ function MemberModal({
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`${member.name} ${s.label}`}
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.04] px-3 py-1.5 text-mist/85 hover:text-gold hover:border-gold/40 transition-colors text-[11px] sm:text-xs"
+                className={
+                  s.primary
+                    ? "inline-flex items-center gap-1.5 rounded-full border border-glow/50 bg-glow/20 px-4 py-2 text-white hover:bg-glow/30 hover:border-glow transition-colors text-xs sm:text-sm font-semibold"
+                    : "inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.04] px-3 py-1.5 text-mist/85 hover:text-gold hover:border-gold/40 transition-colors text-[11px] sm:text-xs"
+                }
               >
                 <SocialIcon kind={s.kind} />
                 <span>{s.label}</span>
@@ -271,7 +275,7 @@ export default function Artists() {
             はじめて知ってくれたあなたへ
           </span>
         </div>
-        <h2 className="text-center font-mincho text-3xl sm:text-4xl text-mist mb-6">
+        <h2 className="text-center text-3xl sm:text-4xl text-mist mb-6 italic">
           わたしたちについて
         </h2>
         <p className="text-center text-mist/85 text-sm sm:text-base max-w-2xl mx-auto mb-14 leading-relaxed">

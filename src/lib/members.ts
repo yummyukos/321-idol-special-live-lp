@@ -32,8 +32,9 @@ export type Member = {
   height?: string;
   color?: string;
   comment?: string;
-  // SNS（持っている人だけ。後で追加していくのでoptional）
-  pococha?: string;
+  /** 配信ルーム（公式プロフページの「配信ルーム」リンク。多くはPococha、一部TikTok） */
+  streamingRoom?: string;
+  // 個人SNS（あれば。後で追加していくのでoptional）
   instagram?: string;
   x?: string;
   tiktok?: string;
@@ -55,7 +56,7 @@ export const MEMBERS: Member[] = [
     color: "ライトブルー",
     comment:
       "普段はポコチャでのんびり雑談配信をしています！\n30代に突入しましたが、321アイドル部の魅力をたくさんの人に届けられるようにますます頑張ります！♡",
-    pococha:
+    streamingRoom:
       "https://www.pococha.com/app/users/339cfe2b-57d4-4bf3-aa0e-ea42ed96153b",
   },
   {
@@ -71,8 +72,7 @@ export const MEMBERS: Member[] = [
     color: "ピンク",
     comment:
       "一瞬、一瞬を大事に会いに来て下さった皆さんを全員幸せに出来るように自分自身も楽しみながらステージに立ちます！",
-    pococha:
-      "https://www.pococha.com/app/users/988ce661-a641-4cc5-aaf9-9a1e29c1cb91",
+    streamingRoom: "https://www.tiktok.com/@yuuri_3ito",
   },
   {
     id: "301",
@@ -88,7 +88,7 @@ export const MEMBERS: Member[] = [
     color: "オレンジ",
     comment:
       "久しぶりにペルチュの曲ができてとーっても嬉しいです！オレンジ似合うって言ってもらえるようにパワフルで元気にがんばるぞー！猫とお酒が好きです！",
-    pococha:
+    streamingRoom:
       "https://www.pococha.com/app/users/7c888755-8a07-4b88-a0fd-6c5619cdb6f9",
   },
   {
@@ -105,6 +105,8 @@ export const MEMBERS: Member[] = [
     color: "ミントグリーン",
     comment:
       "アイドル部のため、PALE TULLEのために、私のできることを精一杯頑張ります🐰⸝꙳\nこの半年間は、あっという間に過ぎてしまうと思うのですが、みなさんとかけがえのない時間を大事に大事に共有していきたいです！\n7月のKanadevia Hallが素敵な日になって、応援しててよかったと思ってもらえるように、これから色んな挑戦をしていきますのであたたかく見守ってくださると幸いです。\nどうぞよろしくお願いします！",
+    streamingRoom:
+      "https://www.pococha.com/ja-jp/app/users/671d5f3f-4b00-45eb-bd47-16b5cd59d618",
   },
   {
     id: "1164",
@@ -120,6 +122,8 @@ export const MEMBERS: Member[] = [
     color: "レッド",
     comment:
       "富山県在住！レッド担当♥️\n「るのるん」こと【みなみるの】です🐹\nおとなしそうに見えて、実は喋りだすと止まらないおふざけ大好きっ子！ 世界30ヵ国を旅するバックパッカーで、特に台湾はマニア級🇹🇼 釣り、お酒、脱出ゲーム、そして配信まで❣️ 常に全力で「楽しい」を追求しています🥃🎣\n皆さんの元気や笑顔のため！情熱の赤を胸にアイドルも配信も全力で頑張ります🎤❤️\n私のこと一番近くで見守っててほしいな🫶\nるのるんの成長を〜？\n＼みんなみるの〜👀❤️／",
+    streamingRoom:
+      "https://www.pococha.com/ja-jp/app/users/dead0da9-958d-4162-be61-9efeabfad4e9",
   },
   {
     id: "172",
@@ -134,7 +138,7 @@ export const MEMBERS: Member[] = [
     color: "ホワイト",
     comment:
       "ずっと目指していたPALETULLEのスタメンに連れてきてくれて本当にありがとうございます！\n半年間後悔のないように精一杯頑張るのでよろしくお願いします！\n7月のKanadevia Hallワンマン絶対一緒に成功させようね！🤍",
-    pococha:
+    streamingRoom:
       "https://www.pococha.com/app/users/2ba61f10-e4af-4828-be64-138630f77e16",
   },
   {
@@ -150,6 +154,8 @@ export const MEMBERS: Member[] = [
     color: "パープル",
     comment:
       "諦めずに最後まで応援してくれたみんなのおかげで、またスタメンとして活動させていただきます！\n自分らしく！目がなくなるくらいとびっきりの笑顔でキラキラ輝きます✨\nペンライトはパープル💜👑\nせーの！の後に大きな声で「まほー！」って呼んでね📣\n＼せーの！まほー！🐰🎀／",
+    streamingRoom:
+      "https://www.pococha.com/ja-jp/app/users/1898b0e1-0633-47e9-8ddc-4c4fbec78de9",
   },
 
   // ────── Glitter System ──────
@@ -166,7 +172,7 @@ export const MEMBERS: Member[] = [
     color: "レッド",
     comment:
       "ステージや配信を通して、みなさんの毎日に笑顔のきっかけを作れたら嬉しいです✨\nユカリのことを推して後悔させないよっ♡",
-    pococha:
+    streamingRoom:
       "https://www.pococha.com/app/users/5e8951c1-6cae-48c8-b19f-9f7eca6feb7e",
   },
   {
@@ -182,7 +188,7 @@ export const MEMBERS: Member[] = [
     color: "グリーン",
     comment:
       "見た目はアイドル！中身はおじさん！ギャンブルとお酒と阪神タイガースが好きです。",
-    pococha:
+    streamingRoom:
       "https://www.pococha.com/app/users/84c82336-0638-4f17-aa47-a319b13e453b",
   },
   {
@@ -197,6 +203,8 @@ export const MEMBERS: Member[] = [
     height: "155cm",
     color: "ホワイト",
     comment: "一生懸命がんばりますっ‪ᐢ⸝⸝•⩊•⸝⸝ᐢ❤︎",
+    streamingRoom:
+      "https://www.pococha.com/ja-jp/app/users/ed61019b-e25f-421d-aa21-ee9bb42158e6",
   },
   {
     id: "185",
@@ -211,7 +219,7 @@ export const MEMBERS: Member[] = [
     color: "パープル",
     comment:
       "おいもパープル担当えりんこです🍠💜\n熟成16年、味わうほどハマります🍠",
-    pococha:
+    streamingRoom:
       "https://www.pococha.com/app/users/3e32ebcb-f7ed-45f4-b6c1-2c354d59bf7e",
   },
   {
@@ -227,6 +235,7 @@ export const MEMBERS: Member[] = [
     height: "160cm",
     color: "ピンク",
     comment: "推しメンにしてくれますか？♡",
+    streamingRoom: "https://www.tiktok.com/@miyu__mitsuha",
   },
   {
     id: "565",
@@ -240,6 +249,8 @@ export const MEMBERS: Member[] = [
     height: "156cm",
     color: "ブルー",
     comment: "青色担当です\n初スタメンうれしいです頑張ります\n平和主義です",
+    streamingRoom:
+      "https://www.pococha.com/ja-jp/app/users/5668b91b-5dce-4d9c-902e-cb77a50dfcab",
   },
   {
     id: "1235",
@@ -254,6 +265,8 @@ export const MEMBERS: Member[] = [
     color: "オレンジ",
     comment:
       "夢のアイドル人生がはじまりましたっ！\nアイドル・ライバー・看護師…\nなーんでもよくばっちゃう、よくばりバイリンガール🎀🧡\n配信はNGなし！\n居酒屋のように笑って泣いて、\nいつでも帰ってこられる居場所であり続けるよ🧡\n新人アイドル、推してみない？🫵\nみんなをHappyにするよ🪄✨\nこれから一緒に、たくさん思い出つくろうね🎀🧡",
+    streamingRoom:
+      "https://www.pococha.com/ja-jp/app/users/c2f0e17d-20f2-430d-b748-28f6fddf5f03",
   },
 ];
 
