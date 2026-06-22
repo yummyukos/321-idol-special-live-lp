@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import {
   GROUPS,
@@ -13,6 +13,11 @@ import {
 /**
  * ARTISTSセクション
  * PALE TULLE と Glitter System の紹介＋14人のメンバーカード
+ *
+ * カード上半分：2枚スワイプ式
+ *  - 1枚目: arrangePhoto（正式アー写・フルポスター）
+ *  - 2枚目: portraitPhoto（顔アップ）
+ *
  * カードをタップで一言メッセージ・SNSが展開
  */
 
@@ -38,7 +43,6 @@ function SocialIcon({ kind }: { kind: "instagram" | "x" | "tiktok" | "pococha" |
         </svg>
       );
     case "pococha":
-      // Pocochaは独自カラーの炎マーク的アイコン
       return (
         <svg viewBox="0 0 24 24" className={cls} aria-hidden>
           <path d="M12 2c0 3.5-3 5.5-3 9a3 3 0 0 0 3 3 3 3 0 0 0 3-3c0-1 .5-2 1-2.5 1.5 1 3 3.5 3 6.5a7 7 0 1 1-14 0c0-5 4-7 4-13 1.5 0 3 0 3 0Z" />
@@ -59,6 +63,113 @@ function SocialIcon({ kind }: { kind: "instagram" | "x" | "tiktok" | "pococha" |
   }
 }
 
+function PhotoSwipe({ photos }: { photos: { src: string; alt: string }[] }) {
+  const [idx, setIdx] = useState(0);
+  const startX = useRef<number | null>(null);
+  const startY = useRef<number | null>(null);
+  const moved = useRef(false);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    startX.current = e.touches[0].clientX;
+    startY.current = e.touches[0].clientY;
+    moved.current = false;
+  };
+  const onTouchMove = (e: React.TouchEvent) => {
+    if (startX.current == null) return;
+    const dx = e.touches[0].clientX - startX.current;
+    const dy = (e.touches[0].clientY - (startY.current ?? 0));
+    if (Math.abs(dx) > 6 && Math.abs(dx) > Math.abs(dy)) moved.current = true;
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (startX.current == null) return;
+    const dx = (e.changedTouches[0].clientX) - startX.current;
+    startX.current = null;
+    if (Math.abs(dx) < 40) return;
+    if (dx < 0 && idx < photos.length - 1) setIdx(idx + 1);
+    if (dx > 0 && idx > 0) setIdx(idx - 1);
+  };
+
+  return (
+    <div
+      className="relative aspect-[3/4] overflow-hidden bg-velvet"
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+    >
+      <div
+        className="flex h-full transition-transform duration-300 ease-out"
+        style={{
+          width: `${photos.length * 100}%`,
+          transform: `translateX(-${(100 / photos.length) * idx}%)`,
+        }}
+      >
+        {photos.map((p, i) => (
+          <div
+            key={p.src}
+            className="relative h-full shrink-0"
+            style={{ width: `${100 / photos.length}%` }}
+          >
+            <Image
+              src={p.src}
+              alt={p.alt}
+              fill
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 240px"
+              className="object-cover"
+              priority={i === 0}
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* 左右ボタン（PC用・ホバーで出現） */}
+      {idx > 0 && (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            setIdx(idx - 1);
+          }}
+          aria-label="前の写真"
+          className="absolute left-1.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-ink/70 backdrop-blur-sm text-mist flex items-center justify-center hover:bg-ink/90 transition-opacity opacity-0 group-hover:opacity-100"
+        >
+          ‹
+        </button>
+      )}
+      {idx < photos.length - 1 && (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            setIdx(idx + 1);
+          }}
+          aria-label="次の写真"
+          className="absolute right-1.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-ink/70 backdrop-blur-sm text-mist flex items-center justify-center hover:bg-ink/90 transition-opacity opacity-0 group-hover:opacity-100"
+        >
+          ›
+        </button>
+      )}
+
+      {/* ドットインジケーター */}
+      <div className="absolute top-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+        {photos.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIdx(i);
+            }}
+            aria-label={`写真 ${i + 1}`}
+            className={`block h-1.5 rounded-full transition-all ${
+              i === idx ? "w-5 bg-mist" : "w-1.5 bg-mist/40"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function MemberCard({ member }: { member: Member }) {
   const [expanded, setExpanded] = useState(false);
   const socials: Array<{ kind: Parameters<typeof SocialIcon>[0]["kind"]; href: string; label: string }> = [];
@@ -69,40 +180,39 @@ function MemberCard({ member }: { member: Member }) {
   if (member.youtube) socials.push({ kind: "youtube", href: member.youtube, label: "YouTube" });
   socials.push({ kind: "profile", href: member.profileUrl, label: "公式プロフィール" });
 
+  const photos = [
+    { src: member.arrangePhoto, alt: `${member.name}（アー写）` },
+    { src: member.portraitPhoto, alt: `${member.name}（プロフ写真）` },
+  ];
+
   return (
     <li className="group">
-      <button
-        type="button"
-        onClick={() => setExpanded((v) => !v)}
-        aria-expanded={expanded}
-        className="block w-full text-left overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] hover:border-gold/40 transition-colors"
-      >
-        <div className="relative aspect-[3/4] overflow-hidden">
-          <Image
-            src={member.photo}
-            alt={member.name}
-            fill
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 220px"
-            className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-          />
-          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/90 via-ink/40 to-transparent p-3">
-            <p className="font-mincho text-mist text-sm sm:text-base leading-tight">
+      <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] hover:border-gold/40 transition-colors">
+        <PhotoSwipe photos={photos} />
+        <button
+          type="button"
+          onClick={() => setExpanded((v) => !v)}
+          aria-expanded={expanded}
+          className="flex w-full items-center justify-between gap-2 px-3 py-2.5 text-left"
+        >
+          <div className="min-w-0">
+            <p className="font-mincho text-mist text-sm sm:text-base leading-tight truncate">
               {member.name}
             </p>
             {member.subName && (
-              <p className="text-mist/60 text-[10px] sm:text-xs leading-tight mt-0.5">
+              <p className="text-mist/60 text-[10px] sm:text-xs leading-tight mt-0.5 truncate">
                 {member.subName}
               </p>
             )}
           </div>
           <span
             aria-hidden
-            className={`absolute top-2 right-2 inline-flex items-center justify-center w-6 h-6 rounded-full bg-ink/70 backdrop-blur-sm text-mist/80 text-[10px] transition-transform ${expanded ? "rotate-180" : ""}`}
+            className={`shrink-0 text-mist/60 text-[10px] transition-transform ${expanded ? "rotate-180" : ""}`}
           >
             ▾
           </span>
-        </div>
-      </button>
+        </button>
+      </div>
 
       {expanded && (
         <div className="mt-2 rounded-2xl border border-white/10 bg-white/[0.04] p-4">
@@ -186,11 +296,9 @@ export default function Artists() {
           出演アーティスト
         </h2>
         <p className="text-center text-mist/70 text-sm sm:text-base max-w-2xl mx-auto mb-14 leading-relaxed font-mincho">
-          321 IDOL PROJECT の2つのグループ、{MEMBERS.length}名が
-          <br className="sm:hidden" />
-          このステージに立ちます。
-          <br />
-          カードをタップで一言メッセージとSNSを見られます。
+          321 IDOL PROJECT の2つのグループ、{MEMBERS.length}名がこのステージに立ちます。
+          <br className="hidden sm:inline" />
+          写真は<span className="text-gold">スワイプ</span>で切替、カードをタップで一言メッセージ＆SNSが見られます。
         </p>
 
         <GroupBlock group="PALE TULLE" />

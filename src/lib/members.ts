@@ -3,6 +3,12 @@
 // 名前・写真・公式プロフィールURL・Pochochaリンクは公式サイト
 // (liveridol.321.inc/member) から取得済み。
 //
+// 写真は2枚：
+//  - arrangePhoto: 正式アー写（フルポスター・グループ世界観入り）← Drive正式版
+//  - portraitPhoto: 顔アップのプロフ写真 ← 公式メンバーページ
+//
+// ARTISTSセクションでは2枚をスワイプで切り替え表示。
+//
 // 各メンバー本人のIG / X / TikTok / 配信アプリの追加URLや、
 // ライブへの一言メッセージ（message）は本人から集まり次第ここに追記。
 // ----------------------------------------------------------------
@@ -16,8 +22,10 @@ export type Member = {
   /** 別名・本名など（カッコ書きで表示） */
   subName?: string;
   group: GroupName;
-  /** /public からの相対パス */
-  photo: string;
+  /** 1枚目（メイン）：正式アー写 */
+  arrangePhoto: string;
+  /** 2枚目：顔アップのプロフ写真 */
+  portraitPhoto: string;
   /** 公式プロフィールページ */
   profileUrl: string;
   // SNS（持っている人だけ。後で追加していくのでoptional）
@@ -36,7 +44,8 @@ export const MEMBERS: Member[] = [
     id: "154",
     name: "あさちゃん",
     group: "PALE TULLE",
-    photo: "/members/PT_web_aph_asachan.jpg",
+    arrangePhoto: "/members/PT__asachan.jpg",
+    portraitPhoto: "/members/PT_web_aph_asachan.jpg",
     profileUrl: "https://liveridol.321.inc/member/154",
     pococha: "https://www.pococha.com/app/users/339cfe2b-57d4-4bf3-aa0e-ea42ed96153b",
   },
@@ -44,7 +53,8 @@ export const MEMBERS: Member[] = [
     id: "211",
     name: "斉藤優里",
     group: "PALE TULLE",
-    photo: "/members/PT_web_aph_saitoyuuri.jpg",
+    arrangePhoto: "/members/PT__saitoyuuri.jpg",
+    portraitPhoto: "/members/PT_web_aph_saitoyuuri.jpg",
     profileUrl: "https://liveridol.321.inc/member/211",
     pococha: "https://www.pococha.com/app/users/988ce661-a641-4cc5-aaf9-9a1e29c1cb91",
   },
@@ -53,7 +63,8 @@ export const MEMBERS: Member[] = [
     name: "ゆいかさん。",
     subName: "山内唯花",
     group: "PALE TULLE",
-    photo: "/members/PT_web_aph_yamauchiyuika.jpg",
+    arrangePhoto: "/members/PT__yamauchiyuika.jpg",
+    portraitPhoto: "/members/PT_web_aph_yamauchiyuika.jpg",
     profileUrl: "https://liveridol.321.inc/member/301",
     pococha: "https://www.pococha.com/app/users/7c888755-8a07-4b88-a0fd-6c5619cdb6f9",
   },
@@ -62,7 +73,8 @@ export const MEMBERS: Member[] = [
     name: "うーたん",
     subName: "泡沫ちゃん",
     group: "PALE TULLE",
-    photo: "/members/PT_web_aph_utakatachan.jpg",
+    arrangePhoto: "/members/PT__u-tan.jpg",
+    portraitPhoto: "/members/PT_web_aph_utakatachan.jpg",
     profileUrl: "https://liveridol.321.inc/member/175",
   },
   {
@@ -70,14 +82,16 @@ export const MEMBERS: Member[] = [
     name: "美波瑠乃",
     subName: "るのるん",
     group: "PALE TULLE",
-    photo: "/members/PT_web_aph_minamiruno.jpg",
+    arrangePhoto: "/members/PT__minamiruno.jpg",
+    portraitPhoto: "/members/PT_web_aph_minamiruno.jpg",
     profileUrl: "https://liveridol.321.inc/member/1164",
   },
   {
     id: "172",
     name: "宇佐美麗乃.",
     group: "PALE TULLE",
-    photo: "/members/PT_web_aph_usamireno.jpg",
+    arrangePhoto: "/members/PT__uremireno.jpg",
+    portraitPhoto: "/members/PT_web_aph_usamireno.jpg",
     profileUrl: "https://liveridol.321.inc/member/172",
     pococha: "https://www.pococha.com/app/users/2ba61f10-e4af-4828-be64-138630f77e16",
   },
@@ -85,7 +99,8 @@ export const MEMBERS: Member[] = [
     id: "228",
     name: "清野真帆",
     group: "PALE TULLE",
-    photo: "/members/PT_web_aph_seinomaho.jpg",
+    arrangePhoto: "/members/PT__seinomaho.jpg",
+    portraitPhoto: "/members/PT_web_aph_seinomaho.jpg",
     profileUrl: "https://liveridol.321.inc/member/228",
   },
 
@@ -94,7 +109,8 @@ export const MEMBERS: Member[] = [
     id: "306",
     name: "ユカリ",
     group: "Glitter System",
-    photo: "/members/GS_web_aph_yukari.jpg",
+    arrangePhoto: "/members/GS__yukari.jpg",
+    portraitPhoto: "/members/GS_web_aph_yukari.jpg",
     profileUrl: "https://liveridol.321.inc/member/306",
     pococha: "https://www.pococha.com/app/users/5e8951c1-6cae-48c8-b19f-9f7eca6feb7e",
   },
@@ -102,7 +118,8 @@ export const MEMBERS: Member[] = [
     id: "217",
     name: "塩見きら",
     group: "Glitter System",
-    photo: "/members/GS_web_aph_shiomikira.jpg",
+    arrangePhoto: "/members/GS__shiomi.jpg",
+    portraitPhoto: "/members/GS_web_aph_shiomikira.jpg",
     profileUrl: "https://liveridol.321.inc/member/217",
     pococha: "https://www.pococha.com/app/users/84c82336-0638-4f17-aa47-a319b13e453b",
   },
@@ -110,14 +127,16 @@ export const MEMBERS: Member[] = [
     id: "208",
     name: "こもも",
     group: "Glitter System",
-    photo: "/members/GS_web_aph_komomo.jpg",
+    arrangePhoto: "/members/GS__komomo.jpg",
+    portraitPhoto: "/members/GS_web_aph_komomo.jpg",
     profileUrl: "https://liveridol.321.inc/member/208",
   },
   {
     id: "185",
     name: "えりんこ",
     group: "Glitter System",
-    photo: "/members/GS_web_aph_erinko.jpg",
+    arrangePhoto: "/members/GS__erinko.jpg",
+    portraitPhoto: "/members/GS_web_aph_erinko.jpg",
     profileUrl: "https://liveridol.321.inc/member/185",
     pococha: "https://www.pococha.com/app/users/3e32ebcb-f7ed-45f4-b6c1-2c354d59bf7e",
   },
@@ -126,21 +145,24 @@ export const MEMBERS: Member[] = [
     name: "三葉みゆ",
     subName: "かわちまる",
     group: "Glitter System",
-    photo: "/members/GS_web_aph_mitsuhamiyu.jpg",
+    arrangePhoto: "/members/GS__mitsuhamiyu.jpg",
+    portraitPhoto: "/members/GS_web_aph_mitsuhamiyu.jpg",
     profileUrl: "https://liveridol.321.inc/member/1238",
   },
   {
     id: "565",
     name: "七瀬ユリナ",
     group: "Glitter System",
-    photo: "/members/GS_web_aph_nanaseyurina.jpg",
+    arrangePhoto: "/members/GS__nanaseyurina.jpg",
+    portraitPhoto: "/members/GS_web_aph_nanaseyurina.jpg",
     profileUrl: "https://liveridol.321.inc/member/565",
   },
   {
     id: "1235",
     name: "みにい",
     group: "Glitter System",
-    photo: "/members/GS_web_aph_minnie.jpg",
+    arrangePhoto: "/members/GS__minnie.jpg",
+    portraitPhoto: "/members/GS_web_aph_minnie.jpg",
     profileUrl: "https://liveridol.321.inc/member/1235",
   },
 ];
