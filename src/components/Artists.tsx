@@ -198,12 +198,12 @@ function MemberCard({
             className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
           />
         </div>
-        <div className="bg-white px-2 py-3.5 sm:px-2.5 sm:py-4 flex items-center justify-center min-h-[54px] sm:min-h-[60px]">
+        <div className="bg-white px-2 py-4 sm:px-2.5 sm:py-5 flex items-center justify-center min-h-[62px] sm:min-h-[70px]">
           <p
             className="text-ink leading-tight text-center truncate w-full"
             style={{
               fontFamily: '"Dela Gothic One", system-ui, sans-serif',
-              fontSize: "clamp(12px, 2.8vw, 16px)",
+              fontSize: "clamp(14px, 3.4vw, 19px)",
               fontWeight: 400,
             }}
           >
