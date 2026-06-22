@@ -1,9 +1,8 @@
 "use client";
 
 /**
- * 公式サイトCTA + SNS導線セクション
- * ARTISTS（わたしたちについて）と Countdown の間に配置。
- * ピンクの可愛い公式サイトボタン＋その下に X / Instagram / TikTok アイコン。
+ * 公式サイトCTA + SNS導線セクション（明るい背景版）
+ * GroupPhoto と Countdown の間に配置。下端でクリーム→暗背景にフェード。
  */
 
 type SocialLink = {
@@ -54,23 +53,21 @@ export default function FollowUs() {
   return (
     <section
       id="follow"
-      className="section-pad bg-ink relative overflow-hidden"
+      className="section-pad relative overflow-hidden"
+      style={{ background: "#faf6ec" }}
     >
-      <div className="absolute inset-0 -z-10 bg-aurora opacity-25" />
-
-      <div className="mx-auto max-w-3xl px-6 text-center">
-        {/* メインCTA：公式サイトボタン（ピンクで可愛い） */}
+      <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
+        {/* メインCTA：公式サイトボタン（ピンク・明るい背景でも映える） */}
         <a
           href="https://liveridol.321.inc/"
           target="_blank"
           rel="noopener noreferrer"
-          className="group relative inline-flex items-center gap-3 rounded-full px-8 py-4 sm:px-12 sm:py-5 text-white font-mincho text-base sm:text-xl shadow-[0_0_40px_-8px_rgba(255,105,180,0.7)] hover:shadow-[0_0_60px_-6px_rgba(255,105,180,0.9)] hover:scale-105 active:scale-95 transition-all"
+          className="group relative inline-flex items-center gap-3 rounded-full px-8 py-4 sm:px-12 sm:py-5 text-white text-base sm:text-xl shadow-[0_8px_30px_-6px_rgba(255,92,156,0.5)] hover:shadow-[0_12px_40px_-6px_rgba(255,92,156,0.7)] hover:scale-105 active:scale-95 transition-all font-semibold"
           style={{
             background:
               "linear-gradient(135deg, #FF8FB9 0%, #FF5C9C 50%, #FFB4D1 100%)",
           }}
         >
-          {/* キラキラ */}
           <span aria-hidden className="text-lg sm:text-2xl">✨</span>
           <span className="relative">321 IDOL PROJECT 公式サイト</span>
           <span
@@ -90,7 +87,7 @@ export default function FollowUs() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`321 IDOL PROJECT ${l.label}`}
-                className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full border border-white/20 bg-white/[0.04] text-mist/85 hover:text-white hover:bg-white/10 hover:border-white/40 hover:scale-110 active:scale-95 transition-all"
+                className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full border border-ink/15 bg-white text-ink/80 hover:text-ink hover:bg-white hover:border-ink/40 hover:scale-110 active:scale-95 transition-all shadow-sm"
               >
                 <IconSvg kind={l.icon} />
               </a>
@@ -98,6 +95,15 @@ export default function FollowUs() {
           ))}
         </ul>
       </div>
+
+      {/* 下端：クリームから暗背景（Countdown）へフェード */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-32 z-0"
+        style={{
+          background:
+            "linear-gradient(to top, rgb(8,6,15) 0%, rgba(8,6,15,0.7) 30%, rgba(8,6,15,0) 100%)",
+        }}
+      />
     </section>
   );
 }

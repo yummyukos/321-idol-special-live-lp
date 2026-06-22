@@ -10,11 +10,13 @@ import {
 } from "@/lib/members";
 
 /**
- * ABOUT US セクション
- *  - 見出し「わたしたちについて」（はじめて知ってくれたあなたへ）
- *  - 2グループ紹介＋14人のプロフ写真グリッド（3列）
- *  - メンバーカードをタップで、画面中央モーダルでアー写（全身）＋プロフィール詳細＋SNS表示
+ * ABOUT US セクション（明るい背景版）
+ *  - 背景：淡いクリーム色
+ *  - 上端：暗い Message からのフェード遷移
+ *  - 文字色：ink（黒系）
  */
+
+const LIGHT_BG = "#faf6ec";
 
 function SocialIcon({
   kind,
@@ -42,7 +44,6 @@ function SocialIcon({
         </svg>
       );
     case "room":
-      // 配信ルームアイコン（放送波）
       return (
         <svg viewBox="0 0 24 24" className={cls} aria-hidden>
           <path d="M12 9.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm-3.05-2.83a.75.75 0 0 1 0 1.06 4.62 4.62 0 0 0 0 6.54.75.75 0 1 1-1.06 1.06 6.12 6.12 0 0 1 0-8.66.75.75 0 0 1 1.06 0Zm6.1 0a.75.75 0 0 1 1.06 0 6.12 6.12 0 0 1 0 8.66.75.75 0 0 1-1.06-1.06 4.62 4.62 0 0 0 0-6.54.75.75 0 0 1 0-1.06ZM6.12 3.84a.75.75 0 0 1 0 1.06 10 10 0 0 0 0 14.2.75.75 0 1 1-1.06 1.06 11.5 11.5 0 0 1 0-16.32.75.75 0 0 1 1.06 0Zm11.76 0a.75.75 0 0 1 1.06 0 11.5 11.5 0 0 1 0 16.32.75.75 0 1 1-1.06-1.06 10 10 0 0 0 0-14.2.75.75 0 0 1 0-1.06Z" />
@@ -93,19 +94,12 @@ function MemberModal({
     primary?: boolean;
   }> = [];
   if (member.streamingRoom)
-    socials.push({
-      kind: "room",
-      href: member.streamingRoom,
-      label: "配信ルーム",
-      primary: true,
-    });
+    socials.push({ kind: "room", href: member.streamingRoom, label: "配信ルーム", primary: true });
   if (member.instagram)
     socials.push({ kind: "instagram", href: member.instagram, label: "Instagram" });
   if (member.x) socials.push({ kind: "x", href: member.x, label: "X" });
-  if (member.tiktok)
-    socials.push({ kind: "tiktok", href: member.tiktok, label: "TikTok" });
-  if (member.youtube)
-    socials.push({ kind: "youtube", href: member.youtube, label: "YouTube" });
+  if (member.tiktok) socials.push({ kind: "tiktok", href: member.tiktok, label: "TikTok" });
+  if (member.youtube) socials.push({ kind: "youtube", href: member.youtube, label: "YouTube" });
 
   return (
     <div
@@ -142,20 +136,14 @@ function MemberModal({
             {member.name}
           </p>
           {member.subName && (
-            <p className="text-mist/60 text-xs sm:text-sm mt-1">
-              {member.subName}
-            </p>
+            <p className="text-mist/60 text-xs sm:text-sm mt-1">{member.subName}</p>
           )}
-
-          {/* プロフィール詳細 */}
           <dl className="mt-5">
             <ProfileRow label="誕生日" value={member.birthday} />
             <ProfileRow label="出身地" value={member.birthplace} />
             <ProfileRow label="身長" value={member.height} />
             <ProfileRow label="カラー" value={member.color} />
           </dl>
-
-          {/* コメント */}
           {member.comment && (
             <div className="mt-5">
               <p className="text-xs sm:text-sm tracking-[0.2em] text-gold/80 mb-2">
@@ -166,8 +154,6 @@ function MemberModal({
               </p>
             </div>
           )}
-
-          {/* 配信ルーム & SNS */}
           <div className="mt-6 flex flex-wrap gap-2">
             {socials.map((s) => (
               <a
@@ -205,10 +191,10 @@ function MemberCard({
       <button
         type="button"
         onClick={() => onOpen(member)}
-        className="group block w-full text-left overflow-hidden rounded-2xl border border-white/10 hover:border-gold/40 transition-colors"
+        className="group block w-full text-left overflow-hidden rounded-2xl border border-ink/10 bg-white shadow-sm hover:shadow-md hover:border-ink/30 transition-all"
         aria-label={`${member.name} のプロフィールを開く`}
       >
-        <div className="relative aspect-[3/4] overflow-hidden bg-velvet">
+        <div className="relative aspect-[3/4] overflow-hidden bg-[#f4efe2]">
           <Image
             src={member.portraitPhoto}
             alt={member.name}
@@ -247,39 +233,25 @@ function GroupBlock({
     <div className="mb-14 last:mb-0">
       <div className="flex justify-center mb-7 sm:mb-9">
         {info.logoUrl ? (
-          // 案C：半透明白パネルにロゴ画像を乗せる
-          <div
-            className="inline-flex items-center justify-center rounded-2xl border border-white/15 px-8 py-5 sm:px-12 sm:py-6"
-            style={{
-              background: "rgba(255,255,255,0.08)",
-              backdropFilter: "blur(8px)",
-              WebkitBackdropFilter: "blur(8px)",
+          // 明るい背景なのでロゴはパネルなしでそのまま表示
+          <img
+            src={info.logoUrl}
+            alt={info.name}
+            className="h-14 sm:h-20 w-auto object-contain"
+            onError={(e) => {
+              const el = e.currentTarget;
+              el.style.display = "none";
+              const next = el.nextElementSibling as HTMLElement | null;
+              if (next) next.style.display = "block";
             }}
-          >
-            <img
-              src={info.logoUrl}
-              alt={info.name}
-              className="h-12 sm:h-16 w-auto object-contain"
-              onError={(e) => {
-                // ロゴ未配置の場合はテキストにフォールバック
-                const el = e.currentTarget;
-                el.style.display = "none";
-                const next = el.nextElementSibling as HTMLElement | null;
-                if (next) next.style.display = "block";
-              }}
-            />
-            <span
-              className="hidden text-2xl sm:text-3xl text-mist font-bold tracking-wide"
-              aria-hidden="true"
-            >
-              {info.name}
-            </span>
-          </div>
-        ) : (
-          <h3 className="text-2xl sm:text-3xl text-mist font-bold tracking-wide">
-            {info.name}
-          </h3>
-        )}
+          />
+        ) : null}
+        <h3
+          className={`text-2xl sm:text-3xl text-ink font-bold tracking-wide ${info.logoUrl ? "hidden" : ""}`}
+          aria-hidden={!!info.logoUrl}
+        >
+          {info.name}
+        </h3>
       </div>
 
       <ul className="grid grid-cols-3 gap-2.5 sm:gap-3.5">
@@ -296,13 +268,21 @@ export default function Artists() {
   return (
     <section
       id="artists"
-      className="section-pad bg-ink relative overflow-hidden"
+      className="section-pad relative overflow-hidden"
+      style={{ background: LIGHT_BG }}
     >
-      <div className="absolute inset-0 -z-10 bg-aurora opacity-25" />
-      <div className="mx-auto max-w-5xl px-6">
-        {/* サブタイトル：金色アクセントの淡いバッジ */}
+      {/* 上端：暗い Message からクリームへフェード */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-32 z-0"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgb(8,6,15) 0%, rgba(8,6,15,0.7) 30%, rgba(8,6,15,0) 100%)",
+        }}
+      />
+
+      <div className="relative z-10 mx-auto max-w-5xl px-6">
         <div className="text-center mb-3">
-          <span className="inline-block rounded-full border border-gold/40 bg-gold/15 text-gold px-4 py-1.5 text-[11px] sm:text-xs tracking-[0.2em] backdrop-blur-sm">
+          <span className="inline-block rounded-full bg-ink/8 border border-ink/15 text-ink/70 px-4 py-1.5 text-[11px] sm:text-xs tracking-[0.2em]">
             はじめて知ってくれたあなたへ
           </span>
         </div>
@@ -310,14 +290,14 @@ export default function Artists() {
           className="text-center text-3xl sm:text-5xl mb-6 italic font-semibold tracking-wide leading-tight"
           style={{
             color: "transparent",
-            WebkitTextStroke: "1.3px #e9e6f0",
+            WebkitTextStroke: "1.3px #08060f",
           }}
         >
           私たち、
           <br />
           321 IDOL PROJECT
         </h2>
-        <p className="text-center text-mist/85 text-sm sm:text-base max-w-2xl mx-auto mb-14 leading-relaxed">
+        <p className="text-center text-ink/85 text-sm sm:text-base max-w-2xl mx-auto mb-14 leading-relaxed">
           2つのグループ「PALE TULLE」と「Glitter System」からなる
           <br />
           ライブ配信から生まれたアイドルプロジェクト「321 IDOL PROJECT」。
@@ -325,7 +305,7 @@ export default function Artists() {
           ライバーとして、日々みんなと配信でつながりながら、アイドル活動も全力で！
           <br />
           応援してくれるあなたと一緒に、
-          <span className="text-gold">ライバー × アイドルの伝説</span>
+          <span className="text-glow">ライバー × アイドルの伝説</span>
           を作りたい！
         </p>
 
