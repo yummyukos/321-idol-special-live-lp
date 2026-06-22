@@ -245,10 +245,41 @@ function GroupBlock({
   const members = getMembersByGroup(group);
   return (
     <div className="mb-14 last:mb-0">
-      <div className="text-center mb-7 sm:mb-9">
-        <h3 className="text-2xl sm:text-3xl text-mist font-bold tracking-wide">
-          {info.name}
-        </h3>
+      <div className="flex justify-center mb-7 sm:mb-9">
+        {info.logoUrl ? (
+          // 案C：半透明白パネルにロゴ画像を乗せる
+          <div
+            className="inline-flex items-center justify-center rounded-2xl border border-white/15 px-8 py-5 sm:px-12 sm:py-6"
+            style={{
+              background: "rgba(255,255,255,0.08)",
+              backdropFilter: "blur(8px)",
+              WebkitBackdropFilter: "blur(8px)",
+            }}
+          >
+            <img
+              src={info.logoUrl}
+              alt={info.name}
+              className="h-12 sm:h-16 w-auto object-contain"
+              onError={(e) => {
+                // ロゴ未配置の場合はテキストにフォールバック
+                const el = e.currentTarget;
+                el.style.display = "none";
+                const next = el.nextElementSibling as HTMLElement | null;
+                if (next) next.style.display = "block";
+              }}
+            />
+            <span
+              className="hidden text-2xl sm:text-3xl text-mist font-bold tracking-wide"
+              aria-hidden="true"
+            >
+              {info.name}
+            </span>
+          </div>
+        ) : (
+          <h3 className="text-2xl sm:text-3xl text-mist font-bold tracking-wide">
+            {info.name}
+          </h3>
+        )}
       </div>
 
       <ul className="grid grid-cols-3 gap-2.5 sm:gap-3.5">
@@ -275,7 +306,13 @@ export default function Artists() {
             はじめて知ってくれたあなたへ
           </span>
         </div>
-        <h2 className="text-center text-3xl sm:text-4xl text-mist mb-6 italic">
+        <h2
+          className="text-center text-3xl sm:text-5xl mb-6 italic font-semibold tracking-wide"
+          style={{
+            color: "transparent",
+            WebkitTextStroke: "1.5px #e9e6f0",
+          }}
+        >
           わたしたちについて
         </h2>
         <p className="text-center text-mist/85 text-sm sm:text-base max-w-2xl mx-auto mb-14 leading-relaxed">

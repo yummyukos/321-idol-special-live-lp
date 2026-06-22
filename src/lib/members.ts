@@ -277,6 +277,8 @@ export type GroupInfo = {
   memberCount: number;
   siteUrl: string;
   concept?: string;
+  /** ロゴ画像（public/からの相対パス）。あればテキスト見出しの代わりに表示 */
+  logoUrl?: string;
 };
 
 export const GROUPS: Record<GroupName, GroupInfo> = {
@@ -286,6 +288,7 @@ export const GROUPS: Record<GroupName, GroupInfo> = {
     nickname: "ペルチュ",
     memberCount: 7,
     siteUrl: "https://paletulle.321.inc/",
+    logoUrl: "/logos/pale-tulle.png",
   },
   "Glitter System": {
     name: "Glitter System",
@@ -293,6 +296,7 @@ export const GROUPS: Record<GroupName, GroupInfo> = {
     nickname: "グリシス",
     memberCount: 7,
     siteUrl: "https://glittersystem.321.inc/",
+    logoUrl: "/logos/glitter-system.png",
   },
 };
 
