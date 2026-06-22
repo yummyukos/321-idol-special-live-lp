@@ -309,16 +309,19 @@ export default function Artists() {
           わたしたちについて
         </h2>
         <p className="text-center text-mist/85 text-base sm:text-lg max-w-2xl mx-auto mb-14 leading-relaxed">
-          2つのグループ「<strong className="font-bold text-mist">PALE TULLE</strong>」と「
+          「<strong className="font-bold text-mist">PALE TULLE</strong>」と「
           <strong className="font-bold text-mist">Glitter System</strong>」からなる
           <br />
-          ライブ配信から生まれたアイドルプロジェクト「321 IDOL PROJECT」。
+          ライブ配信から生まれたアイドルプロジェクト
           <br />
-          ライバーとして、日々みんなと配信でつながりながら
+          「321 IDOL PROJECT」
           <br />
-          アイドル活動も全力で！
+          ライバーとして、日々みんなと
+          <br />
+          配信でつながりながら、アイドル活動も全力で！
           <br />
           応援してくれるあなたと一緒に、
+          <br />
           <span className="text-glow font-bold">ライバー × アイドルの伝説</span>
           を作りたい！
         </p>
