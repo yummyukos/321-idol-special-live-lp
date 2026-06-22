@@ -238,14 +238,14 @@ export default function Artists() {
       <div className="absolute inset-0 -z-10 bg-aurora opacity-25" />
       <div className="mx-auto max-w-5xl px-6">
         <div className="text-center mb-3">
-          <span className="inline-block bg-white text-ink rounded-full px-4 py-1.5 text-[11px] sm:text-xs tracking-[0.2em] font-mincho">
+          <span className="inline-block bg-white text-ink rounded-full px-4 py-1.5 text-[11px] sm:text-xs tracking-[0.2em]">
             はじめて知ってくれたあなたへ
           </span>
         </div>
-        <h2 className="text-center font-mincho text-3xl sm:text-4xl text-mist mb-6">
+        <h2 className="text-center text-3xl sm:text-4xl text-mist mb-6 font-semibold">
           わたしたちについて
         </h2>
-        <p className="text-center text-mist/85 text-sm sm:text-base max-w-2xl mx-auto mb-14 leading-relaxed font-mincho">
+        <p className="text-center text-mist/85 text-sm sm:text-base max-w-2xl mx-auto mb-14 leading-relaxed">
           2つのグループ「PALE TULLE」と「Glitter System」からなる
           <br />
           ライブ配信から生まれたアイドルプロジェクト「321 IDOL PROJECT」。

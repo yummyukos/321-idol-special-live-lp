@@ -11,7 +11,7 @@ export default function TicketCta() {
         <h2 className="font-mincho text-3xl sm:text-5xl text-mist mb-4">
           チケット販売中
         </h2>
-        <p className="font-mincho text-mist text-base sm:text-xl max-w-xl mx-auto mb-10 leading-relaxed">
+        <p className="text-mist text-base sm:text-xl max-w-xl mx-auto mb-10 leading-relaxed">
           あなたの1枚が、ライブを変える。
         </p>
 

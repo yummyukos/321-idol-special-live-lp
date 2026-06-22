@@ -36,7 +36,7 @@ export default function InvitationRewards() {
         <h2 className="text-center font-mincho text-3xl sm:text-4xl text-mist mb-3">
           招待特典
         </h2>
-        <p className="text-center text-mist/90 text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed font-mincho">
+        <p className="text-center text-mist/90 text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
           招待した人数に応じて、招待特典をプレゼント！
         </p>
 
@@ -89,7 +89,7 @@ export default function InvitationRewards() {
         </div>
 
         {/* 50人以降は普通のテキストで（カードにしない） */}
-        <p className="mt-6 text-center text-mist/90 text-sm sm:text-base font-mincho">
+        <p className="mt-6 text-center text-mist/90 text-sm sm:text-base">
           ＋ {INVITATION_BONUS.countLabel}{INVITATION_BONUS.suffixLabel}は、
           {INVITATION_BONUS.title}
         </p>
