@@ -13,7 +13,7 @@ import {
  * ABOUT US セクション
  *  - 見出し「わたしたちについて」（はじめて知ってくれたあなたへ）
  *  - 2グループ紹介＋14人のプロフ写真グリッド（3列）
- *  - メンバーのカードをタップで、画面中央モーダルでアー写（全身）＋SNS表示
+ *  - メンバーカードをタップで、画面中央モーダルでアー写（全身）＋プロフィール詳細＋SNS表示
  */
 
 function SocialIcon({
@@ -62,6 +62,16 @@ function SocialIcon({
   }
 }
 
+function ProfileRow({ label, value }: { label: string; value?: string }) {
+  if (!value) return null;
+  return (
+    <div className="grid grid-cols-[80px_1fr] gap-3 py-2 border-b border-white/10 last:border-b-0">
+      <dt className="text-xs sm:text-sm tracking-[0.2em] text-gold/80">{label}</dt>
+      <dd className="text-mist text-sm sm:text-base">{value}</dd>
+    </div>
+  );
+}
+
 function MemberModal({
   member,
   onClose,
@@ -99,12 +109,12 @@ function MemberModal({
 
   return (
     <div
-      className="fixed inset-0 z-[80] flex items-center justify-center p-4 sm:p-8"
+      className="fixed inset-0 z-[80] flex items-start sm:items-center justify-center p-4 sm:p-8 overflow-y-auto"
       onClick={onClose}
     >
       <div className="absolute inset-0 bg-ink/85 backdrop-blur-md" />
       <div
-        className="relative max-w-md w-full max-h-[92vh] overflow-y-auto rounded-2xl border border-white/15 bg-velvet"
+        className="relative max-w-md w-full my-auto rounded-2xl border border-white/15 bg-velvet"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -127,8 +137,8 @@ function MemberModal({
             priority
           />
         </div>
-        <div className="px-5 py-4">
-          <p className="font-mincho text-mist text-xl sm:text-2xl leading-tight">
+        <div className="px-5 py-5 sm:px-6 sm:py-6">
+          <p className="font-mincho text-mist text-2xl sm:text-3xl leading-tight">
             {member.name}
           </p>
           {member.subName && (
@@ -136,11 +146,29 @@ function MemberModal({
               {member.subName}
             </p>
           )}
-          <p className="text-gold/80 text-[10px] tracking-widest mt-2">
-            {member.group}
-          </p>
 
-          <div className="mt-5 flex flex-wrap gap-2">
+          {/* プロフィール詳細 */}
+          <dl className="mt-5">
+            <ProfileRow label="誕生日" value={member.birthday} />
+            <ProfileRow label="出身地" value={member.birthplace} />
+            <ProfileRow label="身長" value={member.height} />
+            <ProfileRow label="カラー" value={member.color} />
+          </dl>
+
+          {/* コメント */}
+          {member.comment && (
+            <div className="mt-5">
+              <p className="text-xs sm:text-sm tracking-[0.2em] text-gold/80 mb-2">
+                コメント
+              </p>
+              <p className="text-mist/90 text-sm sm:text-[15px] leading-relaxed whitespace-pre-wrap">
+                {member.comment}
+              </p>
+            </div>
+          )}
+
+          {/* SNS */}
+          <div className="mt-6 flex flex-wrap gap-2">
             {socials.map((s) => (
               <a
                 key={s.label}
@@ -214,7 +242,7 @@ function GroupBlock({
   return (
     <div className="mb-14 last:mb-0">
       <div className="text-center mb-7 sm:mb-9">
-        <h3 className="font-mincho text-2xl sm:text-3xl text-mist">
+        <h3 className="text-2xl sm:text-3xl text-mist font-bold tracking-wide">
           {info.name}
         </h3>
       </div>
@@ -237,12 +265,13 @@ export default function Artists() {
     >
       <div className="absolute inset-0 -z-10 bg-aurora opacity-25" />
       <div className="mx-auto max-w-5xl px-6">
+        {/* サブタイトル：金色アクセントの淡いバッジ */}
         <div className="text-center mb-3">
-          <span className="inline-block bg-white text-ink rounded-full px-4 py-1.5 text-[11px] sm:text-xs tracking-[0.2em]">
+          <span className="inline-block rounded-full border border-gold/40 bg-gold/15 text-gold px-4 py-1.5 text-[11px] sm:text-xs tracking-[0.2em] backdrop-blur-sm">
             はじめて知ってくれたあなたへ
           </span>
         </div>
-        <h2 className="text-center text-3xl sm:text-4xl text-mist mb-6 font-semibold">
+        <h2 className="text-center font-mincho text-3xl sm:text-4xl text-mist mb-6">
           わたしたちについて
         </h2>
         <p className="text-center text-mist/85 text-sm sm:text-base max-w-2xl mx-auto mb-14 leading-relaxed">
