@@ -58,6 +58,7 @@ export const MEMBERS: Member[] = [
       "普段はポコチャでのんびり雑談配信をしています！\n30代に突入しましたが、321アイドル部の魅力をたくさんの人に届けられるようにますます頑張ります！♡",
     streamingRoom:
       "https://www.pococha.com/app/users/339cfe2b-57d4-4bf3-aa0e-ea42ed96153b",
+    instagram: "https://www.instagram.com/asachan_live/",
   },
   {
     id: "211",
@@ -73,6 +74,7 @@ export const MEMBERS: Member[] = [
     comment:
       "一瞬、一瞬を大事に会いに来て下さった皆さんを全員幸せに出来るように自分自身も楽しみながらステージに立ちます！",
     streamingRoom: "https://www.tiktok.com/@yuuri_3ito",
+    instagram: "https://www.instagram.com/yuuri_3ito/",
   },
   {
     id: "301",
@@ -90,6 +92,7 @@ export const MEMBERS: Member[] = [
       "久しぶりにペルチュの曲ができてとーっても嬉しいです！オレンジ似合うって言ってもらえるようにパワフルで元気にがんばるぞー！猫とお酒が好きです！",
     streamingRoom:
       "https://www.pococha.com/app/users/7c888755-8a07-4b88-a0fd-6c5619cdb6f9",
+    instagram: "https://www.instagram.com/yuiimiinii_/",
   },
   {
     id: "175",
@@ -107,6 +110,7 @@ export const MEMBERS: Member[] = [
       "アイドル部のため、PALE TULLEのために、私のできることを精一杯頑張ります🐰⸝꙳\nこの半年間は、あっという間に過ぎてしまうと思うのですが、みなさんとかけがえのない時間を大事に大事に共有していきたいです！\n7月のKanadevia Hallが素敵な日になって、応援しててよかったと思ってもらえるように、これから色んな挑戦をしていきますのであたたかく見守ってくださると幸いです。\nどうぞよろしくお願いします！",
     streamingRoom:
       "https://www.pococha.com/ja-jp/app/users/671d5f3f-4b00-45eb-bd47-16b5cd59d618",
+    instagram: "https://www.instagram.com/new_utandayo/",
   },
   {
     id: "1164",
@@ -124,6 +128,7 @@ export const MEMBERS: Member[] = [
       "富山県在住！レッド担当♥️\n「るのるん」こと【みなみるの】です🐹\nおとなしそうに見えて、実は喋りだすと止まらないおふざけ大好きっ子！ 世界30ヵ国を旅するバックパッカーで、特に台湾はマニア級🇹🇼 釣り、お酒、脱出ゲーム、そして配信まで❣️ 常に全力で「楽しい」を追求しています🥃🎣\n皆さんの元気や笑顔のため！情熱の赤を胸にアイドルも配信も全力で頑張ります🎤❤️\n私のこと一番近くで見守っててほしいな🫶\nるのるんの成長を〜？\n＼みんなみるの〜👀❤️／",
     streamingRoom:
       "https://www.pococha.com/ja-jp/app/users/dead0da9-958d-4162-be61-9efeabfad4e9",
+    instagram: "https://www.instagram.com/minami_runo/",
   },
   {
     id: "172",
@@ -176,6 +181,7 @@ export const MEMBERS: Member[] = [
       "ステージや配信を通して、みなさんの毎日に笑顔のきっかけを作れたら嬉しいです✨\nユカリのことを推して後悔させないよっ♡",
     streamingRoom:
       "https://www.pococha.com/app/users/5e8951c1-6cae-48c8-b19f-9f7eca6feb7e",
+    instagram: "https://www.instagram.com/___yukariiin___/",
   },
   {
     id: "217",
@@ -192,6 +198,7 @@ export const MEMBERS: Member[] = [
       "見た目はアイドル！中身はおじさん！ギャンブルとお酒と阪神タイガースが好きです。",
     streamingRoom:
       "https://www.pococha.com/app/users/84c82336-0638-4f17-aa47-a319b13e453b",
+    instagram: "https://www.instagram.com/kira_kmyd/",
   },
   {
     id: "208",
@@ -207,6 +214,7 @@ export const MEMBERS: Member[] = [
     comment: "一生懸命がんばりますっ‪ᐢ⸝⸝•⩊•⸝⸝ᐢ❤︎",
     streamingRoom:
       "https://www.pococha.com/ja-jp/app/users/ed61019b-e25f-421d-aa21-ee9bb42158e6",
+    instagram: "https://www.instagram.com/k__momo.04/",
   },
   {
     id: "185",
@@ -223,6 +231,7 @@ export const MEMBERS: Member[] = [
       "おいもパープル担当えりんこです🍠💜\n熟成16年、味わうほどハマります🍠",
     streamingRoom:
       "https://www.pococha.com/app/users/3e32ebcb-f7ed-45f4-b6c1-2c354d59bf7e",
+    instagram: "https://www.instagram.com/erinkoo215/",
   },
   {
     id: "1238",
@@ -238,6 +247,7 @@ export const MEMBERS: Member[] = [
     color: "ピンク",
     comment: "推しメンにしてくれますか？♡",
     streamingRoom: "https://www.tiktok.com/@miyu__mitsuha",
+    instagram: "https://www.instagram.com/miyu__mitsuha/",
   },
   {
     id: "565",
@@ -253,6 +263,7 @@ export const MEMBERS: Member[] = [
     comment: "青色担当です\n初スタメンうれしいです頑張ります\n平和主義です",
     streamingRoom:
       "https://www.pococha.com/ja-jp/app/users/5668b91b-5dce-4d9c-902e-cb77a50dfcab",
+    instagram: "https://www.instagram.com/achamomo__/",
   },
   {
     id: "1235",
@@ -269,6 +280,7 @@ export const MEMBERS: Member[] = [
       "夢のアイドル人生がはじまりましたっ！\nアイドル・ライバー・看護師…\nなーんでもよくばっちゃう、よくばりバイリンガール🎀🧡\n配信はNGなし！\n居酒屋のように笑って泣いて、\nいつでも帰ってこられる居場所であり続けるよ🧡\n新人アイドル、推してみない？🫵\nみんなをHappyにするよ🪄✨\nこれから一緒に、たくさん思い出つくろうね🎀🧡",
     streamingRoom:
       "https://www.pococha.com/ja-jp/app/users/c2f0e17d-20f2-430d-b748-28f6fddf5f03",
+    instagram: "https://www.instagram.com/ikumin_hi/",
   },
 ];
 
