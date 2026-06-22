@@ -53,9 +53,21 @@ export default function FollowUs() {
   return (
     <section
       id="follow"
-      className="section-pad relative overflow-hidden"
+      className="relative overflow-hidden pt-12 sm:pt-16 pb-44 sm:pb-56"
       style={{ background: "#faf6ec" }}
     >
+      {/* 装飾：淡いピンク・ゴールドのぼかし光（Artistsと統一感） */}
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+        <div
+          className="absolute left-[-15%] top-[20%] h-[55%] w-[45%] rounded-full"
+          style={{ background: "rgba(255, 200, 220, 0.5)", filter: "blur(120px)" }}
+        />
+        <div
+          className="absolute right-[-10%] top-[10%] h-[50%] w-[40%] rounded-full"
+          style={{ background: "rgba(255, 230, 180, 0.55)", filter: "blur(120px)" }}
+        />
+      </div>
+
       <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
         {/* メインCTA：公式サイトボタン（ピンク・明るい背景でも映える） */}
         <a

@@ -268,7 +268,7 @@ export default function Artists() {
   return (
     <section
       id="artists"
-      className="section-pad relative overflow-hidden"
+      className="relative overflow-hidden pt-40 sm:pt-56 pb-16 sm:pb-24"
       style={{ background: LIGHT_BG }}
     >
       {/* 上端：暗い Message からクリームへフェード */}
@@ -279,6 +279,22 @@ export default function Artists() {
             "linear-gradient(to bottom, rgb(8,6,15) 0%, rgba(8,6,15,0.7) 30%, rgba(8,6,15,0) 100%)",
         }}
       />
+
+      {/* 装飾：淡いピンク・ゴールド・パープルのぼかし光 */}
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+        <div
+          className="absolute left-[-10%] top-[18%] h-[40%] w-[45%] rounded-full"
+          style={{ background: "rgba(255, 200, 220, 0.55)", filter: "blur(120px)" }}
+        />
+        <div
+          className="absolute right-[-10%] top-[55%] h-[38%] w-[40%] rounded-full"
+          style={{ background: "rgba(255, 230, 180, 0.6)", filter: "blur(120px)" }}
+        />
+        <div
+          className="absolute left-[28%] bottom-[8%] h-[28%] w-[34%] rounded-full"
+          style={{ background: "rgba(220, 200, 255, 0.45)", filter: "blur(120px)" }}
+        />
+      </div>
 
       <div className="relative z-10 mx-auto max-w-5xl px-6">
         <div className="text-center mb-3">
@@ -298,14 +314,15 @@ export default function Artists() {
           321 IDOL PROJECT
         </h2>
         <p className="text-center text-ink/85 text-sm sm:text-base max-w-2xl mx-auto mb-14 leading-relaxed">
-          2つのグループ「PALE TULLE」と「Glitter System」からなる
+          2つのグループ「<strong className="font-bold text-ink">PALE TULLE</strong>」と「
+          <strong className="font-bold text-ink">Glitter System</strong>」からなる
           <br />
           ライブ配信から生まれたアイドルプロジェクト「321 IDOL PROJECT」。
           <br />
           ライバーとして、日々みんなと配信でつながりながら、アイドル活動も全力で！
           <br />
           応援してくれるあなたと一緒に、
-          <span className="text-glow">ライバー × アイドルの伝説</span>
+          <span className="text-glow font-bold">ライバー × アイドルの伝説</span>
           を作りたい！
         </p>
 
