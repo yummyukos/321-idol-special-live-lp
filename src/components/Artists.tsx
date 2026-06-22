@@ -10,13 +10,8 @@ import {
 } from "@/lib/members";
 
 /**
- * ABOUT US セクション（明るい背景版）
- *  - 背景：淡いクリーム色
- *  - 上端：暗い Message からのフェード遷移
- *  - 文字色：ink（黒系）
+ * ABOUT US セクション（暗背景版・ロゴの裏に白いブラーを敷いて視認性UP）
  */
-
-const LIGHT_BG = "#FFFFFF";
 
 function SocialIcon({
   kind,
@@ -191,11 +186,10 @@ function MemberCard({
       <button
         type="button"
         onClick={() => onOpen(member)}
-        className="group block w-full text-left overflow-hidden rounded-2xl border border-pink-200 shadow-sm hover:shadow-md hover:border-pink-300 transition-all"
-        style={{ background: "#FCE7EE" }}
+        className="group block w-full text-left overflow-hidden rounded-2xl border border-white/10 hover:border-gold/40 transition-colors"
         aria-label={`${member.name} のプロフィールを開く`}
       >
-        <div className="relative aspect-[3/4] overflow-hidden bg-pink-50">
+        <div className="relative aspect-[3/4] overflow-hidden bg-velvet">
           <Image
             src={member.portraitPhoto}
             alt={member.name}
@@ -204,7 +198,7 @@ function MemberCard({
             className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
           />
         </div>
-        <div className="px-2 py-3.5 sm:px-2.5 sm:py-4 flex items-center justify-center min-h-[54px] sm:min-h-[60px]" style={{ background: "#FCE7EE" }}>
+        <div className="bg-white px-2 py-3.5 sm:px-2.5 sm:py-4 flex items-center justify-center min-h-[54px] sm:min-h-[60px]">
           <p
             className="text-ink leading-tight text-center truncate w-full"
             style={{
@@ -234,30 +228,44 @@ function GroupBlock({
     <div className="mb-14 last:mb-0">
       <div className="flex justify-center mb-7 sm:mb-9">
         {info.logoUrl ? (
-          // 明るい背景なのでロゴはパネルなしでそのまま表示
-          // PALE TULLE はスクリプト体で繊細なため少し大きめに
-          <img
-            src={info.logoUrl}
-            alt={info.name}
-            className={
-              group === "PALE TULLE"
-                ? "h-20 sm:h-28 w-auto object-contain"
-                : "h-14 sm:h-20 w-auto object-contain"
-            }
-            onError={(e) => {
-              const el = e.currentTarget;
-              el.style.display = "none";
-              const next = el.nextElementSibling as HTMLElement | null;
-              if (next) next.style.display = "block";
-            }}
-          />
-        ) : null}
-        <h3
-          className={`text-2xl sm:text-3xl text-ink font-bold tracking-wide ${info.logoUrl ? "hidden" : ""}`}
-          aria-hidden={!!info.logoUrl}
-        >
-          {info.name}
-        </h3>
+          <div className="relative inline-flex items-center justify-center px-4">
+            {/* ロゴの裏に白いブラー光（視認性UP） */}
+            <div
+              aria-hidden
+              className="absolute inset-0 -m-6 sm:-m-10 rounded-full pointer-events-none"
+              style={{
+                background:
+                  "radial-gradient(ellipse at center, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.25) 40%, rgba(255,255,255,0) 75%)",
+                filter: "blur(30px)",
+              }}
+            />
+            <img
+              src={info.logoUrl}
+              alt={info.name}
+              className={`relative z-10 ${
+                group === "PALE TULLE"
+                  ? "h-20 sm:h-28"
+                  : "h-14 sm:h-20"
+              } w-auto object-contain`}
+              onError={(e) => {
+                const el = e.currentTarget;
+                el.style.display = "none";
+                const next = el.nextElementSibling as HTMLElement | null;
+                if (next) next.style.display = "block";
+              }}
+            />
+            <h3
+              className="hidden text-2xl sm:text-3xl text-mist font-bold tracking-wide"
+              aria-hidden="true"
+            >
+              {info.name}
+            </h3>
+          </div>
+        ) : (
+          <h3 className="text-2xl sm:text-3xl text-mist font-bold tracking-wide">
+            {info.name}
+          </h3>
+        )}
       </div>
 
       <ul className="grid grid-cols-3 gap-2.5 sm:gap-3.5">
@@ -274,12 +282,12 @@ export default function Artists() {
   return (
     <section
       id="artists"
-      className="relative overflow-hidden pt-20 sm:pt-28 pb-16 sm:pb-24"
-      style={{ background: LIGHT_BG }}
+      className="section-pad bg-ink relative overflow-hidden"
     >
-      <div className="relative z-10 mx-auto max-w-5xl px-6">
+      <div className="absolute inset-0 -z-10 bg-aurora opacity-25" />
+      <div className="mx-auto max-w-5xl px-6">
         <div className="text-center mb-3">
-          <span className="inline-block rounded-full bg-ink/8 border border-ink/15 text-ink/70 px-4 py-1.5 text-[11px] sm:text-xs tracking-[0.2em]">
+          <span className="inline-block rounded-full border border-gold/40 bg-gold/15 text-gold px-4 py-1.5 text-[11px] sm:text-xs tracking-[0.2em] backdrop-blur-sm">
             はじめて知ってくれたあなたへ
           </span>
         </div>
@@ -287,16 +295,16 @@ export default function Artists() {
           className="text-center text-3xl sm:text-5xl mb-6 italic font-semibold tracking-wide leading-tight"
           style={{
             color: "transparent",
-            WebkitTextStroke: "1.3px #08060f",
+            WebkitTextStroke: "1.3px #e9e6f0",
           }}
         >
           私たち、
           <br />
           321 IDOL PROJECT
         </h2>
-        <p className="text-center text-ink/85 text-sm sm:text-base max-w-2xl mx-auto mb-14 leading-relaxed">
-          2つのグループ「<strong className="font-bold text-ink">PALE TULLE</strong>」と「
-          <strong className="font-bold text-ink">Glitter System</strong>」からなる
+        <p className="text-center text-mist/85 text-sm sm:text-base max-w-2xl mx-auto mb-14 leading-relaxed">
+          2つのグループ「<strong className="font-bold text-mist">PALE TULLE</strong>」と「
+          <strong className="font-bold text-mist">Glitter System</strong>」からなる
           <br />
           ライブ配信から生まれたアイドルプロジェクト「321 IDOL PROJECT」。
           <br />

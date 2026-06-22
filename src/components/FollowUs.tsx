@@ -1,8 +1,8 @@
 "use client";
 
 /**
- * 公式サイトCTA + SNS導線セクション（明るい背景版）
- * GroupPhoto と Countdown の間に配置。下端でクリーム→暗背景にフェード。
+ * 公式サイトCTA + SNS導線セクション（暗背景版）
+ * GroupPhoto と Countdown の間に配置。
  */
 
 type SocialLink = {
@@ -53,16 +53,17 @@ export default function FollowUs() {
   return (
     <section
       id="follow"
-      className="relative overflow-hidden pt-12 sm:pt-16 pb-16 sm:pb-24"
-      style={{ background: "#FFFFFF" }}
+      className="section-pad bg-ink relative overflow-hidden"
     >
+      <div className="absolute inset-0 -z-10 bg-aurora opacity-30" />
+
       <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
-        {/* メインCTA：公式サイトボタン（ピンク・明るい背景でも映える） */}
+        {/* メインCTA：公式サイトボタン（ピンクで可愛い） */}
         <a
           href="https://liveridol.321.inc/"
           target="_blank"
           rel="noopener noreferrer"
-          className="group relative inline-flex items-center gap-3 rounded-full px-8 py-4 sm:px-12 sm:py-5 text-white text-base sm:text-xl shadow-[0_8px_30px_-6px_rgba(255,92,156,0.5)] hover:shadow-[0_12px_40px_-6px_rgba(255,92,156,0.7)] hover:scale-105 active:scale-95 transition-all font-semibold"
+          className="group relative inline-flex items-center gap-3 rounded-full px-8 py-4 sm:px-12 sm:py-5 text-white text-base sm:text-xl font-semibold shadow-[0_0_40px_-8px_rgba(255,105,180,0.7)] hover:shadow-[0_0_60px_-6px_rgba(255,105,180,0.9)] hover:scale-105 active:scale-95 transition-all"
           style={{
             background:
               "linear-gradient(135deg, #FF8FB9 0%, #FF5C9C 50%, #FFB4D1 100%)",
@@ -87,8 +88,7 @@ export default function FollowUs() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`321 IDOL PROJECT ${l.label}`}
-                className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full border border-pink-200 text-ink/80 hover:text-ink hover:border-pink-400 hover:scale-110 active:scale-95 transition-all shadow-sm"
-                style={{ background: "#FCE7EE" }}
+                className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full border border-white/20 bg-white/[0.04] text-mist/85 hover:text-white hover:bg-white/10 hover:border-white/40 hover:scale-110 active:scale-95 transition-all"
               >
                 <IconSvg kind={l.icon} />
               </a>
@@ -96,7 +96,6 @@ export default function FollowUs() {
           ))}
         </ul>
       </div>
-
     </section>
   );
 }
