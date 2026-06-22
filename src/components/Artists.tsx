@@ -185,29 +185,17 @@ function MemberCard({
             className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
           />
         </div>
-        <div className="bg-white px-2 py-2 sm:px-2.5 sm:py-2.5">
+        <div className="bg-white px-2 py-3.5 sm:px-2.5 sm:py-4 flex items-center justify-center min-h-[54px] sm:min-h-[60px]">
           <p
-            className="text-ink leading-tight truncate"
+            className="text-ink leading-tight text-center truncate w-full"
             style={{
               fontFamily: '"Dela Gothic One", system-ui, sans-serif',
-              fontSize: "clamp(11px, 2.5vw, 14px)",
+              fontSize: "clamp(12px, 2.8vw, 16px)",
               fontWeight: 400,
             }}
           >
             {member.name}
           </p>
-          {member.subName && (
-            <p
-              className="leading-tight mt-0.5 truncate text-ink/60"
-              style={{
-                fontFamily: '"Dela Gothic One", system-ui, sans-serif',
-                fontSize: "clamp(9px, 1.8vw, 10px)",
-                fontWeight: 400,
-              }}
-            >
-              {member.subName}
-            </p>
-          )}
         </div>
       </button>
     </li>
@@ -249,22 +237,24 @@ export default function Artists() {
     >
       <div className="absolute inset-0 -z-10 bg-aurora opacity-25" />
       <div className="mx-auto max-w-5xl px-6">
-        <p className="text-center text-xs tracking-[0.4em] text-gold/80 mb-2">
-          はじめて知ってくれたあなたへ
-        </p>
-        <h2 className="text-center font-mincho text-3xl sm:text-4xl text-mist mb-5">
+        <div className="text-center mb-3">
+          <span className="inline-block bg-white text-ink rounded-full px-4 py-1.5 text-[11px] sm:text-xs tracking-[0.2em] font-mincho">
+            はじめて知ってくれたあなたへ
+          </span>
+        </div>
+        <h2 className="text-center font-mincho text-3xl sm:text-4xl text-mist mb-6">
           わたしたちについて
         </h2>
         <p className="text-center text-mist/85 text-sm sm:text-base max-w-2xl mx-auto mb-14 leading-relaxed font-mincho">
           2つのグループ「PALE TULLE」と「Glitter System」からなる
-          <br className="hidden sm:inline" />
+          <br />
           ライブ配信から生まれたアイドルプロジェクト「321 IDOL PROJECT」。
           <br />
           ライバーとして、日々みんなと配信でつながりながら、アイドル活動も全力で！
           <br />
           応援してくれるあなたと一緒に、
           <span className="text-gold">ライバー × アイドルの伝説</span>
-          を作ってみせる！
+          を作りたい！
         </p>
 
         <GroupBlock group="PALE TULLE" onOpen={setOpen} />
