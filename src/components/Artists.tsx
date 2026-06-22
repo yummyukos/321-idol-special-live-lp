@@ -310,7 +310,7 @@ export default function Artists() {
         </h2>
         <p className="text-center text-mist/85 text-base sm:text-lg max-w-2xl mx-auto mb-14 leading-relaxed">
           「<strong className="font-bold text-mist">PALE TULLE</strong>」と「
-          <strong className="font-bold text-mist">Glitter System</strong>」からなる
+          <strong className="font-bold text-mist">グリッターシステム</strong>」からなる
           <br />
           ライブ配信から生まれたアイドルプロジェクト
           <br />
