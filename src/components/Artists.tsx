@@ -313,6 +313,7 @@ export default function Artists() {
           <strong className="font-bold text-mist">Glitter System</strong>」からなる
           <br />
           ライブ配信から生まれたアイドルプロジェクト「321 IDOL PROJECT」。
+          <br />
           ライバーとして、日々みんなと配信でつながりながら
           <br />
           アイドル活動も全力で！
