@@ -1,22 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import {
   GROUPS,
-  MEMBERS,
   getMembersByGroup,
   type GroupName,
   type Member,
 } from "@/lib/members";
 
 /**
- * ARTISTSセクション
- * PALE TULLE と Glitter System の紹介＋14人のメンバーカード
- * カードをタップで一言メッセージ・SNSが展開
+ * ABOUT US セクション（暗背景版・ロゴの裏に白いブラーを敷いて視認性UP）
  */
 
-function SocialIcon({ kind }: { kind: "instagram" | "x" | "tiktok" | "pococha" | "youtube" | "profile" }) {
+function SocialIcon({
+  kind,
+}: {
+  kind: "instagram" | "x" | "tiktok" | "room" | "youtube";
+}) {
   const cls = "w-4 h-4 fill-current";
   switch (kind) {
     case "instagram":
@@ -37,11 +38,10 @@ function SocialIcon({ kind }: { kind: "instagram" | "x" | "tiktok" | "pococha" |
           <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43V8.7a8.16 8.16 0 0 0 4.77 1.52V6.78a4.85 4.85 0 0 1-1.84-.09Z" />
         </svg>
       );
-    case "pococha":
-      // Pocochaは独自カラーの炎マーク的アイコン
+    case "room":
       return (
         <svg viewBox="0 0 24 24" className={cls} aria-hidden>
-          <path d="M12 2c0 3.5-3 5.5-3 9a3 3 0 0 0 3 3 3 3 0 0 0 3-3c0-1 .5-2 1-2.5 1.5 1 3 3.5 3 6.5a7 7 0 1 1-14 0c0-5 4-7 4-13 1.5 0 3 0 3 0Z" />
+          <path d="M12 9.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm-3.05-2.83a.75.75 0 0 1 0 1.06 4.62 4.62 0 0 0 0 6.54.75.75 0 1 1-1.06 1.06 6.12 6.12 0 0 1 0-8.66.75.75 0 0 1 1.06 0Zm6.1 0a.75.75 0 0 1 1.06 0 6.12 6.12 0 0 1 0 8.66.75.75 0 0 1-1.06-1.06 4.62 4.62 0 0 0 0-6.54.75.75 0 0 1 0-1.06ZM6.12 3.84a.75.75 0 0 1 0 1.06 10 10 0 0 0 0 14.2.75.75 0 1 1-1.06 1.06 11.5 11.5 0 0 1 0-16.32.75.75 0 0 1 1.06 0Zm11.76 0a.75.75 0 0 1 1.06 0 11.5 11.5 0 0 1 0 16.32.75.75 0 1 1-1.06-1.06 10 10 0 0 0 0-14.2.75.75 0 0 1 0-1.06Z" />
         </svg>
       );
     case "youtube":
@@ -50,70 +50,106 @@ function SocialIcon({ kind }: { kind: "instagram" | "x" | "tiktok" | "pococha" |
           <path d="M23.5 6.2a3 3 0 0 0-2.1-2.13C19.6 3.5 12 3.5 12 3.5s-7.6 0-9.4.57A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.13c1.8.57 9.4.57 9.4.57s7.6 0 9.4-.57a3 3 0 0 0 2.1-2.13A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6Z" />
         </svg>
       );
-    case "profile":
-      return (
-        <svg viewBox="0 0 24 24" className={cls} aria-hidden>
-          <path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Zm0 2.5c-3.34 0-10 1.67-10 5V22h20v-2.5c0-3.33-6.66-5-10-5Z" />
-        </svg>
-      );
   }
 }
 
-function MemberCard({ member }: { member: Member }) {
-  const [expanded, setExpanded] = useState(false);
-  const socials: Array<{ kind: Parameters<typeof SocialIcon>[0]["kind"]; href: string; label: string }> = [];
-  if (member.instagram) socials.push({ kind: "instagram", href: member.instagram, label: "Instagram" });
+function ProfileRow({ label, value }: { label: string; value?: string }) {
+  if (!value) return null;
+  return (
+    <div className="grid grid-cols-[80px_1fr] gap-3 py-2 border-b border-white/10 last:border-b-0">
+      <dt className="text-xs sm:text-sm tracking-[0.2em] text-gold/80">{label}</dt>
+      <dd className="text-mist text-sm sm:text-base">{value}</dd>
+    </div>
+  );
+}
+
+function MemberModal({
+  member,
+  onClose,
+}: {
+  member: Member;
+  onClose: () => void;
+}) {
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handler);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handler);
+    };
+  }, [onClose]);
+
+  const socials: Array<{
+    kind: Parameters<typeof SocialIcon>[0]["kind"];
+    href: string;
+    label: string;
+    primary?: boolean;
+  }> = [];
+  if (member.streamingRoom)
+    socials.push({ kind: "room", href: member.streamingRoom, label: "配信ルーム", primary: true });
+  if (member.instagram)
+    socials.push({ kind: "instagram", href: member.instagram, label: "Instagram" });
   if (member.x) socials.push({ kind: "x", href: member.x, label: "X" });
   if (member.tiktok) socials.push({ kind: "tiktok", href: member.tiktok, label: "TikTok" });
-  if (member.pococha) socials.push({ kind: "pococha", href: member.pococha, label: "Pococha" });
   if (member.youtube) socials.push({ kind: "youtube", href: member.youtube, label: "YouTube" });
-  socials.push({ kind: "profile", href: member.profileUrl, label: "公式プロフィール" });
 
   return (
-    <li className="group">
-      <button
-        type="button"
-        onClick={() => setExpanded((v) => !v)}
-        aria-expanded={expanded}
-        className="block w-full text-left overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] hover:border-gold/40 transition-colors"
+    <div
+      className="fixed inset-0 z-[80] flex items-start sm:items-center justify-center p-4 sm:p-8 overflow-y-auto"
+      onClick={onClose}
+    >
+      <div className="absolute inset-0 bg-ink/85 backdrop-blur-md" />
+      <div
+        className="relative max-w-md w-full my-auto rounded-2xl border border-white/15 bg-velvet"
+        onClick={(e) => e.stopPropagation()}
       >
-        <div className="relative aspect-[3/4] overflow-hidden">
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="閉じる"
+          className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-ink/70 backdrop-blur-sm flex items-center justify-center text-mist hover:bg-ink transition-colors"
+        >
+          <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current" aria-hidden>
+            <path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+          </svg>
+        </button>
+        <div className="relative w-full aspect-[3/4] overflow-hidden rounded-t-2xl">
           <Image
-            src={member.photo}
+            src={member.arrangePhoto}
             alt={member.name}
             fill
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 220px"
-            className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+            sizes="(max-width: 640px) 92vw, 28rem"
+            className="object-cover"
+            priority
           />
-          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/90 via-ink/40 to-transparent p-3">
-            <p className="font-mincho text-mist text-sm sm:text-base leading-tight">
-              {member.name}
-            </p>
-            {member.subName && (
-              <p className="text-mist/60 text-[10px] sm:text-xs leading-tight mt-0.5">
-                {member.subName}
-              </p>
-            )}
-          </div>
-          <span
-            aria-hidden
-            className={`absolute top-2 right-2 inline-flex items-center justify-center w-6 h-6 rounded-full bg-ink/70 backdrop-blur-sm text-mist/80 text-[10px] transition-transform ${expanded ? "rotate-180" : ""}`}
-          >
-            ▾
-          </span>
         </div>
-      </button>
-
-      {expanded && (
-        <div className="mt-2 rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-          <p className="text-mist/85 text-xs sm:text-sm leading-relaxed mb-3 whitespace-pre-wrap">
-            {member.message ?? (
-              <span className="text-mist/45 italic">
-                一言メッセージ準備中...
-              </span>
-            )}
+        <div className="px-5 py-5 sm:px-6 sm:py-6">
+          <p className="font-mincho text-mist text-2xl sm:text-3xl leading-tight">
+            {member.name}
           </p>
-          <div className="flex flex-wrap gap-2">
+          {member.subName && (
+            <p className="text-mist/60 text-xs sm:text-sm mt-1">{member.subName}</p>
+          )}
+          <dl className="mt-5">
+            <ProfileRow label="誕生日" value={member.birthday} />
+            <ProfileRow label="出身地" value={member.birthplace} />
+            <ProfileRow label="身長" value={member.height} />
+            <ProfileRow label="カラー" value={member.color} />
+          </dl>
+          {member.comment && (
+            <div className="mt-5">
+              <p className="text-xs sm:text-sm tracking-[0.2em] text-gold/80 mb-2">
+                コメント
+              </p>
+              <p className="text-mist/90 text-sm sm:text-[15px] leading-relaxed whitespace-pre-wrap">
+                {member.comment}
+              </p>
+            </div>
+          )}
+          <div className="mt-6 flex flex-wrap gap-2">
             {socials.map((s) => (
               <a
                 key={s.label}
@@ -121,7 +157,11 @@ function MemberCard({ member }: { member: Member }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`${member.name} ${s.label}`}
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.04] px-3 py-1.5 text-mist/80 hover:text-gold hover:border-gold/40 transition-colors text-[11px]"
+                className={
+                  s.primary
+                    ? "inline-flex items-center gap-1.5 rounded-full border border-glow/50 bg-glow/20 px-4 py-2 text-white hover:bg-glow/30 hover:border-glow transition-colors text-xs sm:text-sm font-semibold"
+                    : "inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.04] px-3 py-1.5 text-mist/85 hover:text-gold hover:border-gold/40 transition-colors text-[11px] sm:text-xs"
+                }
               >
                 <SocialIcon kind={s.kind} />
                 <span>{s.label}</span>
@@ -129,45 +169,115 @@ function MemberCard({ member }: { member: Member }) {
             ))}
           </div>
         </div>
-      )}
+      </div>
+    </div>
+  );
+}
+
+function MemberCard({
+  member,
+  onOpen,
+}: {
+  member: Member;
+  onOpen: (m: Member) => void;
+}) {
+  return (
+    <li>
+      <button
+        type="button"
+        onClick={() => onOpen(member)}
+        className="group block w-full text-left overflow-hidden rounded-2xl border border-white/10 hover:border-gold/40 transition-colors"
+        aria-label={`${member.name} のプロフィールを開く`}
+      >
+        <div className="relative aspect-[3/4] overflow-hidden bg-velvet">
+          <Image
+            src={member.portraitPhoto}
+            alt={member.name}
+            fill
+            sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 220px"
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+          />
+        </div>
+        <div className="bg-white px-2 py-3.5 sm:px-2.5 sm:py-4 flex items-center justify-center min-h-[54px] sm:min-h-[60px]">
+          <p
+            className="text-ink leading-tight text-center truncate w-full"
+            style={{
+              fontFamily: '"Dela Gothic One", system-ui, sans-serif',
+              fontSize: "clamp(12px, 2.8vw, 16px)",
+              fontWeight: 400,
+            }}
+          >
+            {member.name}
+          </p>
+        </div>
+      </button>
     </li>
   );
 }
 
-function GroupBlock({ group }: { group: GroupName }) {
+function GroupBlock({
+  group,
+  onOpen,
+}: {
+  group: GroupName;
+  onOpen: (m: Member) => void;
+}) {
   const info = GROUPS[group];
   const members = getMembersByGroup(group);
   return (
-    <div className="mb-16 last:mb-0">
-      <div className="text-center mb-8 sm:mb-10">
-        <p className="text-xs tracking-[0.4em] text-gold/80 mb-2">
-          {info.name === "PALE TULLE" ? "GROUP 01" : "GROUP 02"}
-        </p>
-        <h3 className="font-mincho text-2xl sm:text-3xl text-mist mb-1">
-          {info.name}
-        </h3>
-        <p className="text-mist/60 text-xs sm:text-sm">
-          {info.nameJa} ／ {info.nickname} ／ {info.memberCount}人
-        </p>
-        {info.concept && (
-          <p className="text-mist/75 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto mt-4 font-mincho">
-            {info.concept}
-          </p>
+    <div className="mb-14 last:mb-0">
+      <div className="flex justify-center mb-7 sm:mb-9">
+        {info.logoUrl ? (
+          <div className="relative inline-flex items-center justify-center px-4">
+            {/* ロゴの裏に白いブラー光（視認性UP）
+                Glitter System は紺ベースのロゴで暗いので、横幅広め＋色を明るくする */}
+            <div
+              aria-hidden
+              className={`absolute inset-0 rounded-full pointer-events-none ${
+                group === "Glitter System"
+                  ? "-mx-16 sm:-mx-28 -my-6 sm:-my-10"
+                  : "-m-6 sm:-m-10"
+              }`}
+              style={{
+                background:
+                  group === "Glitter System"
+                    ? "radial-gradient(ellipse at center, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.5) 40%, rgba(255,255,255,0) 75%)"
+                    : "radial-gradient(ellipse at center, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.25) 40%, rgba(255,255,255,0) 75%)",
+                filter: "blur(30px)",
+              }}
+            />
+            <img
+              src={info.logoUrl}
+              alt={info.name}
+              className={`relative z-10 ${
+                group === "PALE TULLE"
+                  ? "h-20 sm:h-28"
+                  : "h-14 sm:h-20"
+              } w-auto object-contain`}
+              onError={(e) => {
+                const el = e.currentTarget;
+                el.style.display = "none";
+                const next = el.nextElementSibling as HTMLElement | null;
+                if (next) next.style.display = "block";
+              }}
+            />
+            <h3
+              className="hidden text-2xl sm:text-3xl text-mist font-bold tracking-wide"
+              aria-hidden="true"
+            >
+              {info.name}
+            </h3>
+          </div>
+        ) : (
+          <h3 className="text-2xl sm:text-3xl text-mist font-bold tracking-wide">
+            {info.name}
+          </h3>
         )}
-        <a
-          href={info.siteUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 mt-5 text-gold hover:text-mist text-xs sm:text-sm transition-colors"
-        >
-          公式サイトを見る
-          <span aria-hidden>↗</span>
-        </a>
       </div>
 
-      <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+      <ul className="grid grid-cols-3 gap-2.5 sm:gap-3.5">
         {members.map((m) => (
-          <MemberCard key={m.id} member={m} />
+          <MemberCard key={m.id} member={m} onOpen={onOpen} />
         ))}
       </ul>
     </div>
@@ -175,27 +285,49 @@ function GroupBlock({ group }: { group: GroupName }) {
 }
 
 export default function Artists() {
+  const [open, setOpen] = useState<Member | null>(null);
   return (
-    <section id="artists" className="section-pad bg-ink relative overflow-hidden">
+    <section
+      id="artists"
+      className="section-pad bg-ink relative overflow-hidden"
+    >
       <div className="absolute inset-0 -z-10 bg-aurora opacity-25" />
       <div className="mx-auto max-w-5xl px-6">
-        <p className="text-center text-xs tracking-[0.4em] text-gold/80 mb-2">
-          ARTISTS
-        </p>
-        <h2 className="text-center font-mincho text-3xl sm:text-4xl text-mist mb-3">
-          出演アーティスト
+        <div className="text-center mt-10 sm:mt-14 mb-4 sm:mb-5">
+          <span className="inline-block rounded-full border border-gold/40 bg-gold/15 text-gold px-4 py-1.5 text-[11px] sm:text-xs tracking-[0.2em] backdrop-blur-sm">
+            はじめて知ってくれたあなたへ
+          </span>
+        </div>
+        <h2
+          className="text-center text-3xl sm:text-5xl mb-8 sm:mb-10 italic font-bold tracking-wide leading-tight"
+          style={{
+            fontFamily: '"Zen Maru Gothic", system-ui, sans-serif',
+            color: "transparent",
+            WebkitTextStroke: "1.3px #e9e6f0",
+          }}
+        >
+          わたしたちについて
         </h2>
-        <p className="text-center text-mist/70 text-sm sm:text-base max-w-2xl mx-auto mb-14 leading-relaxed font-mincho">
-          321 IDOL PROJECT の2つのグループ、{MEMBERS.length}名が
-          <br className="sm:hidden" />
-          このステージに立ちます。
+        <p className="text-center text-mist/85 text-base sm:text-lg max-w-2xl mx-auto mb-14 leading-relaxed">
+          2つのグループ「<strong className="font-bold text-mist">PALE TULLE</strong>」と「
+          <strong className="font-bold text-mist">Glitter System</strong>」からなる
           <br />
-          カードをタップで一言メッセージとSNSを見られます。
+          ライブ配信から生まれたアイドルプロジェクト「321 IDOL PROJECT」。
+          <br />
+          ライバーとして、日々みんなと配信でつながりながら
+          <br />
+          アイドル活動も全力で！
+          <br />
+          応援してくれるあなたと一緒に、
+          <span className="text-glow font-bold">ライバー × アイドルの伝説</span>
+          を作りたい！
         </p>
 
-        <GroupBlock group="PALE TULLE" />
-        <GroupBlock group="Glitter System" />
+        <GroupBlock group="PALE TULLE" onOpen={setOpen} />
+        <GroupBlock group="Glitter System" onOpen={setOpen} />
       </div>
+
+      {open && <MemberModal member={open} onClose={() => setOpen(null)} />}
     </section>
   );
 }

@@ -74,7 +74,7 @@ export default function Hero() {
         <button
           type="button"
           onClick={scrollToAchievement}
-          className="group mt-10 inline-flex items-center gap-3 rounded-3xl border border-gold/40 bg-gradient-to-r from-glow/20 via-glow2/20 to-gold/20 backdrop-blur-sm px-6 py-4 sm:px-8 sm:py-5 text-mist font-mincho hover:border-gold hover:bg-gradient-to-r hover:from-glow/30 hover:via-glow2/30 hover:to-gold/30 transition-all"
+          className="group mt-10 inline-flex items-center gap-3 rounded-3xl border border-gold/40 bg-gradient-to-r from-glow/20 via-glow2/20 to-gold/20 backdrop-blur-sm px-6 py-4 sm:px-8 sm:py-5 text-mist hover:border-gold hover:bg-gradient-to-r hover:from-glow/30 hover:via-glow2/30 hover:to-gold/30 transition-all"
         >
           <span className="relative flex h-2 w-2 shrink-0">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-glow opacity-60"></span>

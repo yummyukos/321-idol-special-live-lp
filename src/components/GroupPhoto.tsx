@@ -13,7 +13,7 @@ export default function GroupPhoto() {
         <div className="absolute right-[5%] top-1/2 -translate-y-1/2 h-[80%] w-[55%] rounded-full bg-glow2/15 blur-[160px]" />
       </div>
 
-      {/* 上端のスムーズな黒フェード：メッセージ側と自然に繋ぐ */}
+      {/* 上端のスムーズな黒フェード：前のセクションと自然に繋ぐ */}
       <div
         className="pointer-events-none absolute inset-x-0 top-0 h-32 -z-0"
         style={{
@@ -22,7 +22,6 @@ export default function GroupPhoto() {
         }}
       />
 
-      {/* 集合写真 */}
       <div className="relative mx-auto max-w-5xl px-4 sm:px-6">
         <img
           src="/messesita.png"
@@ -31,7 +30,7 @@ export default function GroupPhoto() {
         />
       </div>
 
-      {/* 下端のスムーズな黒フェード：カウントダウン側と自然に繋ぐ */}
+      {/* 下端のスムーズな黒フェード */}
       <div
         className="pointer-events-none absolute inset-x-0 bottom-0 h-32 -z-0"
         style={{

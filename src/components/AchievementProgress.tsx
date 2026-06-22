@@ -40,7 +40,7 @@ export default function AchievementProgress() {
           チケット達成特典
         </h2>
 
-        <p className="text-center text-mist/85 text-base sm:text-lg max-w-2xl mx-auto mb-12 leading-relaxed font-mincho">
+        <p className="text-center text-mist/85 text-base sm:text-lg max-w-2xl mx-auto mb-12 leading-relaxed">
           <span className="text-gold">バルコニー席完売</span>を100%として
           <br />
           販売枚数に応じて特典が次々と解禁！
