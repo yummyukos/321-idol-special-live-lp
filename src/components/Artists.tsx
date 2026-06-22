@@ -307,13 +307,15 @@ export default function Artists() {
           </span>
         </div>
         <h2
-          className="text-center text-3xl sm:text-5xl mb-6 italic font-semibold tracking-wide"
+          className="text-center text-3xl sm:text-5xl mb-6 italic font-semibold tracking-wide leading-tight"
           style={{
             color: "transparent",
-            WebkitTextStroke: "1.5px #e9e6f0",
+            WebkitTextStroke: "1.3px #e9e6f0",
           }}
         >
-          わたしたちについて
+          私たち、
+          <br />
+          321 IDOL PROJECT
         </h2>
         <p className="text-center text-mist/85 text-sm sm:text-base max-w-2xl mx-auto mb-14 leading-relaxed">
           2つのグループ「PALE TULLE」と「Glitter System」からなる
