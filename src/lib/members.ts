@@ -183,8 +183,6 @@ export const GROUPS: Record<GroupName, GroupInfo> = {
     nickname: "ペルチュ",
     memberCount: 7,
     siteUrl: "https://paletulle.321.inc/",
-    concept:
-      "繊細さと強さをまとうアイドルグループ。やわらかな歌声で、聴く人の心にそっと寄り添う楽曲を届けます。",
   },
   "Glitter System": {
     name: "Glitter System",
@@ -192,8 +190,6 @@ export const GROUPS: Record<GroupName, GroupInfo> = {
     nickname: "グリシス",
     memberCount: 7,
     siteUrl: "https://glittersystem.321.inc/",
-    concept:
-      "自己満？ナルシスト？なんだっていい！わたしをもっと知ってほしい！どんどん拡散したくなる、そんな曲を歌う、グリッターの様にきらめくアイドルグループ。",
   },
 };
 

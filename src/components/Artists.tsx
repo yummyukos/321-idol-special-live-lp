@@ -173,7 +173,7 @@ function MemberCard({
       <button
         type="button"
         onClick={() => onOpen(member)}
-        className="group block w-full text-left overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] hover:border-gold/40 transition-colors"
+        className="group block w-full text-left overflow-hidden rounded-2xl border border-white/10 hover:border-gold/40 transition-colors"
         aria-label={`${member.name} のプロフィールを開く`}
       >
         <div className="relative aspect-[3/4] overflow-hidden bg-velvet">
@@ -185,12 +185,26 @@ function MemberCard({
             className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
           />
         </div>
-        <div className="px-2.5 py-2 sm:px-3 sm:py-2.5">
-          <p className="font-mincho text-mist text-xs sm:text-sm leading-tight truncate">
+        <div className="bg-white px-2 py-2 sm:px-2.5 sm:py-2.5">
+          <p
+            className="text-ink leading-tight truncate"
+            style={{
+              fontFamily: '"Dela Gothic One", system-ui, sans-serif',
+              fontSize: "clamp(11px, 2.5vw, 14px)",
+              fontWeight: 400,
+            }}
+          >
             {member.name}
           </p>
           {member.subName && (
-            <p className="text-mist/55 text-[9px] sm:text-[10px] leading-tight mt-0.5 truncate">
+            <p
+              className="leading-tight mt-0.5 truncate text-ink/60"
+              style={{
+                fontFamily: '"Dela Gothic One", system-ui, sans-serif',
+                fontSize: "clamp(9px, 1.8vw, 10px)",
+                fontWeight: 400,
+              }}
+            >
               {member.subName}
             </p>
           )}
@@ -212,14 +226,9 @@ function GroupBlock({
   return (
     <div className="mb-14 last:mb-0">
       <div className="text-center mb-7 sm:mb-9">
-        <h3 className="font-mincho text-2xl sm:text-3xl text-mist mb-3">
+        <h3 className="font-mincho text-2xl sm:text-3xl text-mist">
           {info.name}
         </h3>
-        {info.concept && (
-          <p className="text-mist/75 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto font-mincho">
-            {info.concept}
-          </p>
-        )}
       </div>
 
       <ul className="grid grid-cols-3 gap-2.5 sm:gap-3.5">
@@ -246,14 +255,16 @@ export default function Artists() {
         <h2 className="text-center font-mincho text-3xl sm:text-4xl text-mist mb-5">
           わたしたちについて
         </h2>
-        <p className="text-center text-mist/75 text-sm sm:text-base max-w-2xl mx-auto mb-14 leading-relaxed font-mincho">
-          わたしたちは、ライブ配信から生まれたアイドルプロジェクト「321 IDOL PROJECT」。
+        <p className="text-center text-mist/85 text-sm sm:text-base max-w-2xl mx-auto mb-14 leading-relaxed font-mincho">
+          2つのグループ「PALE TULLE」と「Glitter System」からなる
           <br className="hidden sm:inline" />
-          配信で日々あなたに会いに行く２つのグループ「PALE TULLE」と「Glitter System」が、
-          <br className="hidden sm:inline" />
-          このステージで真ん中に立ちます。
+          ライブ配信から生まれたアイドルプロジェクト「321 IDOL PROJECT」。
           <br />
-          ライブの後も、ぜひ配信に遊びに来てくださいね。
+          ライバーとして、日々みんなと配信でつながりながら、アイドル活動も全力で！
+          <br />
+          応援してくれるあなたと一緒に、
+          <span className="text-gold">ライバー × アイドルの伝説</span>
+          を作ってみせる！
         </p>
 
         <GroupBlock group="PALE TULLE" onOpen={setOpen} />

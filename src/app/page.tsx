@@ -19,12 +19,12 @@ export default function Page() {
       <Message />
       <Artists />
       <GroupPhoto />
+      <FollowUs />
       <Countdown />
       <InvitationRewards />
       <EventInfo />
       <AchievementProgress />
       <TicketCta />
-      <FollowUs />
       <StandFlowerInfo />
       <Footer />
 
