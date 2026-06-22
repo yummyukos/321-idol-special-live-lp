@@ -10,9 +10,11 @@ type MenuItem = {
 };
 
 const ITEMS: MenuItem[] = [
+  { label: "出演アーティスト", href: "/#artists" },
   { label: "招待特典", href: "/#guest-reward" },
   { label: "公演情報", href: "/#info" },
   { label: "チケット達成特典", href: "/#achievement" },
+  { label: "フォローする", href: "/#follow" },
   { label: "スタンド花について", href: "/#stand-flower" },
   { label: "チケット購入", href: EVENT.ticketUrl, external: true },
 ];
