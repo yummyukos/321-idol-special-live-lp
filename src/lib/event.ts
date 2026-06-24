@@ -30,10 +30,10 @@ export const EVENT = {
 
 // チケット構成
 export const TICKETS = {
-  totalCapacity: 1200,
+  totalCapacity: 1500,
   arenaCapacity: 600, // 完売
-  // 達成特典の100%基準：アリーナ600完売後、バルコニーで600枚売れたら100%
-  // つまり累計1200枚で達成率100%
-  balconyCapacity: 600,
+  // 達成特典の100%基準（母数）：
+  //   バルコニー販売分 (TiGET合計 - 600) + 関係者招待数 = 900 で 100%
+  balconyCapacity: 900,
   arenaSoldOut: true,
 };

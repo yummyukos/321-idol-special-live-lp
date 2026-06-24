@@ -20,8 +20,12 @@ export default function AchievementProgress() {
   }, []);
 
   const totalSold = snap?.totalSold ?? 0;
+  const invitedCount = snap?.invitedCount ?? 0;
   const balconySold = useMemo(() => getBalconySold(totalSold), [totalSold]);
-  const balconyPct = useMemo(() => getBalconyPct(totalSold), [totalSold]);
+  const balconyPct = useMemo(
+    () => getBalconyPct(totalSold, invitedCount),
+    [totalSold, invitedCount]
+  );
   // アリーナがまだ完売してない時はバルコニー発売前
   const isBalconyOpen = totalSold > TICKETS.arenaCapacity;
 

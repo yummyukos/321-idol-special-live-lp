@@ -1,39 +1,31 @@
-// 売上データ取得レイヤー
+// 売上 + 招待 データ取得レイヤー
 // ----------------------------------------------------------------
-// チケットの仕組み：
-//  - 先着順で販売（アリーナ → バルコニーの順）
-//  - アリーナ席 600枚が完売してから、バルコニー席の販売開始
-//  - 達成特典は「バルコニー席の販売枚数」を100%として計算
-//    （バルコニーで 600 枚売れた時点で100%＝累計 1200 枚）
+// 達成率の計算（現行ロジック）：
+//  - TiGET販売枚数（招待含む）から、アリーナ完売分の600を引いたものを「バルコニー販売分」とする
+//  - そこに、関係者招待ランキングの「総招待数」を加算
+//  - それを母数 900 で割って％を算出
 //
-// 達成率の計算：
-//  - totalSold ≦ 600 → 0%（まだアリーナ販売中、バルコニー未着手）
-//  - totalSold > 600 → (totalSold - 600) / 600 * 100 がバルコニー達成率
-//  - totalSold ≧ 1200 → 100%
+//    meterValue = max(0, totalSold - 600) + invitedCount
+//    meterPct   = min(100, meterValue / 900 * 100)
 // ----------------------------------------------------------------
 
 import { TICKETS } from "./event";
 
 export type SalesSnapshot = {
-  // 累計販売枚数（アリーナ＋バルコニーの合算）
+  /** TiGET累計販売枚数（招待含む） */
   totalSold: number;
-  // 最終更新時刻（ISO）
+  /** 関係者招待数 */
+  invitedCount: number;
+  /** 最終更新時刻（ISO） */
   updatedAt: string;
 };
 
-// API障害時のフォールバック
 const FALLBACK: SalesSnapshot = {
   totalSold: 0,
+  invitedCount: 0,
   updatedAt: new Date().toISOString(),
 };
 
-/**
- * 現在の売上スナップショットを取得します。
- *
- * 同一オリジンの /api/sales を叩く（中で tiget-sales-monitor の /summary を
- * サーバー側スクレイピングして JSON 化している）。
- * サーバー側で30秒キャッシュしているので、頻繁に叩いても上流負荷は抑えられる。
- */
 export async function fetchCurrentSales(): Promise<SalesSnapshot> {
   try {
     const res = await fetch("/api/sales", { cache: "no-store" });
@@ -42,6 +34,7 @@ export async function fetchCurrentSales(): Promise<SalesSnapshot> {
     if (typeof data.totalSold === "number") {
       return {
         totalSold: data.totalSold,
+        invitedCount: typeof data.invitedCount === "number" ? data.invitedCount : 0,
         updatedAt: data.updatedAt ?? new Date().toISOString(),
       };
     }
@@ -52,23 +45,29 @@ export async function fetchCurrentSales(): Promise<SalesSnapshot> {
 }
 
 /**
- * 累計販売枚数からバルコニー販売枚数を算出（アリーナ完売後の販売分のみ）
+ * バルコニー販売分（アリーナ600を超えた分）を算出
  */
 export function getBalconySold(totalSold: number): number {
   return Math.max(0, totalSold - TICKETS.arenaCapacity);
 }
 
 /**
- * 達成率（%）を算出（バルコニー販売枚数 / バルコニー定員 * 100）
+ * メーター値 = バルコニー販売分 + 関係者招待数
  */
-export function getBalconyPct(totalSold: number): number {
-  const balconySold = getBalconySold(totalSold);
-  return Math.min(100, (balconySold / TICKETS.balconyCapacity) * 100);
+export function getMeterValue(totalSold: number, invitedCount: number): number {
+  return getBalconySold(totalSold) + invitedCount;
 }
 
 /**
- * リアルタイム購読（Firestore onSnapshot を想定）。
- * 今はポーリング（10秒に1回）で代替。
+ * 達成率（%）。母数は TICKETS.balconyCapacity (= 900)
+ */
+export function getBalconyPct(totalSold: number, invitedCount = 0): number {
+  const value = getMeterValue(totalSold, invitedCount);
+  return Math.min(100, (value / TICKETS.balconyCapacity) * 100);
+}
+
+/**
+ * リアルタイム購読（10秒ポーリング）
  */
 export function subscribeSales(
   onUpdate: (snapshot: SalesSnapshot) => void
