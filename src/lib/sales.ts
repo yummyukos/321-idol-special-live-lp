@@ -67,6 +67,32 @@ export function getBalconyPct(totalSold: number, invitedCount = 0): number {
 }
 
 /**
+ * 表示用％：日付スケジュールに応じてロジックを切り替える。
+ *
+ *  ～ 6/25 0:00 JST          : 旧ロジック (TiGET−600) / 600
+ *  6/25 0:00 ～ 6/26 0:00 JST: 50% 固定
+ *  6/26 0:00 ～ 6/27 9:00 JST: 55% 固定
+ *  6/27 9:00 JST 以降        : 新ロジック ((TiGET−600)+招待) / 900
+ */
+export function getDisplayPct(totalSold: number, invitedCount: number): number {
+  const now = Date.now();
+  // 境界はすべてJST。UTC換算で固定値を持つ（JST = UTC+9）。
+  const T_25_0   = Date.UTC(2026, 5, 24, 15, 0, 0); // 2026/6/25 00:00 JST
+  const T_26_0   = Date.UTC(2026, 5, 25, 15, 0, 0); // 2026/6/26 00:00 JST
+  const T_27_9   = Date.UTC(2026, 5, 27, 0,  0, 0); // 2026/6/27 09:00 JST
+
+  if (now < T_25_0) {
+    // 旧ロジック：バルコニー販売分のみで母数600
+    const balconySold = getBalconySold(totalSold);
+    return Math.min(100, (balconySold / 600) * 100);
+  }
+  if (now < T_26_0) return 50;
+  if (now < T_27_9) return 55;
+  // 27日 9:00 JST 以降：新ロジック
+  return getBalconyPct(totalSold, invitedCount);
+}
+
+/**
  * リアルタイム購読（10秒ポーリング）
  */
 export function subscribeSales(

@@ -7,7 +7,7 @@ import { TICKETS } from "@/lib/event";
 import {
   subscribeSales,
   getBalconySold,
-  getBalconyPct,
+  getDisplayPct,
   type SalesSnapshot,
 } from "@/lib/sales";
 
@@ -23,7 +23,7 @@ export default function AchievementProgress() {
   const invitedCount = snap?.invitedCount ?? 0;
   const balconySold = useMemo(() => getBalconySold(totalSold), [totalSold]);
   const balconyPct = useMemo(
-    () => getBalconyPct(totalSold, invitedCount),
+    () => getDisplayPct(totalSold, invitedCount),
     [totalSold, invitedCount]
   );
   // アリーナがまだ完売してない時はバルコニー発売前
