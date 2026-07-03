@@ -66,7 +66,7 @@ export default function Hero() {
         <div className="mt-6 sm:mt-8 font-mincho text-mist tabular space-y-0.5">
           <p className="text-base sm:text-xl">2026年7月13日（月）</p>
           <p className="text-sm sm:text-base tracking-wider text-mist/85">
-            OPEN 17:30 / START 19:00
+            OPEN 17:00 / START 19:00
           </p>
         </div>
 
