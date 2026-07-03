@@ -6,8 +6,8 @@ export const EVENT = {
   venueNote: "（旧東京ドームシティホール）",
   // ISO形式で2026/7/13 19:00 JST
   startAt: "2026-07-13T19:00:00+09:00",
-  openAt: "2026-07-13T17:30:00+09:00",
-  doorsLabel: "OPEN 17:30 / START 19:00",
+  openAt: "2026-07-13T17:00:00+09:00",
+  doorsLabel: "OPEN 17:00 / START 19:00",
   date: "2026年7月13日（月）",
   performers: ["PALE TULLE", "グリッターシステム"],
   ticketUrl: "https://tiget.net/events/477181",
@@ -15,9 +15,9 @@ export const EVENT = {
   invitationFormUrl: "https://docs.google.com/forms/d/e/1FAIpQLSftXTp8Md2TGk7c_XYgXZR8xulNcQlROXXfGiKdwJaRAhWAYA/viewform?pli=1",
   // 招待特典の元ニュースページ（参考）
   invitationSourceUrl: "https://liveridol.321.inc/news/1394",
+  merchBefore: "17:00 〜 18:00",
   meetGreet: {
-    before: "15:30 〜 17:00",
-    after: "21:00 〜 22:15",
+    after: "21:00 〜 22:20",
   },
   venueAddress: "東京都文京区後楽1-3-61",
   accessNotes: [

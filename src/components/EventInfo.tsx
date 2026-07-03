@@ -29,13 +29,12 @@ export default function EventInfo() {
       value: EVENT.performers.join(" / "),
     },
     {
+      label: "前物販",
+      value: EVENT.merchBefore,
+    },
+    {
       label: "特典会",
-      value: (
-        <>
-          ライブ前 {EVENT.meetGreet.before}
-          <span className="block">終演後 {EVENT.meetGreet.after}</span>
-        </>
-      ),
+      value: <>終演後 {EVENT.meetGreet.after}</>,
     },
     {
       label: "席種",
