@@ -36,4 +36,6 @@ export const TICKETS = {
   //   バルコニー販売分 (TiGET合計 - 600) + 関係者招待数 = 900 で 100%
   balconyCapacity: 900,
   arenaSoldOut: true,
+  // 全席完売：メーターを常に100%表示 & お祝いモーション常時発火
+  ticketSoldOut: true,
 };

@@ -75,6 +75,9 @@ export function getBalconyPct(totalSold: number, invitedCount = 0): number {
  *  6/27 9:00 JST 以降        : 新ロジック ((TiGET−600)+招待) / 900
  */
 export function getDisplayPct(totalSold: number, invitedCount: number): number {
+  // チケット完売中は常に100%
+  if (TICKETS.ticketSoldOut) return 100;
+
   const now = Date.now();
   // 境界はすべてJST。UTC換算で固定値を持つ（JST = UTC+9）。
   const T_25_0   = Date.UTC(2026, 5, 24, 15, 0, 0); // 2026/6/25 00:00 JST

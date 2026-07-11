@@ -90,14 +90,8 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* チケット完売表示 */}
-        <div className="mt-8 sm:mt-10 flex flex-col items-center gap-3">
-          <span className="inline-flex items-center gap-2 rounded-full border border-gold/50 bg-ink/40 backdrop-blur-sm px-4 py-1.5 text-gold text-xs sm:text-sm tracking-[0.2em]">
-            <span aria-hidden>🎫</span>
-            チケット完売
-          </span>
-
-          {/* 追加開放席販売決定ボタン */}
+        {/* 追加開放席販売決定ボタン */}
+        <div className="mt-8 sm:mt-10 flex justify-center">
           <button
             type="button"
             onClick={scrollToTicket}
