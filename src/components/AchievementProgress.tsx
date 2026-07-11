@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { ACHIEVEMENTS } from "@/lib/achievements";
 import { TICKETS } from "@/lib/event";
 import {
@@ -11,51 +11,73 @@ import {
   type SalesSnapshot,
 } from "@/lib/sales";
 
-// 紙吹雪/絵文字パーティクルの色バリエ
-const PARTICLE_EMOJIS = ["🎉", "✨", "🌟", "🎊", "💖", "💫", "🎀"];
+// 紙吹雪の色バリエ（ピンク・ゴールド・シアン・ラベンダー・ホワイト・ミント）
+const CONFETTI_COLORS = [
+  "#FF5C9C", // pink
+  "#FFB4D1", // light pink
+  "#F5D27A", // gold
+  "#FFE59A", // light gold
+  "#7CD9E8", // cyan
+  "#C084FC", // purple
+  "#B6F1D2", // mint
+  "#FFFFFF", // white
+];
 
 function ConfettiFall({ fire }: { fire: boolean }) {
-  // 上から下に降ってくる紙吹雪
+  // 上から下にずっと降り続ける紙吹雪
   const particles = useMemo(
     () =>
       Array.from({ length: 60 }, (_, i) => ({
         id: i,
-        emoji: PARTICLE_EMOJIS[i % PARTICLE_EMOJIS.length],
+        color: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
         left: Math.random() * 100, // 横位置 %
-        delay: Math.random() * 3.2, // ばらつき
-        duration: 4 + Math.random() * 3, // 落下時間
-        rotate: (Math.random() - 0.5) * 900,
-        scale: 0.7 + Math.random() * 0.7,
+        delay: Math.random() * 6, // 開始タイミングをばらす
+        duration: 5 + Math.random() * 5, // 落下時間 5-10 秒
+        width: 6 + Math.random() * 6, // 6-12 px
+        height: 10 + Math.random() * 8, // 10-18 px
+        rotate: (Math.random() - 0.5) * 1080,
+        sway: (Math.random() - 0.5) * 60, // 揺れ幅
+        radius: Math.random() > 0.7 ? "50%" : "1px", // 一部は円形
       })),
     []
   );
 
+  if (!fire) return null;
+
   return (
-    <div className="pointer-events-none absolute inset-0 z-20 overflow-hidden">
-      <AnimatePresence>
-        {fire &&
-          particles.map((p) => (
-            <motion.span
-              key={p.id}
-              className="absolute text-2xl sm:text-3xl select-none"
-              style={{ left: `${p.left}%`, top: 0, willChange: "transform" }}
-              initial={{ y: "-8vh", opacity: 0, rotate: 0 }}
-              animate={{
-                y: "108vh",
-                opacity: [0, 1, 1, 0],
-                rotate: p.rotate,
-              }}
-              transition={{
-                duration: p.duration,
-                delay: p.delay,
-                ease: "linear",
-                opacity: { times: [0, 0.08, 0.85, 1] },
-              }}
-            >
-              {p.emoji}
-            </motion.span>
-          ))}
-      </AnimatePresence>
+    <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+      {particles.map((p) => (
+        <motion.div
+          key={p.id}
+          className="absolute"
+          style={{
+            left: `${p.left}%`,
+            top: 0,
+            width: `${p.width}px`,
+            height: `${p.height}px`,
+            background: p.color,
+            borderRadius: p.radius,
+            willChange: "transform",
+          }}
+          initial={{ y: "-5%", x: 0, opacity: 0, rotate: 0 }}
+          animate={{
+            y: ["-5%", "105%"],
+            x: [0, p.sway, -p.sway, 0],
+            opacity: [0, 1, 1, 0.9, 0],
+            rotate: [0, p.rotate],
+          }}
+          transition={{
+            duration: p.duration,
+            delay: p.delay,
+            ease: "linear",
+            repeat: Infinity,
+            repeatDelay: 0,
+            y: { ease: "linear" },
+            x: { ease: "easeInOut" },
+            opacity: { times: [0, 0.06, 0.5, 0.94, 1] },
+          }}
+        />
+      ))}
     </div>
   );
 }
@@ -111,10 +133,10 @@ export default function AchievementProgress() {
     >
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
 
-      {/* 100%達成時：紙吹雪が上から降る */}
+      {/* 100%達成時：紙吹雪が上から降る（コンテンツの背後で無限ループ） */}
       <ConfettiFall fire={fireCelebration} />
 
-      <div className="mx-auto max-w-5xl px-6">
+      <div className="relative z-10 mx-auto max-w-5xl px-6">
         <p className="text-center text-xs tracking-[0.4em] text-gold/80 mb-2">
           TICKET REWARDS
         </p>

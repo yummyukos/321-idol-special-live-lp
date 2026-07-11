@@ -63,18 +63,22 @@ export default function Hero() {
             </h1>
           )}
 
-          {/* チケット完売御礼スタンプ風オーバーレイ */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <span
-              className="font-mincho font-bold text-white text-[clamp(1.8rem,7vw,5rem)] tracking-widest -rotate-6"
+          {/* 完売御礼バナー（赤背景×白文字・ロゴ右下に少し重ねて配置） */}
+          <div
+            className="absolute right-0 bottom-0 translate-x-[10%] translate-y-[35%] sm:translate-x-[10%] sm:translate-y-[30%] pointer-events-none -rotate-6"
+            aria-hidden
+          >
+            <div
+              className="inline-block bg-red-600 px-4 py-2 sm:px-6 sm:py-3 border-2 border-white/90 rounded-sm"
               style={{
-                textShadow:
-                  "0 0 24px rgba(255,58,161,0.7), 0 2px 4px rgba(0,0,0,0.6), 0 0 60px rgba(0,0,0,0.5)",
-                WebkitTextStroke: "1.2px rgba(255, 58, 161, 0.9)",
+                boxShadow:
+                  "0 8px 24px rgba(0,0,0,0.5), 0 0 0 3px rgba(220,38,38,0.6)",
               }}
             >
-              チケット完売御礼
-            </span>
+              <span className="block font-mincho font-bold text-white text-[clamp(1.4rem,5.5vw,3rem)] tracking-widest leading-none">
+                完売御礼
+              </span>
+            </div>
           </div>
         </div>
 
@@ -104,7 +108,7 @@ export default function Hero() {
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-glow"></span>
             </span>
             <span className="text-left leading-tight text-sm sm:text-base">
-              追加で開放席を
+              追加で開放席の
               <br />
               販売が決定！
             </span>
