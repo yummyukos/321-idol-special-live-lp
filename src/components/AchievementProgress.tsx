@@ -132,25 +132,12 @@ export default function AchievementProgress() {
   // アリーナがまだ完売してない時はバルコニー発売前
   const isBalconyOpen = totalSold > TICKETS.arenaCapacity;
 
-  // 100%達成 & セクションが画面に入ったら お祝いモーションを1度だけ発火
+  // 100%達成なら、サイトを開いた瞬間から紙吹雪が降り始める
   useEffect(() => {
-    if (!isFullyAchieved || hasFiredRef.current) return;
-    const el = sectionRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !hasFiredRef.current) {
-            hasFiredRef.current = true;
-            setFireCelebration(true);
-            // 少し後にフラグを戻して次回また発火できるように...はせず一度きり
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
+    if (isFullyAchieved && !hasFiredRef.current) {
+      hasFiredRef.current = true;
+      setFireCelebration(true);
+    }
   }, [isFullyAchieved]);
 
   return (
