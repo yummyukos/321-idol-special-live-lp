@@ -14,46 +14,42 @@ import {
 // 紙吹雪/絵文字パーティクルの色バリエ
 const PARTICLE_EMOJIS = ["🎉", "✨", "🌟", "🎊", "💖", "💫", "🎀"];
 
-function ConfettiBurst({ fire }: { fire: boolean }) {
+function ConfettiFall({ fire }: { fire: boolean }) {
+  // 上から下に降ってくる紙吹雪
   const particles = useMemo(
     () =>
-      Array.from({ length: 42 }, (_, i) => {
-        const angle = (Math.PI * 2 * i) / 42 + (Math.random() - 0.5) * 0.3;
-        const distance = 200 + Math.random() * 300;
-        return {
-          id: i,
-          emoji: PARTICLE_EMOJIS[i % PARTICLE_EMOJIS.length],
-          x: Math.cos(angle) * distance,
-          y: Math.sin(angle) * distance,
-          rotate: (Math.random() - 0.5) * 720,
-          delay: Math.random() * 0.3,
-          scale: 0.7 + Math.random() * 0.9,
-        };
-      }),
+      Array.from({ length: 60 }, (_, i) => ({
+        id: i,
+        emoji: PARTICLE_EMOJIS[i % PARTICLE_EMOJIS.length],
+        left: Math.random() * 100, // 横位置 %
+        delay: Math.random() * 3.2, // ばらつき
+        duration: 4 + Math.random() * 3, // 落下時間
+        rotate: (Math.random() - 0.5) * 900,
+        scale: 0.7 + Math.random() * 0.7,
+      })),
     []
   );
 
   return (
-    <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center overflow-visible">
+    <div className="pointer-events-none absolute inset-0 z-20 overflow-hidden">
       <AnimatePresence>
         {fire &&
           particles.map((p) => (
             <motion.span
               key={p.id}
               className="absolute text-2xl sm:text-3xl select-none"
-              initial={{ x: 0, y: 0, opacity: 0, scale: 0.3, rotate: 0 }}
+              style={{ left: `${p.left}%`, top: 0, willChange: "transform" }}
+              initial={{ y: "-8vh", opacity: 0, rotate: 0 }}
               animate={{
-                x: p.x,
-                y: p.y,
+                y: "108vh",
                 opacity: [0, 1, 1, 0],
-                scale: p.scale,
                 rotate: p.rotate,
               }}
               transition={{
-                duration: 2.6,
+                duration: p.duration,
                 delay: p.delay,
-                ease: [0.2, 0.8, 0.2, 1],
-                opacity: { times: [0, 0.1, 0.7, 1] },
+                ease: "linear",
+                opacity: { times: [0, 0.08, 0.85, 1] },
               }}
             >
               {p.emoji}
@@ -115,8 +111,8 @@ export default function AchievementProgress() {
     >
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
 
-      {/* 100%達成時：紙吹雪 */}
-      <ConfettiBurst fire={fireCelebration} />
+      {/* 100%達成時：紙吹雪が上から降る */}
+      <ConfettiFall fire={fireCelebration} />
 
       <div className="mx-auto max-w-5xl px-6">
         <p className="text-center text-xs tracking-[0.4em] text-gold/80 mb-2">
@@ -126,54 +122,11 @@ export default function AchievementProgress() {
           チケット達成特典
         </h2>
 
-        <p className="text-center text-mist/85 text-base sm:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+        <p className="text-center text-mist/85 text-base sm:text-lg max-w-2xl mx-auto mb-12 leading-relaxed">
           <span className="text-gold">バルコニー席完売</span>を100%として
           <br />
           販売枚数に応じて特典が次々と解禁！
         </p>
-
-        {/* 100%達成バッジ */}
-        {isFullyAchieved && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: -10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.34, 1.56, 0.64, 1] }}
-            className="text-center mb-8"
-          >
-            <div
-              className="inline-flex items-center gap-2 rounded-full border border-gold/60 px-5 py-2 text-gold font-mincho text-sm sm:text-base font-bold tracking-widest"
-              style={{
-                background:
-                  "linear-gradient(90deg, rgba(255,215,140,0.15) 0%, rgba(255,180,209,0.15) 50%, rgba(255,215,140,0.15) 100%)",
-                boxShadow:
-                  "0 0 24px rgba(245, 210, 122, 0.35), inset 0 0 20px rgba(245, 210, 122, 0.15)",
-              }}
-            >
-              <motion.span
-                aria-hidden
-                animate={{ rotate: [0, -15, 15, -10, 10, 0] }}
-                transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
-                className="inline-block"
-              >
-                🎉
-              </motion.span>
-              100% 達成！ありがとうございます
-              <motion.span
-                aria-hidden
-                animate={{ rotate: [0, 15, -15, 10, -10, 0] }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  repeatDelay: 1,
-                  delay: 0.2,
-                }}
-                className="inline-block"
-              >
-                🎊
-              </motion.span>
-            </div>
-          </motion.div>
-        )}
 
         {/* 達成率：数字と%をベースライン揃え、全体としてやや左寄りに */}
         <div className="text-center">

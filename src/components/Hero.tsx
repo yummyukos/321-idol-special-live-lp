@@ -42,25 +42,41 @@ export default function Hero() {
       />
 
       <div className="relative mx-auto w-full max-w-5xl px-6 pt-[30svh] sm:pt-[27svh] pb-16 text-center">
-        {/* メインロゴ画像（Special LIVE 2026 in Kanadevia Hall） */}
-        {!logoFailed ? (
-          <img
-            src="/logo-special-live.png"
-            alt="321 IDOL PROJECT Special LIVE 2026 in Kanadevia Hall"
-            className="mx-auto w-auto h-auto max-w-[88vw] sm:max-w-[640px] md:max-w-[760px] drop-shadow-[0_0_40px_rgba(245,210,122,0.25)]"
-            onError={() => setLogoFailed(true)}
-          />
-        ) : (
-          <h1 className="font-mincho font-bold leading-[0.95] text-white text-[clamp(2.5rem,9vw,6.5rem)]">
-            321 <span className="text-shimmer">IDOL</span>
-            <br />
-            PROJECT
-            <br />
-            <span className="text-[clamp(1.4rem,5vw,3.5rem)] tracking-widest text-mist/90">
-              Special LIVE
+        {/* メインロゴ画像 ＋ 「チケット完売御礼」オーバーレイ */}
+        <div className="relative inline-block mx-auto">
+          {!logoFailed ? (
+            <img
+              src="/logo-special-live.png"
+              alt="321 IDOL PROJECT Special LIVE 2026 in Kanadevia Hall"
+              className="mx-auto w-auto h-auto max-w-[88vw] sm:max-w-[640px] md:max-w-[760px] drop-shadow-[0_0_40px_rgba(245,210,122,0.25)]"
+              onError={() => setLogoFailed(true)}
+            />
+          ) : (
+            <h1 className="font-mincho font-bold leading-[0.95] text-white text-[clamp(2.5rem,9vw,6.5rem)]">
+              321 <span className="text-shimmer">IDOL</span>
+              <br />
+              PROJECT
+              <br />
+              <span className="text-[clamp(1.4rem,5vw,3.5rem)] tracking-widest text-mist/90">
+                Special LIVE
+              </span>
+            </h1>
+          )}
+
+          {/* チケット完売御礼スタンプ風オーバーレイ */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <span
+              className="font-mincho font-bold text-white text-[clamp(1.8rem,7vw,5rem)] tracking-widest -rotate-6"
+              style={{
+                textShadow:
+                  "0 0 24px rgba(255,58,161,0.7), 0 2px 4px rgba(0,0,0,0.6), 0 0 60px rgba(0,0,0,0.5)",
+                WebkitTextStroke: "1.2px rgba(255, 58, 161, 0.9)",
+              }}
+            >
+              チケット完売御礼
             </span>
-          </h1>
-        )}
+          </div>
+        </div>
 
         {/* 日付（2行で表示・コンパクトに） */}
         <div className="mt-6 sm:mt-8 font-mincho text-mist tabular space-y-0.5">
@@ -88,9 +104,9 @@ export default function Hero() {
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-glow"></span>
             </span>
             <span className="text-left leading-tight text-sm sm:text-base">
-              追加開放席販売が
-              <br className="sm:hidden" />
-              決定！
+              追加で開放席を
+              <br />
+              販売が決定！
             </span>
             <span aria-hidden className="group-hover:translate-y-0.5 transition-transform shrink-0">↓</span>
           </button>
