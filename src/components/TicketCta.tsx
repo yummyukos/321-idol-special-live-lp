@@ -12,7 +12,7 @@ export default function TicketCta() {
           チケット販売中
         </h2>
         <p className="text-mist text-base sm:text-xl max-w-xl mx-auto mb-10 leading-relaxed">
-          あなたの1枚が、ライブを変える。
+          「追加開放席」の販売が開始されました！
         </p>
 
         {/* CTAボタン：背景に動くグラデ＋脈動グロー＋ホバーで微浮上＋矢印アニメ */}

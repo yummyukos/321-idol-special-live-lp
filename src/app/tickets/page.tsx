@@ -21,22 +21,39 @@ export default function TicketsPage() {
       </div>
 
       <div className="flex flex-col sm:flex-row gap-5 w-full max-w-lg">
-        <a
-          href="https://tiget.net/events/477181"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="ticket-cta-button group inline-flex flex-col items-center justify-center gap-1 rounded-2xl px-8 py-6 text-ink font-display font-semibold flex-1 transition-transform hover:scale-105 active:scale-95"
+        {/* アリーナ席：SOLD OUT（クリック不可） */}
+        <div
+          aria-disabled="true"
+          className="relative inline-flex flex-col items-center justify-center gap-1 rounded-2xl px-8 py-6 text-ink/70 font-display font-semibold flex-1 overflow-hidden"
           style={{
-            background: "linear-gradient(135deg, #FF3AA1 0%, #FFB84C 100%)",
+            background: "linear-gradient(135deg, #6b4d5a 0%, #7a6058 100%)",
+            cursor: "not-allowed",
           }}
         >
-          <span className="text-lg sm:text-xl whitespace-nowrap">
+          {/* 斜めの SOLD OUT オーバーレイ */}
+          <span
+            aria-hidden
+            className="absolute inset-0 flex items-center justify-center pointer-events-none"
+          >
+            <span
+              className="text-white/90 font-bold tracking-[0.3em] text-2xl sm:text-3xl"
+              style={{
+                textShadow: "0 2px 8px rgba(0,0,0,0.5)",
+                transform: "rotate(-8deg)",
+              }}
+            >
+              SOLD OUT
+            </span>
+          </span>
+          <span className="text-lg sm:text-xl whitespace-nowrap opacity-40 line-through decoration-2">
             アリーナ席チケット
           </span>
-          <span className="mt-2 text-sm bg-black/20 rounded-full px-4 py-1">
-            購入する →
+          <span className="mt-2 text-xs bg-black/30 rounded-full px-4 py-1 opacity-60">
+            完売
           </span>
-        </a>
+        </div>
+
+        {/* バルコニー席：販売中 */}
         <a
           href="https://eplus.jp/liveridol_321/"
           target="_blank"

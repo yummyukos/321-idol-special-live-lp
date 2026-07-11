@@ -9,9 +9,9 @@ import { useState } from "react";
 export default function Hero() {
   const [logoFailed, setLogoFailed] = useState(false);
 
-  const scrollToAchievement = (e: React.MouseEvent) => {
+  const scrollToTicket = (e: React.MouseEvent) => {
     e.preventDefault();
-    const el = document.getElementById("achievement");
+    const el = document.getElementById("ticket");
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
@@ -70,23 +70,31 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* 達成特典へのCTAボタン */}
-        <button
-          type="button"
-          onClick={scrollToAchievement}
-          className="group mt-10 inline-flex items-center gap-3 rounded-3xl border border-gold/40 bg-gradient-to-r from-glow/20 via-glow2/20 to-gold/20 backdrop-blur-sm px-6 py-4 sm:px-8 sm:py-5 text-mist hover:border-gold hover:bg-gradient-to-r hover:from-glow/30 hover:via-glow2/30 hover:to-gold/30 transition-all"
-        >
-          <span className="relative flex h-2 w-2 shrink-0">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-glow opacity-60"></span>
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-glow"></span>
+        {/* チケット完売表示 */}
+        <div className="mt-8 sm:mt-10 flex flex-col items-center gap-3">
+          <span className="inline-flex items-center gap-2 rounded-full border border-gold/50 bg-ink/40 backdrop-blur-sm px-4 py-1.5 text-gold text-xs sm:text-sm tracking-[0.2em]">
+            <span aria-hidden>🎫</span>
+            チケット完売
           </span>
-          <span className="text-left leading-tight text-sm sm:text-base">
-            チケット達成特典を
-            <br />
-            リアルタイムで見る
-          </span>
-          <span aria-hidden className="group-hover:translate-y-0.5 transition-transform shrink-0">↓</span>
-        </button>
+
+          {/* 追加開放席販売決定ボタン */}
+          <button
+            type="button"
+            onClick={scrollToTicket}
+            className="group inline-flex items-center gap-3 rounded-3xl border border-glow/60 bg-gradient-to-r from-glow/30 via-glow2/30 to-gold/30 backdrop-blur-sm px-6 py-4 sm:px-8 sm:py-5 text-white font-semibold hover:border-glow hover:from-glow/40 hover:via-glow2/40 hover:to-gold/40 transition-all animate-pulse-soft"
+          >
+            <span className="relative flex h-2.5 w-2.5 shrink-0">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-glow opacity-70"></span>
+              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-glow"></span>
+            </span>
+            <span className="text-left leading-tight text-sm sm:text-base">
+              追加開放席販売が
+              <br className="sm:hidden" />
+              決定！
+            </span>
+            <span aria-hidden className="group-hover:translate-y-0.5 transition-transform shrink-0">↓</span>
+          </button>
+        </div>
 
         {/* 321 IDOL PROJECT ロゴ */}
         <img
