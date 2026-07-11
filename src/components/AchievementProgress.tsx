@@ -23,26 +23,52 @@ const CONFETTI_COLORS = [
   "#FFFFFF", // white
 ];
 
-function ConfettiFall({ fire }: { fire: boolean }) {
-  // 上から下にずっと降り続ける紙吹雪
+function ConfettiFall({
+  fire,
+  sectionRef,
+}: {
+  fire: boolean;
+  sectionRef: React.RefObject<HTMLElement | null>;
+}) {
+  // セクションの高さを測って、ピクセル基準でy軸animation
+  const [sectionHeight, setSectionHeight] = useState(1400);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const measure = () => {
+      const h = el.offsetHeight;
+      if (h && h > 200) setSectionHeight(h);
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    window.addEventListener("resize", measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, [sectionRef]);
+
   const particles = useMemo(
     () =>
-      Array.from({ length: 60 }, (_, i) => ({
+      Array.from({ length: 70 }, (_, i) => ({
         id: i,
         color: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
         left: Math.random() * 100, // 横位置 %
-        delay: Math.random() * 6, // 開始タイミングをばらす
-        duration: 5 + Math.random() * 5, // 落下時間 5-10 秒
-        width: 6 + Math.random() * 6, // 6-12 px
-        height: 10 + Math.random() * 8, // 10-18 px
-        rotate: (Math.random() - 0.5) * 1080,
-        sway: (Math.random() - 0.5) * 60, // 揺れ幅
-        radius: Math.random() > 0.7 ? "50%" : "1px", // 一部は円形
+        delay: Math.random() * 8, // 開始タイミングをばらす
+        duration: 6 + Math.random() * 6, // 落下時間 6-12 秒
+        width: 8 + Math.random() * 8, // 8-16 px
+        height: 14 + Math.random() * 10, // 14-24 px
+        rotate: (Math.random() - 0.5) * 1440,
+        radius: Math.random() > 0.7 ? "50%" : "1.5px",
       })),
     []
   );
 
   if (!fire) return null;
+
+  const endY = sectionHeight + 80;
 
   return (
     <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
@@ -57,24 +83,26 @@ function ConfettiFall({ fire }: { fire: boolean }) {
             height: `${p.height}px`,
             background: p.color,
             borderRadius: p.radius,
-            willChange: "transform",
+            willChange: "transform, opacity",
           }}
-          initial={{ y: "-5%", x: 0, opacity: 0, rotate: 0 }}
+          initial={{ y: -60, opacity: 0, rotate: 0 }}
           animate={{
-            y: ["-5%", "105%"],
-            x: [0, p.sway, -p.sway, 0],
-            opacity: [0, 1, 1, 0.9, 0],
+            y: [-60, endY],
+            opacity: [0, 1, 1, 0],
             rotate: [0, p.rotate],
           }}
           transition={{
             duration: p.duration,
             delay: p.delay,
-            ease: "linear",
             repeat: Infinity,
-            repeatDelay: 0,
-            y: { ease: "linear" },
-            x: { ease: "easeInOut" },
-            opacity: { times: [0, 0.06, 0.5, 0.94, 1] },
+            ease: "linear",
+            opacity: {
+              duration: p.duration,
+              delay: p.delay,
+              times: [0, 0.05, 0.9, 1],
+              repeat: Infinity,
+              ease: "linear",
+            },
           }}
         />
       ))}
@@ -134,7 +162,7 @@ export default function AchievementProgress() {
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
 
       {/* 100%達成時：紙吹雪が上から降る（コンテンツの背後で無限ループ） */}
-      <ConfettiFall fire={fireCelebration} />
+      <ConfettiFall fire={fireCelebration} sectionRef={sectionRef} />
 
       <div className="relative z-10 mx-auto max-w-5xl px-6">
         <p className="text-center text-xs tracking-[0.4em] text-gold/80 mb-2">
